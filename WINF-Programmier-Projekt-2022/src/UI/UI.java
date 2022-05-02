@@ -83,7 +83,7 @@ public class UI extends JFrame {
         panel_2 = new JPanel();
         suche.add(panel_2, BorderLayout.NORTH);
         
-        dropdownSuche1 = new JComboBox();
+        dropdownSuche1 = new JComboBox(new String[]{"Grafikkarte", "Festplatte","Hauptspeicher","Fertigprodukt","CPU"});
         panel_2.add(dropdownSuche1);
         
         dropdownSuche2 = new JComboBox();
