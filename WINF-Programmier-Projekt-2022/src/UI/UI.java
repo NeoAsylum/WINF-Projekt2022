@@ -3,14 +3,12 @@ package UI;
 import java.awt.BorderLayout;
 
 import Backend.Hauptklasse;
-import Backend.Tabelleneintraege;
 import Datentypen.CPU;
 import Datentypen.Festplatte;
 import Datentypen.Grafikkarte;
 import Datentypen.Hauptspeicher;
 import Datentypen.Produkt;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,21 +16,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.awt.GridLayout;
-import javax.swing.DropMode;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
-import javax.swing.JSpinner;
 import javax.swing.JComboBox;
-import javax.swing.BoxLayout;
-import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
 
@@ -168,18 +159,21 @@ public class UI extends JFrame {
 
     }
 
+    /*
+     * Methode erzeugt Table neu.
+     */
     public void setGrakaTable(Object[][] input) {
         Object[][] data = Arrays.copyOfRange(input, 1, input.length);
-        setTable(input[0], data);
-    }
-
-    public void setTable(Object[] names, Object[][] data) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
-        model=new DefaultTableModel(data, names);
+        model=new DefaultTableModel(data, input[0]);
         table.setModel(model);
     }
-
+    
+    
+    /*
+     * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
+     */
     public void query() {
         Produkt p;
         switch (dropdownSuche1.getSelectedItem().toString()) {
@@ -234,6 +228,10 @@ public class UI extends JFrame {
         }
     }
 
+    
+    /*
+     * Methode welche die JComboBoxen refresht
+     */
     public void updateDropdown2() {
         Produkt p;
         dropdownSuche2.removeAllItems();
