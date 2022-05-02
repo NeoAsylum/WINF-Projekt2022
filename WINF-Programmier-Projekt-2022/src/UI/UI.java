@@ -202,23 +202,28 @@ public class UI extends JFrame {
         int added=0;
         if (!(dropdownSuche2.getSelectedItem().toString().length() <= 1)) {
             sqlQuery += "WHERE " + dropdownSuche2.getSelectedItem() + "='" + textField.getText()
-                    + "', ";
+                    + "' AND ";
             added=1;
         }
         if (!(dropdownSuche3.getSelectedItem().toString().length() <= 1)) {
-            sqlQuery += "WHERE " + dropdownSuche3.getSelectedItem() + "='" + textField_1.getText()
-                    + "', ";
+            if(added==0) {
+                sqlQuery += "WHERE ";
+            }
+            sqlQuery += dropdownSuche3.getSelectedItem() + "='" + textField_1.getText()
+                    + "' AND ";
             added=1;
 
         }
         if (!(dropdownSuche4.getSelectedItem().toString().length() <= 1)) {
+            if(added==0) {
+                sqlQuery += "WHERE ";
+            }
             System.out.println(dropdownSuche2.getSelectedItem().toString());
-            sqlQuery += "WHERE " + dropdownSuche4.getSelectedItem() + "='" + textField_2.getText()
-                    + "', ";
-            added=1;
-
+            sqlQuery += dropdownSuche4.getSelectedItem() + "='" + textField_2.getText()
+                    + "'";
+            added=0;
         }
-        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added) + ";";
+        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added*4) + ";";
         sqlQuery = p == null ? null : sqlQuery;
         System.out.println(sqlQuery);
         try {
