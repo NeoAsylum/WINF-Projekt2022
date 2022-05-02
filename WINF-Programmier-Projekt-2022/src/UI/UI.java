@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.awt.GridLayout;
 import javax.swing.DropMode;
@@ -54,7 +55,7 @@ public class UI extends JFrame {
      * 
      * @wbp.parser.constructor
      */
-    public UI(String[][] input) {
+    public UI(Object[][] input) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -118,14 +119,41 @@ public class UI extends JFrame {
 
     }
 
-    public void setGrakaTable(String[][] input) {
-        String[] names = { "Name", "VRAM", "Hersteller" };
-        String[][] data = Arrays.copyOfRange(input, 1, input.length);
+    public void setGrakaTable(Object[][] input) {
+        Object[] names = { "Name", "VRAM", "Hersteller","Delete" };
+        Object[][] data = Arrays.copyOfRange(input, 1, input.length);
         setTable(input[0], data);
     }
 
-    public void setTable(String[] names, String[][] data) {
-        table = new JTable(data, names);
+    public void setTable(Object[] names, Object[][] data) {
+        DefaultTableModel model = new DefaultTableModel(data, names);
+
+        //table = new JTable(data, names);
+        table = new JTable(model) {
+
+            private static final long serialVersionUID = 1L;
+
+            /*@Override
+            public Class getColumnClass(int column) {
+            return getValueAt(0, column).getClass();
+            }*/
+            @Override
+            public Class getColumnClass(int column) {
+                switch (column) {
+                    case 0:
+                        return String.class;
+                    case 1:
+                        return String.class;
+                    case 2:
+                        return String.class;
+                    case 3:
+                        return String.class;
+                    default:
+                        return Boolean.class;
+                }
+            }
+        };
+
     }
 
 }
