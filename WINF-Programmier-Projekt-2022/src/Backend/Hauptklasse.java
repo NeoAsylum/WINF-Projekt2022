@@ -67,10 +67,10 @@ public class Hauptklasse {
             counter++;
         }
         // Alle Daten in Array parsen
-        Object[][] ergebnis = new Object[counter][p.getTabelleneintraege().length+1];
+        Object[][] ergebnis = new Object[counter][p.getTabelleneintraege().length];
         for (int i = 0; i < counter; i++) {
             ergebnis[i] = result.split("##")[i].split("<<");
-            ergebnis[i][0]= new Boolean(false);
+            //ergebnis[i][0]= new Boolean(false);
         }
         System.out.println("Disconnected from database");
 
