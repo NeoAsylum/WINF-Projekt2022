@@ -21,28 +21,23 @@ public class Hauptklasse {
     static UI frame;
 
     public static void main(String[] args) {
-        establishConnection();
-    }
-
-    public static void establishConnection() {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url + dbName, userName, password);
             System.out.println("Connected to the database");
-            //nonsense Query but works, has no results
+            // nonsense Query but works, has no results
             aQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
                     + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';");
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
      * Diese Methode führt SQL-Queries durch
      * 
-     * @param p Produkt welches gefiltert wird
+     * @param p     Produkt welches gefiltert wird
      * @param query String welcher Query enthält
      * @throws SQLException
      */
@@ -92,7 +87,7 @@ public class Hauptklasse {
             conn.close();
         } catch (SQLSyntaxErrorException e) {
             System.out.println("SQLSyntaxErrorException!!!");
-            //nonsense Query but works
+            // nonsense Query but works
             aQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
                     + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';");
         } catch (ClassNotFoundException e) {
