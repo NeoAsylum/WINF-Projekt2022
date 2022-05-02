@@ -3,7 +3,7 @@ package Datentypen;
 public abstract class Produkt extends EinObjekt {
     int mindestmenge;
     String Hersteller;
-    int Lagerplatz;
+    int lagerplatz;
     public String[] tabelleneintraege;
 
     public abstract String[] getTabelleneintraege();

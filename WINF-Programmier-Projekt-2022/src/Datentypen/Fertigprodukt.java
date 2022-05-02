@@ -5,7 +5,7 @@ public class Fertigprodukt extends Produkt {
     int groesse;
     String betriebssystem;
     private String[] tabelleneintraege = { "Name", "Hersteller", "Betriebssystem" };
-    final static String PRODUKTTYP = "FESTPLATTE";
+    final static String PRODUKTTYP = "FERTIGPRODUKT";
 
     @Override
     public String[] getTabelleneintraege() {

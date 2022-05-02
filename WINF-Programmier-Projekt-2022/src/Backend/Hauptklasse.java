@@ -1,6 +1,6 @@
 package Backend;
 
-import UI.UI;
+import UI.Suche;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,7 +18,7 @@ public class Hauptklasse {
     static String driver = "com.mysql.cj.jdbc.Driver";
     static String userName = "db4";
     static String password = "!db4.hfts22?";
-    static UI frame;
+    static Suche frame;
 
     public static void main(String[] args) {
         try {
@@ -26,8 +26,8 @@ public class Hauptklasse {
             conn = DriverManager.getConnection(url + dbName, userName, password);
             System.out.println("Connected to the database");
             // nonsense Query but works, has no results
-            aQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
-                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';");
+            produktQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
+                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Suche");
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,7 +41,8 @@ public class Hauptklasse {
      * @param query String welcher Query enthält
      * @throws SQLException
      */
-    public static void aQuery(Produkt p, String query) throws SQLException {
+    public static void produktQuery(Produkt p, String query, String oberflaeche)
+            throws SQLException {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url + dbName, userName, password);
@@ -78,18 +79,24 @@ public class Hauptklasse {
             System.out.println("Disconnected from database");
             // Wenn Frame nicht initialisiert wird er initialisiert.
             if (frame == null) {
-                frame = new UI(ergebnis);
+                frame = new Suche(ergebnis);
                 frame.setVisible(true);
                 System.out.println("aa");
             } else {
-                frame.setGrakaTable(ergebnis);
+                if (oberflaeche.equals("Suche")) {
+                    frame.setSuchTable(ergebnis);
+                } else if (oberflaeche.equals("Einlagerung")) {
+                    System.out.println("huhu");
+                    frame.setEinlagerungTable(ergebnis);
+                }
+
             }
             conn.close();
         } catch (SQLSyntaxErrorException e) {
             System.out.println("SQLSyntaxErrorException!!!");
             // nonsense Query but works
-            aQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
-                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';");
+            produktQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
+                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Suche");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
