@@ -10,6 +10,7 @@ import java.sql.Statement;
 
 import Datentypen.Grafikkarte;
 import Datentypen.Produkt;
+import Datentypen.CPU;
 
 public class Hauptklasse {
 
@@ -25,13 +26,13 @@ public class Hauptklasse {
         uI(establishConnection());
     }
 
-    public static String[][] establishConnection() {
-        String[][] ergebnis = {};
+    public static Object[][] establishConnection() {
+        Object[][] ergebnis = {};
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url + dbName, userName, password);
             System.out.println("Connected to the database");
-            ergebnis = Query(new Grafikkarte());
+            ergebnis = Query(new CPU());
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +41,7 @@ public class Hauptklasse {
 
     }
 
-    public static String[][] Query(Produkt p) throws SQLException {
+    public static Object[][] Query(Produkt p) throws SQLException {
         String result = "";
         Statement stmt = conn.createStatement();
         ResultSet rs;
@@ -66,16 +67,17 @@ public class Hauptklasse {
             counter++;
         }
         // Alle Daten in Array parsen
-        String[][] ergebnis = new String[counter][p.getTabelleneintraege().length];
+        Object[][] ergebnis = new Object[counter][p.getTabelleneintraege().length+1];
         for (int i = 0; i < counter; i++) {
             ergebnis[i] = result.split("##")[i].split("<<");
+            ergebnis[i][0]= new Boolean(false);
         }
         System.out.println("Disconnected from database");
 
         return ergebnis;
     }
 
-    public static void uI(String[][] input) {
+    public static void uI(Object[][] input) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
