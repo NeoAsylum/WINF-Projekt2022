@@ -2,6 +2,12 @@ package UI;
 
 import java.awt.BorderLayout;
 import Backend.Tabelleneintraege;
+import Datentypen.CPU;
+import Datentypen.Festplatte;
+import Datentypen.Grafikkarte;
+import Datentypen.Hauptspeicher;
+import Datentypen.Produkt;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -40,11 +46,12 @@ public class UI extends JFrame {
     private JScrollPane scrollPane;
     private JTable table_1;
     private JButton btnNewButton;
-    private JComboBox dropdownSuche1;
-    private JComboBox dropdownSuche2;
-    private JComboBox dropdownSuche3;
-    private JComboBox dropdownSuche4;
+    private JComboBox<String> dropdownSuche1;
+    private JComboBox<String> dropdownSuche2;
+    private JComboBox<String> dropdownSuche3;
+    private JComboBox<String> dropdownSuche4;
     private JButton deleteSuche;
+    private String[] dropdownMenu1 = { "" };
 
     public UI(Tabelleneintraege e) {
 
@@ -66,41 +73,48 @@ public class UI extends JFrame {
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         contentPane.add(tabbedPane);
 
-        
-        
         suche = new JPanel();
         tabbedPane.addTab("Suche", null, suche, null);
         suche.setLayout(new BorderLayout(0, 0));
-        
+
         panel_1 = new JPanel();
         FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
         flowLayout.setAlignment(FlowLayout.RIGHT);
         suche.add(panel_1, BorderLayout.SOUTH);
-        
+
         btnNewButton = new JButton("Export");
         panel_1.add(btnNewButton);
-        
+
         panel_2 = new JPanel();
         suche.add(panel_2, BorderLayout.NORTH);
-        
-        dropdownSuche1 = new JComboBox(new String[]{"Grafikkarte", "Festplatte","Hauptspeicher","Fertigprodukt","CPU"});
+
+        dropdownSuche1 = new JComboBox<String>(new String[] { "", "Grafikkarte", "Festplatte",
+                "Hauptspeicher", "Fertigprodukt", "CPU" });
+        dropdownSuche1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                updateDropdown2();
+            }
+        });
         panel_2.add(dropdownSuche1);
-        
-        dropdownSuche2 = new JComboBox();
+
+        dropdownSuche2 = new JComboBox<String>();
+        dropdownSuche2.setEditable(true);
         panel_2.add(dropdownSuche2);
-        
-        dropdownSuche3 = new JComboBox();
+
+        dropdownSuche3 = new JComboBox<String>();
+        dropdownSuche3.setEditable(true);
         panel_2.add(dropdownSuche3);
-        
-        dropdownSuche4 = new JComboBox();
+
+        dropdownSuche4 = new JComboBox<String>();
+        dropdownSuche4.setEditable(true);
         panel_2.add(dropdownSuche4);
-        
+
         deleteSuche = new JButton("delete");
         panel_2.add(deleteSuche);
-        
+
         scrollPane = new JScrollPane();
         suche.add(scrollPane, BorderLayout.CENTER);
-        
+
         table_1 = new JTable();
         scrollPane.setViewportView(table_1);
 
@@ -112,7 +126,7 @@ public class UI extends JFrame {
 
         bestellliste = new JScrollPane();
         tabbedPane.addTab("Bestelliste", null, bestellliste, null);
-        
+
         table = new JTable();
         setGrakaTable(input);
         scrollPane.setViewportView(table);
@@ -120,40 +134,43 @@ public class UI extends JFrame {
     }
 
     public void setGrakaTable(Object[][] input) {
-        Object[] names = { "Name", "VRAM", "Hersteller","Delete" };
         Object[][] data = Arrays.copyOfRange(input, 1, input.length);
         setTable(input[0], data);
     }
 
     public void setTable(Object[] names, Object[][] data) {
         DefaultTableModel model = new DefaultTableModel(data, names);
-
-        //table = new JTable(data, names);
-        table = new JTable(model) {
-
-            private static final long serialVersionUID = 1L;
-
-            /*@Override
-            public Class getColumnClass(int column) {
-            return getValueAt(0, column).getClass();
-            }*/
-            @Override
-            public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return String.class;
-                    case 3:
-                        return String.class;
-                    default:
-                        return Boolean.class;
-                }
-            }
-        };
-
+        table = new JTable(model);
     }
 
+    public void updateDropdown2() {
+        Produkt p;
+        dropdownSuche2.removeAllItems();
+        dropdownSuche3.removeAllItems();
+        dropdownSuche4.removeAllItems();
+
+        switch (dropdownSuche1.getSelectedItem().toString()) {
+        case "Grafikkarte":
+            p = new Grafikkarte();
+            break;
+        case "Festplatte":
+            p = new Festplatte();
+            break;
+        case "Hauptspeicher":
+            p = new Hauptspeicher();
+            break;
+        case "CPU":
+            p = new CPU();
+            break;
+        default:
+            p = null;
+            break;
+        }
+        for (String a : p.getTabelleneintraege()) {
+            dropdownSuche2.addItem(a);
+            dropdownSuche3.addItem(a);
+            dropdownSuche4.addItem(a);
+            System.out.println(a);
+        }
+    }
 }
