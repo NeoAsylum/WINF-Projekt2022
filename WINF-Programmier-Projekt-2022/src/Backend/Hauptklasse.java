@@ -1,12 +1,16 @@
 package Backend;
 
-import UI.Suche;
+import UI.UI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Datentypen.Grafikkarte;
 import Datentypen.Produkt;
 
@@ -18,19 +22,20 @@ public class Hauptklasse {
     static String driver = "com.mysql.cj.jdbc.Driver";
     static String userName = "db4";
     static String password = "!db4.hfts22?";
-    static Suche frame;
+    static UI frame;
+    public static final Logger log = Logger.getLogger(Hauptklasse.class.getName());
 
     public static void main(String[] args) {
+
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url + dbName, userName, password);
-            System.out.println("Connected to the database");
             // nonsense Query but works, has no results
             produktQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
                     + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Suche");
             conn.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Problem:", e);
         }
     }
 
@@ -43,13 +48,12 @@ public class Hauptklasse {
      */
     public static void produktQuery(Produkt p, String query, String oberflaeche)
             throws SQLException {
+        log.info("Query: " + query + " in " + oberflaeche);
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url + dbName, userName, password);
-            System.out.println("Connected to the database");
             String result = "";
             Statement stmt = conn.createStatement();
-            System.out.println(query);
             ResultSet rs = stmt.executeQuery(query);
             int counter = 2;
 
@@ -57,7 +61,7 @@ public class Hauptklasse {
             for (int i = 0; i < p.getTabelleneintraege().length; i++) {
                 result += p.getTabelleneintraege()[i] + "<<";
             }
-            result += "x<<##";
+            result += "Delete<<##";
             result += " " + "<<" + " " + "<<" + " " + "<<" + "##";
 
             // Alle Spalten holen
@@ -65,40 +69,35 @@ public class Hauptklasse {
                 for (int i = 0; i < p.getTabelleneintraege().length; i++) {
                     result += rs.getString(p.getTabelleneintraege()[i]) + "<<";
                 }
-                result += "x<<##";
+                result += "<<##";
                 counter++;
-                System.out.println(result);
             }
             // Alle Daten in Array parsen
             Object[][] ergebnis = new Object[counter][p.getTabelleneintraege().length + 2];
-            System.out.println(counter + "  " + p.getTabelleneintraege().length + 1);
             ergebnis[0] = result.split("##")[0].split("<<");
             for (int i = 0; i < counter; i++) {
                 ergebnis[i] = result.split("##")[i].split("<<");
             }
-            System.out.println("Disconnected from database");
             // Wenn Frame nicht initialisiert wird er initialisiert.
             if (frame == null) {
-                frame = new Suche(ergebnis);
+                frame = new UI(ergebnis);
                 frame.setVisible(true);
-                System.out.println("aa");
             } else {
                 if (oberflaeche.equals("Suche")) {
                     frame.setSuchTable(ergebnis);
                 } else if (oberflaeche.equals("Einlagerung")) {
-                    System.out.println("huhu");
                     frame.setEinlagerungTable(ergebnis);
                 }
 
             }
             conn.close();
         } catch (SQLSyntaxErrorException e) {
-            System.out.println("SQLSyntaxErrorException!!!");
             // nonsense Query but works
             produktQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
                     + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Suche");
+            log.log(Level.SEVERE, "Problem:", e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Problem:", e);
         }
     }
 }

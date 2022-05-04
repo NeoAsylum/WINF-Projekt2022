@@ -14,15 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
 
 
 public class Login extends JFrame {
 
-	private JPanel contentPane;
+	private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
 	private JTextField username;
 	private JPasswordField password;
 

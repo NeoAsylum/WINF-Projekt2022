@@ -17,17 +17,21 @@ import javax.swing.JTable;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
 
-public class Suche extends JFrame {
+public class UI extends JFrame {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTabbedPane tabbedPane;
     private JTable table;
@@ -54,7 +58,7 @@ public class Suche extends JFrame {
     private JButton btnNewButton_1;
     private JTable einlagerungsTable;
 
-    public Suche() {
+    public UI() {
 
     }
 
@@ -63,7 +67,7 @@ public class Suche extends JFrame {
      * 
      * @wbp.parser.constructor
      */
-    public Suche(Object[][] input) {
+    public UI(Object[][] input) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 987, 437);
         contentPane = new JPanel();
@@ -80,6 +84,7 @@ public class Suche extends JFrame {
         flowLayout.setAlignment(FlowLayout.RIGHT);
         suche.add(panel_1, BorderLayout.SOUTH);
         deleteSuche = new JButton("delete");
+        deleteSuche.setToolTipText("put x in 'delete' column");
         panel_1.add(deleteSuche);
         btnNewButton = new JButton("Export");
         panel_1.add(btnNewButton);
@@ -88,6 +93,7 @@ public class Suche extends JFrame {
         String[] arr = new String[] { "Grafikkarte", "Festplatte", "Hauptspeicher",
                 "Fertigprodukt", "CPU" };
         dropdownSuche1 = new JComboBox<String>();
+        dropdownSuche1.addItem("");
         for (String a : arr) {
             dropdownSuche1.addItem(a);
         }
@@ -191,41 +197,42 @@ public class Suche extends JFrame {
             p = null;
             break;
         }
-        String sqlQuery = "SELECT ";
-        for (int i = 0; i < p.getTabelleneintraege().length; i++) {
-            sqlQuery += p.getTabelleneintraege()[i] + ", ";
-        }
-        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2);
-        sqlQuery += " FROM " + p.produktTyp() + " ";
-        int added = 0;
-        if (!(dropdownSuche2.getSelectedItem().toString().length() <= 1)) {
-            sqlQuery += "WHERE " + dropdownSuche2.getSelectedItem() + "='" + textField.getText()
-                    + "' AND ";
-            added = 1;
-        }
-        if (!(dropdownSuche3.getSelectedItem().toString().length() <= 1)) {
-            if (added == 0) {
-                sqlQuery += "WHERE ";
+        if (p != null) {
+            String sqlQuery = "SELECT ";
+            for (int i = 0; i < p.getTabelleneintraege().length; i++) {
+                sqlQuery += p.getTabelleneintraege()[i] + ", ";
             }
-            sqlQuery += dropdownSuche3.getSelectedItem() + "='" + textField_1.getText() + "' AND ";
-            added = 1;
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2);
+            sqlQuery += " FROM " + p.produktTyp() + " ";
+            int added = 0;
+            if (!(dropdownSuche2.getSelectedItem().toString().length() <= 1)) {
+                sqlQuery += "WHERE " + dropdownSuche2.getSelectedItem() + "='"
+                        + textField.getText() + "' AND ";
+                added = 1;
+            }
+            if (!(dropdownSuche3.getSelectedItem().toString().length() <= 1)) {
+                if (added == 0) {
+                    sqlQuery += "WHERE ";
+                }
+                sqlQuery += dropdownSuche3.getSelectedItem() + "='" + textField_1.getText()
+                        + "' AND ";
+                added = 1;
 
-        }
-        if (!(dropdownSuche4.getSelectedItem().toString().length() <= 1)) {
-            if (added == 0) {
-                sqlQuery += "WHERE ";
             }
-            System.out.println(dropdownSuche2.getSelectedItem().toString());
-            sqlQuery += dropdownSuche4.getSelectedItem() + "='" + textField_2.getText() + "'";
-            added = 0;
-        }
-        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
-        sqlQuery = p == null ? null : sqlQuery;
-        System.out.println(sqlQuery);
-        try {
-            Hauptklasse.produktQuery(p, sqlQuery, "Suche");
-        } catch (SQLException e) {
-            e.printStackTrace();
+            if (!(dropdownSuche4.getSelectedItem().toString().length() <= 1)) {
+                if (added == 0) {
+                    sqlQuery += "WHERE ";
+                }
+                sqlQuery += dropdownSuche4.getSelectedItem() + "='" + textField_2.getText() + "'";
+                added = 0;
+            }
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
+            sqlQuery = p == null ? null : sqlQuery;
+            try {
+                Hauptklasse.produktQuery(p, sqlQuery, "Suche");
+            } catch (SQLException e) {
+                Hauptklasse.log.log(Level.SEVERE,"Problem:", e);
+            }
         }
     }
 
@@ -271,14 +278,10 @@ public class Suche extends JFrame {
         }
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        System.out.println(Arrays.deepToString(input));
         model.setRowCount(0);
         model = new DefaultTableModel(data, input[0]);
         einlagerungsTable.setModel(model);
-        System.out.println("huhu");
     }
-    
-    
 
     /*
      * Methode welche die JComboBoxen refresht
@@ -309,11 +312,12 @@ public class Suche extends JFrame {
         dropdownSuche2.addItem("");
         dropdownSuche3.addItem("");
         dropdownSuche4.addItem("");
-        for (String a : p.getTabelleneintraege()) {
-            dropdownSuche2.addItem(a);
-            dropdownSuche3.addItem(a);
-            dropdownSuche4.addItem(a);
-            System.out.println(a);
+        if (p != null) {
+            for (String a : p.getTabelleneintraege()) {
+                dropdownSuche2.addItem(a);
+                dropdownSuche3.addItem(a);
+                dropdownSuche4.addItem(a);
+            }
         }
     }
 }
