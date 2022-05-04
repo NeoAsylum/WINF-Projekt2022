@@ -7,12 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import Datentypen.Grafikkarte;
-import Datentypen.Produkt;
 
 public class Hauptklasse {
 
@@ -31,8 +27,8 @@ public class Hauptklasse {
             Class.forName(driver);
             conn = DriverManager.getConnection(url + dbName, userName, password);
             // nonsense Query but works, has no results
-            produktQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
-                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Suche");
+            produktQuery("SELECT " + "Name, VRAM, Hersteller "
+                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Suche",new String[]{"Name", "VRAM",  "Hersteller" });
             conn.close();
         } catch (Exception e) {
             log.log(Level.SEVERE, "Problem:", e);
@@ -46,7 +42,7 @@ public class Hauptklasse {
      * @param query String welcher Query enthält
      * @throws SQLException
      */
-    public static void produktQuery(Produkt p, String query, String oberflaeche)
+    public static void produktQuery(String query, String oberflaeche, String[] tabelleneintrage)
             throws SQLException {
         log.info("Query: " + query + " in " + oberflaeche);
         try {
@@ -58,22 +54,22 @@ public class Hauptklasse {
             int counter = 2;
 
             // Tabelle Spalten benennen
-            for (int i = 0; i < p.getTabelleneintraege().length; i++) {
-                result += p.getTabelleneintraege()[i] + "<<";
+            for (int i = 0; i < tabelleneintrage.length; i++) {
+                result += tabelleneintrage[i] + "<<";
             }
             result += "Delete<<##";
             result += " " + "<<" + " " + "<<" + " " + "<<" + "##";
 
             // Alle Spalten holen
             while (rs.next()) {
-                for (int i = 0; i < p.getTabelleneintraege().length; i++) {
-                    result += rs.getString(p.getTabelleneintraege()[i]) + "<<";
+                for (int i = 0; i < tabelleneintrage.length; i++) {
+                    result += rs.getString(tabelleneintrage[i]) + "<<";
                 }
                 result += "<<##";
                 counter++;
             }
             // Alle Daten in Array parsen
-            Object[][] ergebnis = new Object[counter][p.getTabelleneintraege().length + 2];
+            Object[][] ergebnis = new Object[counter][tabelleneintrage.length + 2];
             ergebnis[0] = result.split("##")[0].split("<<");
             for (int i = 0; i < counter; i++) {
                 ergebnis[i] = result.split("##")[i].split("<<");
@@ -93,8 +89,8 @@ public class Hauptklasse {
             conn.close();
         } catch (SQLSyntaxErrorException e) {
             // nonsense Query but works
-            produktQuery(new Grafikkarte(), "SELECT " + "Name, VRAM, Hersteller "
-                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Suche");
+            produktQuery("SELECT " + "Name, VRAM, Hersteller "
+                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Suche",new String[]{"Name", "VRAM",  "Hersteller" });
             log.log(Level.SEVERE, "Problem:", e);
         } catch (ClassNotFoundException e) {
             log.log(Level.SEVERE, "Problem:", e);

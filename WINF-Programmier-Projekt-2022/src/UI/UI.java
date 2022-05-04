@@ -229,7 +229,7 @@ public class UI extends JFrame {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
             sqlQuery = p == null ? null : sqlQuery;
             try {
-                Hauptklasse.produktQuery(p, sqlQuery, "Suche");
+                Hauptklasse.produktQuery(sqlQuery, "Suche", p.getTabelleneintraege());
             } catch (SQLException e) {
                 Hauptklasse.log.log(Level.SEVERE,"Problem:", e);
             }
@@ -259,8 +259,8 @@ public class UI extends JFrame {
             break;
         }
         try {
-            Hauptklasse.produktQuery(p, "SELECT " + "Name, VRAM, Hersteller "
-                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Einlagerung");
+            Hauptklasse.produktQuery( "SELECT " + "Name, VRAM, Hersteller "
+                    + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Einlagerung",p.getTabelleneintraege());
         } catch (SQLException e) {
             e.printStackTrace();
         }

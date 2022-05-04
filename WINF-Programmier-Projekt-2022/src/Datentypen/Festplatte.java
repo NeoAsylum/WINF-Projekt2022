@@ -10,7 +10,7 @@ public class Festplatte extends Produkt {
     @Override
     public String[] getTabelleneintraege() {
         return tabelleneintraege;
-    }
+    } 
     
     @Override
     public String produktTyp() {
