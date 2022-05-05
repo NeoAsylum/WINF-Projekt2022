@@ -35,7 +35,6 @@ public class Login extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-//
 	/**
 	 * Create the frame.
 	 */
