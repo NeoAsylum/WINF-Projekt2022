@@ -31,7 +31,7 @@ public class QueryOutputHandling {
         try {
             return SQL.queryToStringArray(
                     "SELECT " + "Name, VRAM, Hersteller "
-                            + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';",
+                            + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
                     new String[] { "Name", "VRAM", "Hersteller" },"Suche");
         } catch (SQLException e) {
             e.printStackTrace();

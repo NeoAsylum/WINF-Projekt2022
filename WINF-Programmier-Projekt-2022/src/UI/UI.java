@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import Backend.QueryOutputHandling;
 import Backend.SQL;
 import Datentypen.CPU;
+import Datentypen.Fertigprodukt;
 import Datentypen.Festplatte;
 import Datentypen.Grafikkarte;
 import Datentypen.Hauptspeicher;
@@ -281,6 +282,7 @@ public class UI extends JFrame {
             }
         }
     }
+    
 
     /*
      * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
@@ -300,13 +302,16 @@ public class UI extends JFrame {
         case "CPU":
             p = new CPU();
             break;
+        case "Fertigprodukt":
+            p = new Fertigprodukt();
+            break;
         default:
             p = null;
             break;
         }
         QueryOutputHandling.queryToUI(
                 "SELECT " + "Name, VRAM, Hersteller "
-                        + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';",
+                        + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
                 "Einlagerung", p.getTabelleneintraege());
     }
 

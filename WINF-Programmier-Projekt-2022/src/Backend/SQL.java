@@ -16,7 +16,13 @@ import java.util.Properties;
 import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
+import Datentypen.CPU;
+import Datentypen.Festplatte;
+import Datentypen.Grafikkarte;
+import Datentypen.Hauptspeicher;
+import Datentypen.Produkt;
 import UI.UI;
 
 public class SQL {
@@ -69,6 +75,54 @@ public class SQL {
         Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
     }
 
+    /*
+     * Methode welche die in die Einlagern-Tabelle eingefuegten Daten bei
+     * Vollständigkeit Reihenweise in die SQL-Datenbank einfuegt.
+     */
+    public static void queryEinlagern(String selectedItem, JTable table) {
+        for (int k = 0; k < table.getRowCount(); k++) {
+            Produkt p;
+            switch (selectedItem) {
+            case "Grafikkarte":
+                p = new Grafikkarte();
+                break;
+            case "Festplatte":
+                p = new Festplatte();
+                break;
+            case "Hauptspeicher":
+                p = new Hauptspeicher();
+                break;
+            case "CPU":
+                p = new CPU();
+                break;
+            default:
+                p = null;
+                break;
+            }
+
+            boolean allRowsFull = true;
+            for (int i = 0; i < table.getColumnCount(); i++) {
+                allRowsFull = !table.getModel().getValueAt(k, i).equals("");
+            }
+            if (allRowsFull && p != null) {
+                String sqlQuery = "INSERT INTO " + p.produktTyp() + " (";
+                for (int i = 0; i < p.getTabelleneintraege().length; i++) {
+                    sqlQuery += p.getTabelleneintraege()[i] + ",";
+                }
+                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1) + ")"
+                        + System.lineSeparator() + "VALUES (";
+
+                for (int i = 0; i < p.getTabelleneintraege().length; i++) {
+                    sqlQuery += "'" + table.getModel().getValueAt(k, i) + "', ";
+                }
+                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) + " );";
+                SQL.update(sqlQuery);
+                QueryOutputHandling.nonsenseQuery();
+            } else {
+            }
+        }
+    }
+    
     public static Object[][] queryToStringArray(String query, String[] tabelleneintrage,
             String oberflaeche) throws SQLException {
         try {
