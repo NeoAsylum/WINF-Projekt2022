@@ -23,7 +23,7 @@ public class SQL {
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url + dbName, userName, password);
-			Hauptklasse.frame = new UI(Hauptklasse.nonsenseQuery());
+			Hauptklasse.frame = new UI(QueryOutputHandling.nonsenseQuery());
 			Hauptklasse.frame.setVisible(true);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -31,7 +31,7 @@ public class SQL {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Object[][] queryToStringArray(String query, String[] tabelleneintrage) throws SQLException {
 		try {
 			Statement stmt = conn.createStatement();
@@ -54,9 +54,9 @@ public class SQL {
 				result += "<<##";
 				counter++;
 			}
-			return Hauptklasse.result(counter, result, tabelleneintrage.length + 2);
+			return QueryOutputHandling.queryOutputToStringArray(counter, result, tabelleneintrage.length + 2);
 		} catch (SQLSyntaxErrorException e) {
-			Hauptklasse.nonsenseQuery();
+			QueryOutputHandling.nonsenseQuery();
 			Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
 		}
 		return null;

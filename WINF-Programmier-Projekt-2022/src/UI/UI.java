@@ -1,8 +1,7 @@
 package UI;
 
 import java.awt.BorderLayout;
-
-import Backend.Hauptklasse;
+import Backend.QueryOutputHandling;
 import Datentypen.CPU;
 import Datentypen.Festplatte;
 import Datentypen.Grafikkarte;
@@ -17,10 +16,7 @@ import javax.swing.JTable;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.logging.Level;
-
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
@@ -226,7 +222,7 @@ public class UI extends JFrame {
 			}
 			sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
 			sqlQuery = p == null ? null : sqlQuery;
-			Hauptklasse.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());
+			QueryOutputHandling.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());
 		}
 	}
 
@@ -252,7 +248,7 @@ public class UI extends JFrame {
 			p = null;
 			break;
 		}
-		Hauptklasse.queryToUI("SELECT " + "Name, VRAM, Hersteller " + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';",
+		QueryOutputHandling.queryToUI("SELECT " + "Name, VRAM, Hersteller " + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';",
 				"Einlagerung", p.getTabelleneintraege());
 	}
 
