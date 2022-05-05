@@ -9,10 +9,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.logging.Level;
+
+import javax.swing.JOptionPane;
 
 import UI.UI;
 
@@ -32,8 +35,10 @@ public class SQL {
             props.loadFromXML(new FileInputStream("file.txt"));
 
         } catch (FileNotFoundException e1) {
+            JOptionPane.showMessageDialog(null, e1.getMessage());
             e1.printStackTrace();
         } catch (IOException e1) {
+            JOptionPane.showMessageDialog(null, e1.getMessage());
             e1.printStackTrace();
         }
         try {
@@ -44,20 +49,24 @@ public class SQL {
             Hauptklasse.frame = new UI(QueryOutputHandling.nonsenseQuery());
             Hauptklasse.frame.setVisible(true);
         } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public static void update(String query) throws SQLException {
+    public static void update(String query) {
+        Statement stmt;
         try {
-            Statement stmt = conn.createStatement();
+            stmt = conn.createStatement();
             stmt.executeUpdate(query);
-        } catch (SQLSyntaxErrorException e) {
-            QueryOutputHandling.nonsenseQuery();
-            Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            Hauptklasse.log.log(Level.SEVERE, e.getMessage());
         }
+        Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
     }
 
     public static Object[][] queryToStringArray(String query, String[] tabelleneintrage,
@@ -86,7 +95,8 @@ public class SQL {
             return QueryOutputHandling.queryOutputToStringArray(counter, result,
                     tabelleneintrage.length + 2);
         } catch (SQLSyntaxErrorException e) {
-            QueryOutputHandling.nonsenseQuery();
+            Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
+            JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
         }
         return null;

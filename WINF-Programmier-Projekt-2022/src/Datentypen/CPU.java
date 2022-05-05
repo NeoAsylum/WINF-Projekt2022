@@ -2,7 +2,7 @@ package Datentypen;
 
 public class CPU extends Produkt {
     int taktfrequenz;
-    private String[] tabelleneintraege = { "Name", "Hersteller", "MHz" };
+    private String[] tabelleneintraege = { "Name", "Hersteller", "MHz","ID" };
     final static String PRODUKTTYP = "cpus";
 
     @Override

@@ -235,7 +235,8 @@ public class UI extends JFrame {
     }
 
     /*
-     * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
+     * Methode welche die in die Einlagern-Tabelle eingefuegten Daten bei
+     * Vollständigkeit Reihenweise in die SQL-Datenbank einfuegt.
      */
     public void queryAdd() {
         for (int k = 0; k < einlagerungsTable.getRowCount(); k++) {
@@ -274,11 +275,7 @@ public class UI extends JFrame {
                     sqlQuery += "'" + einlagerungsTable.getModel().getValueAt(k, i) + "', ";
                 }
                 sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) + " );";
-                try {
-                    SQL.update(sqlQuery);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                SQL.update(sqlQuery);
                 QueryOutputHandling.nonsenseQuery();
             } else {
             }
