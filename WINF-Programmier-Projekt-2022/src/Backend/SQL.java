@@ -31,7 +31,19 @@ public class SQL {
 			e.printStackTrace();
 		}
 	}
+	public static void update(String query) throws SQLException {
+		try {
+			Statement stmt = conn.createStatement();
+			int rs = stmt.executeUpdate(query);
 
+			
+		} catch (SQLSyntaxErrorException e) {
+			QueryOutputHandling.nonsenseQuery();
+			Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
+		}
+	}
+	
+	
 	public static Object[][] queryToStringArray(String query, String[] tabelleneintrage) throws SQLException {
 		try {
 			Statement stmt = conn.createStatement();

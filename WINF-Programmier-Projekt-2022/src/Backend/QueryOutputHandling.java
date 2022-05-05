@@ -31,7 +31,6 @@ public class QueryOutputHandling {
 					"SELECT " + "Name, VRAM, Hersteller " + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';",
 					new String[] { "Name", "VRAM", "Hersteller" });
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

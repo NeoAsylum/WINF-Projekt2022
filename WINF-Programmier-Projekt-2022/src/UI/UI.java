@@ -2,18 +2,19 @@ package UI;
 
 import java.awt.BorderLayout;
 import Backend.QueryOutputHandling;
+import Backend.SQL;
 import Datentypen.CPU;
 import Datentypen.Festplatte;
 import Datentypen.Grafikkarte;
 import Datentypen.Hauptspeicher;
 import Datentypen.Produkt;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.awt.GridLayout;
+import java.sql.SQLException;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.util.Arrays;
@@ -23,6 +24,9 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 
 public class UI extends JFrame {
+	enum tabs {
+		Suche, Einlagerung
+	};
 
 	/**
 	 * 
@@ -51,6 +55,7 @@ public class UI extends JFrame {
 	private JComboBox<String> dropdownSuche1_1;
 	private JButton okButton_1;
 	private JScrollPane scrollPane_1;
+	JScrollPane scrollPane_2;
 	private JButton btnNewButton_1;
 	private JTable einlagerungsTable;
 
@@ -73,7 +78,7 @@ public class UI extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane);
 		suche = new JPanel();
-		tabbedPane.addTab("Suche", null, suche, null);                
+		tabbedPane.addTab("Suche", null, suche, null);
 
 		suche.setLayout(new BorderLayout(0, 0));
 		panel_1 = new JPanel();
@@ -150,14 +155,14 @@ public class UI extends JFrame {
 		einlagern.add(panel_3, BorderLayout.SOUTH);
 
 		btnNewButton_1 = new JButton("Lagerplaetze ausgeben");
-		btnNewButton_1.addActionListener(e -> queryEinlagern());
+		btnNewButton_1.addActionListener(e -> queryAdd());
 		panel_3.add(btnNewButton_1);
 
-		scrollPane_1 = new JScrollPane();
-		einlagern.add(scrollPane_1, BorderLayout.CENTER);
+		JScrollPane scrollPane_2 = new JScrollPane();
+		einlagern.add(scrollPane_2, BorderLayout.CENTER);
 
 		einlagerungsTable = new JTable();
-		scrollPane_1.setViewportView(einlagerungsTable);
+		scrollPane_2.setViewportView(einlagerungsTable);
 	}
 
 	/*
@@ -229,6 +234,53 @@ public class UI extends JFrame {
 	/*
 	 * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
 	 */
+	public void queryAdd() {
+		Produkt p;
+		switch (dropdownSuche1_1.getSelectedItem().toString()) {
+		case "Grafikkarte":
+			p = new Grafikkarte();
+			break;
+		case "Festplatte":
+			p = new Festplatte();
+			break;
+		case "Hauptspeicher":
+			p = new Hauptspeicher();
+			break;
+		case "CPU":
+			p = new CPU();
+			break;
+		default:
+			p = null;
+			break;
+		}
+
+		if (p != null) {
+			String sqlQuery = "INSERT INTO " + p.produktTyp() + " (";
+			for (int i = 0; i < p.getTabelleneintraege().length; i++) {
+				sqlQuery += p.getTabelleneintraege()[i] + ",";
+			}
+			sqlQuery = sqlQuery.substring(0, sqlQuery.length()-1) + ")" + System.lineSeparator() + "VALUES (";
+
+			for (int i = 0; i < p.getTabelleneintraege().length; i++) {
+				sqlQuery += "'"+einlagerungsTable.getModel().getValueAt(0, i) + "', ";
+				System.out.println(i);
+				System.out.println(sqlQuery);
+			}
+			System.out.println(sqlQuery + "#####");
+			sqlQuery = sqlQuery.substring(0, sqlQuery.length()-2) + " );";
+			System.out.println(sqlQuery + "#####");
+			try {
+				SQL.update(sqlQuery);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			QueryOutputHandling.nonsenseQuery();
+		}
+	}
+
+	/*
+	 * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
+	 */
 	public void queryEinlagern() {
 		Produkt p;
 		switch (dropdownSuche1_1.getSelectedItem().toString()) {
@@ -248,8 +300,9 @@ public class UI extends JFrame {
 			p = null;
 			break;
 		}
-		QueryOutputHandling.queryToUI("SELECT " + "Name, VRAM, Hersteller " + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';",
-				"Einlagerung", p.getTabelleneintraege());
+		QueryOutputHandling.queryToUI(
+				"SELECT " + "Name, VRAM, Hersteller " + "FROM GRAFIKKARTEN WHERE HERSTELLER='ABCDEFG';", "Einlagerung",
+				p.getTabelleneintraege());
 	}
 
 	/*
