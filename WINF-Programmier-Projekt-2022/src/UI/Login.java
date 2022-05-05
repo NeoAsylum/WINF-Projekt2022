@@ -6,14 +6,23 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
+
+import Backend.SQL;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class Login extends JFrame {
@@ -26,18 +35,6 @@ public class Login extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -166,6 +163,33 @@ public class Login extends JFrame {
 		panel_2.add(fehler_login, gbc_fehler_login);
 		
 		JButton enter = new JButton("Enter");
+		enter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String benutzername = "Benutzer123";
+                String passwort = "Passwort123";
+
+               String name = String.valueOf(username.getText());
+               String passwort1 = String.valueOf(password.getPassword());
+
+               if(benutzername.equals(name) && passwort1.equals(passwort) ) {
+            	   
+            	   SQL.setup();
+            	   
+            	   dispose();
+            	   
+
+               }else{
+
+                   String nachricht = "Benutzername oder Passwort ist flasch"; 
+
+                   JOptionPane.showMessageDialog(null, nachricht);
+                   
+                   loeschen();
+
+                   
+               }
+			}
+		});
 		GridBagConstraints gbc_enter = new GridBagConstraints();
 		gbc_enter.weighty = 1.0;
 		gbc_enter.weightx = 1.0;
@@ -174,5 +198,17 @@ public class Login extends JFrame {
 		gbc_enter.gridy = 0;
 		panel_2.add(enter, gbc_enter);
 	}
+	
+	public void loeschen() {
+		
+	username.setText("");
+	password.setText("");
+			
+	}
+	
+	
+	
 
 }
+
+
