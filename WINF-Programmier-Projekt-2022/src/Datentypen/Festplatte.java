@@ -4,7 +4,7 @@ public class Festplatte extends Produkt {
     int groesse;
     String betriebssystem;
     private String[] tabelleneintraege = { "Name", "Hersteller", "Groesse", "Betriebssystem" };
-    final static String PRODUKTTYP = "FESTPLATTE";
+    final static String PRODUKTTYP = "FESTPLATTEN";
 
 
     @Override
