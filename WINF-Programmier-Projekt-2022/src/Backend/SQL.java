@@ -2,6 +2,7 @@ package Backend;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,17 +26,11 @@ import UI.UI;
 public class SQL {
 
     static Connection conn;
-    static String url = "jdbc:mysql://3.69.96.96:3306/";
-    static String dbName = "db4";
-    static String driver = "com.mysql.cj.jdbc.Driver";
-    static String userName = "db4";
-    static String password = "!db4.hfts22?";
     static Properties props = new Properties();
 
     public static void setup() {
         try {
             props.loadFromXML(new FileInputStream("file.txt"));
-            
         } catch (FileNotFoundException e1) {
             JOptionPane.showMessageDialog(null, e1.getMessage());
             e1.printStackTrace();
@@ -44,11 +39,10 @@ public class SQL {
             e1.printStackTrace();
         }
         try {
-            Class.forName(driver);
-            /*conn = DriverManager.getConnection(props.getProperty(url) + props.getProperty(dbName), props.getProperty(userName),
-                    props.getProperty(password));*/
-            conn = DriverManager.getConnection(url + dbName, userName,
-                    password);
+            Class.forName(props.getProperty("driver"));
+            conn = DriverManager.getConnection(
+                    props.getProperty("url") + props.getProperty("dbName"),
+                    props.getProperty("userName"), props.getProperty("password"));
             Hauptklasse.frame = new UI(QueryOutputHandling.nonsenseQuery());
             Hauptklasse.frame.setVisible(true);
         } catch (ClassNotFoundException e) {
@@ -119,7 +113,7 @@ public class SQL {
             }
         }
     }
-    
+
     public static Object[][] queryToStringArray(String query, String[] tabelleneintrage,
             String oberflaeche) throws SQLException {
         try {
