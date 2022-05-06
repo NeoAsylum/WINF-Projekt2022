@@ -1,6 +1,7 @@
 package UI;
 
 import java.awt.BorderLayout;
+
 import Backend.QueryOutputHandling;
 import Backend.SQL;
 import Datentypen.CPU;
@@ -15,7 +16,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.awt.GridLayout;
-import java.sql.SQLException;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.util.Arrays;
@@ -55,10 +55,19 @@ public class UI extends JFrame {
     private JPanel panel_3;
     private JComboBox<String> dropdownSuche1_1;
     private JButton okButton_1;
-    private JScrollPane scrollPane_1;
     JScrollPane scrollPane_2;
     private JButton btnNewButton_1;
     private JTable einlagerungsTable;
+    private JPanel einlagern_1;
+    private JPanel panel_4;
+    private JPanel panel_5;
+    private JButton exportieren;
+    private JScrollPane scrollPane_1;
+    private JPanel einlagern_2;
+    private JPanel panel_6;
+    private JButton exportieren_1;
+    private JScrollPane scrollPane_3;
+    private JTable table_1;
 
     public UI() {
 
@@ -165,6 +174,38 @@ public class UI extends JFrame {
 
         einlagerungsTable = new JTable();
         scrollPane_2.setViewportView(einlagerungsTable);
+        
+        einlagern_1 = new JPanel();
+        tabbedPane.addTab("Inventar", null, einlagern_1, null);
+        einlagern_1.setLayout(new BorderLayout(0, 0));
+        
+        panel_4 = new JPanel();
+        einlagern_1.add(panel_4, BorderLayout.NORTH);
+        
+        panel_5 = new JPanel();
+        einlagern_1.add(panel_5, BorderLayout.SOUTH);
+        
+        exportieren = new JButton("Exportieren");
+        panel_5.add(exportieren);
+        
+        scrollPane_1 = new JScrollPane();
+        einlagern_1.add(scrollPane_1, BorderLayout.WEST);
+        
+        einlagern_2 = new JPanel();
+        tabbedPane.addTab("Bestellliste", null, einlagern_2, null);
+        einlagern_2.setLayout(new BorderLayout(0, 0));
+        
+        panel_6 = new JPanel();
+        einlagern_2.add(panel_6, BorderLayout.SOUTH);
+        
+        exportieren_1 = new JButton("Exportieren");
+        panel_6.add(exportieren_1);
+        
+        scrollPane_3 = new JScrollPane();
+        einlagern_2.add(scrollPane_3, BorderLayout.CENTER);
+        
+        table_1 = new JTable();
+        scrollPane_3.setViewportView(table_1);
     }
 
     /*
@@ -259,7 +300,6 @@ public class UI extends JFrame {
                 p = null;
                 break;
             }
-
             boolean allRowsFull = true;
             for (int i = 0; i < einlagerungsTable.getColumnCount(); i++) {
                 allRowsFull = !einlagerungsTable.getModel().getValueAt(k, i).equals("");
@@ -282,7 +322,6 @@ public class UI extends JFrame {
             }
         }
     }
-    
 
     /*
      * Methode welche eine Query basierend auf dem Zustand des UI erstellt.

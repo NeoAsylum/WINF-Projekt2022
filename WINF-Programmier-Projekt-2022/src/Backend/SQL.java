@@ -2,14 +2,11 @@ package Backend;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -37,9 +34,8 @@ public class SQL {
 
     public static void setup() {
         try {
-            // Properties props = new Properties();
             props.loadFromXML(new FileInputStream("file.txt"));
-
+            
         } catch (FileNotFoundException e1) {
             JOptionPane.showMessageDialog(null, e1.getMessage());
             e1.printStackTrace();
@@ -49,8 +45,9 @@ public class SQL {
         }
         try {
             Class.forName(driver);
-
-            conn = DriverManager.getConnection(props.getProperty(url) + dbName, userName,
+            /*conn = DriverManager.getConnection(props.getProperty(url) + props.getProperty(dbName), props.getProperty(userName),
+                    props.getProperty(password));*/
+            conn = DriverManager.getConnection(url + dbName, userName,
                     password);
             Hauptklasse.frame = new UI(QueryOutputHandling.nonsenseQuery());
             Hauptklasse.frame.setVisible(true);
