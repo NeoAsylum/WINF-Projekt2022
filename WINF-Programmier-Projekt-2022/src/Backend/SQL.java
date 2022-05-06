@@ -126,7 +126,7 @@ public class SQL {
             for (int i = 0; i < tabelleneintrage.length; i++) {
                 result += tabelleneintrage[i] + "<<";
             }
-            result += oberflaeche.equals("Suche") ? "Delete<<##" : "<<##";
+            result += "<<##";
             result += " " + "<<" + " " + "<<" + " " + "<<" + "##";
 
             // Alle Spalten holen

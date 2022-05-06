@@ -23,6 +23,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UI extends JFrame {
     enum tabs {
@@ -96,6 +98,7 @@ public class UI extends JFrame {
         flowLayout.setAlignment(FlowLayout.RIGHT);
         suche.add(panel_1, BorderLayout.SOUTH);
         deleteSuche = new JButton("delete");
+        deleteSuche.addActionListener(e->deletion());
         deleteSuche.setToolTipText("put x in 'delete' column");
         panel_1.add(deleteSuche);
         btnNewButton = new JButton("Export");
@@ -174,36 +177,36 @@ public class UI extends JFrame {
 
         einlagerungsTable = new JTable();
         scrollPane_2.setViewportView(einlagerungsTable);
-        
+
         einlagern_1 = new JPanel();
         tabbedPane.addTab("Inventar", null, einlagern_1, null);
         einlagern_1.setLayout(new BorderLayout(0, 0));
-        
+
         panel_4 = new JPanel();
         einlagern_1.add(panel_4, BorderLayout.NORTH);
-        
+
         panel_5 = new JPanel();
         einlagern_1.add(panel_5, BorderLayout.SOUTH);
-        
+
         exportieren = new JButton("Exportieren");
         panel_5.add(exportieren);
-        
+
         scrollPane_1 = new JScrollPane();
         einlagern_1.add(scrollPane_1, BorderLayout.WEST);
-        
+
         einlagern_2 = new JPanel();
         tabbedPane.addTab("Bestellliste", null, einlagern_2, null);
         einlagern_2.setLayout(new BorderLayout(0, 0));
-        
+
         panel_6 = new JPanel();
         einlagern_2.add(panel_6, BorderLayout.SOUTH);
-        
+
         exportieren_1 = new JButton("Exportieren");
         panel_6.add(exportieren_1);
-        
+
         scrollPane_3 = new JScrollPane();
         einlagern_2.add(scrollPane_3, BorderLayout.CENTER);
-        
+
         table_1 = new JTable();
         scrollPane_3.setViewportView(table_1);
     }
@@ -219,6 +222,60 @@ public class UI extends JFrame {
         table.setModel(model);
     }
 
+    
+    public void deletion() {
+        Produkt p;
+        switch (dropdownSuche1.getSelectedItem().toString()) {
+        case "Grafikkarte":
+            p = new Grafikkarte();
+            break;
+        case "Festplatte":
+            p = new Festplatte();
+            break;
+        case "Hauptspeicher":
+            p = new Hauptspeicher();
+            break;
+        case "CPU":
+            p = new CPU();
+            break;
+        default:
+            p = null;
+            break;
+        }
+        if (p != null) {
+            String sqlQuery = "DELETE ";
+           
+            sqlQuery += " FROM " + p.produktTyp() + " ";
+            int added = 0;
+            if (!(dropdownSuche2.getSelectedItem().toString().length() <= 1)) {
+                sqlQuery += "WHERE " + dropdownSuche2.getSelectedItem() + "='"
+                        + textField.getText() + "' AND ";
+                added = 1;
+            }
+            if (!(dropdownSuche3.getSelectedItem().toString().length() <= 1)) {
+                if (added == 0) {
+                    sqlQuery += "WHERE ";
+                }
+                sqlQuery += dropdownSuche3.getSelectedItem() + "='" + textField_1.getText()
+                        + "' AND ";
+                added = 1;
+
+            }
+            if (!(dropdownSuche4.getSelectedItem().toString().length() <= 1)) {
+                if (added == 0) {
+                    sqlQuery += "WHERE ";
+                }
+                sqlQuery += dropdownSuche4.getSelectedItem() + "='" + textField_2.getText() + "'";
+                added = 0;
+            }
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
+            sqlQuery = p == null ? null : sqlQuery;
+            System.out.println(sqlQuery);
+            SQL.update(sqlQuery);
+            QueryOutputHandling.nonsenseQuery();
+
+        }
+    }
     /*
      * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
      */
