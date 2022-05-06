@@ -36,8 +36,10 @@ public class Login extends JFrame {
 	 * Launch the application.
 	 */
 	/**
+	 *
 	 * Create the frame.
 	 */
+	//
 	public Login() {
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -164,8 +166,8 @@ public class Login extends JFrame {
 		JButton enter = new JButton("Enter");
 		enter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String benutzername = "Benutzer123";
-                String passwort = "Passwort123";
+				String benutzername = "Benutzer";
+                String passwort = "Passwort";
 
                String name = String.valueOf(username.getText());
                String passwort1 = String.valueOf(password.getPassword());
