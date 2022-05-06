@@ -11,9 +11,13 @@ import Datentypen.Grafikkarte;
 import Datentypen.Hauptspeicher;
 import Datentypen.Produkt;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
+
 import javax.swing.JTable;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
@@ -98,7 +102,7 @@ public class UI extends JFrame {
         flowLayout.setAlignment(FlowLayout.RIGHT);
         suche.add(panel_1, BorderLayout.SOUTH);
         deleteSuche = new JButton("delete");
-        deleteSuche.addActionListener(e->deletion());
+        deleteSuche.addActionListener(e -> deletion());
         deleteSuche.setToolTipText("put x in 'delete' column");
         panel_1.add(deleteSuche);
         btnNewButton = new JButton("Export");
@@ -222,7 +226,6 @@ public class UI extends JFrame {
         table.setModel(model);
     }
 
-    
     public void deletion() {
         Produkt p;
         switch (dropdownSuche1.getSelectedItem().toString()) {
@@ -244,7 +247,7 @@ public class UI extends JFrame {
         }
         if (p != null) {
             String sqlQuery = "DELETE ";
-           
+
             sqlQuery += " FROM " + p.produktTyp() + " ";
             int added = 0;
             if (!(dropdownSuche2.getSelectedItem().toString().length() <= 1)) {
@@ -272,10 +275,18 @@ public class UI extends JFrame {
             sqlQuery = p == null ? null : sqlQuery;
             System.out.println(sqlQuery);
             SQL.update(sqlQuery);
-            QueryOutputHandling.nonsenseQuery();
+            Object[] options = { "Yes", "No" };
+            int n = JOptionPane.showOptionDialog(this, "Delete current Selection?", "Delete?",
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+                    options[1]);
+            if (n == 1) {
+                SQL.update(sqlQuery);
+                QueryOutputHandling.nonsenseQuery();
+            }
 
         }
     }
+
     /*
      * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
      */
