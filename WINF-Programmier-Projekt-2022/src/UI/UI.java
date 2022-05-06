@@ -16,8 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
-
 import javax.swing.JTable;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
@@ -27,8 +25,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class UI extends JFrame {
     enum tabs {
@@ -241,6 +237,9 @@ public class UI extends JFrame {
         case "CPU":
             p = new CPU();
             break;
+        case "Fertigprodukt":
+            p = new Fertigprodukt();
+            break;
         default:
             p = null;
             break;
@@ -251,30 +250,33 @@ public class UI extends JFrame {
             sqlQuery += " FROM " + p.produktTyp() + " ";
             int added = 0;
             if (!(dropdownSuche2.getSelectedItem().toString().length() <= 1)) {
-                sqlQuery += "WHERE " + dropdownSuche2.getSelectedItem() + "='"
-                        + textField.getText() + "' AND ";
+                sqlQuery += dropdownSuche2.getSelectedItem().equals("ID")
+                        ? dropdownSuche2.getSelectedItem() + "=" + textField.getText() + " AND "
+                        : dropdownSuche2.getSelectedItem() + "='" + textField.getText() + "' AND ";
                 added = 1;
             }
             if (!(dropdownSuche3.getSelectedItem().toString().length() <= 1)) {
                 if (added == 0) {
                     sqlQuery += "WHERE ";
                 }
-                sqlQuery += dropdownSuche3.getSelectedItem() + "='" + textField_1.getText()
-                        + "' AND ";
+                sqlQuery += dropdownSuche3.getSelectedItem().equals("ID")
+                        ? dropdownSuche3.getSelectedItem() + "=" + textField_1.getText() + " AND "
+                        : dropdownSuche3.getSelectedItem() + "='" + textField_1.getText()
+                                + "' AND ";
                 added = 1;
-
             }
             if (!(dropdownSuche4.getSelectedItem().toString().length() <= 1)) {
                 if (added == 0) {
                     sqlQuery += "WHERE ";
                 }
-                sqlQuery += dropdownSuche4.getSelectedItem() + "='" + textField_2.getText() + "'";
+                sqlQuery += dropdownSuche4.getSelectedItem().equals("ID")
+                        ? dropdownSuche4.getSelectedItem() + "=" + textField_2.getText() + " "
+                        : dropdownSuche4.getSelectedItem() + "='" + textField_2.getText()
+                                + "' ";
                 added = 0;
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
             sqlQuery = p == null ? null : sqlQuery;
-            System.out.println(sqlQuery);
-            SQL.update(sqlQuery);
             Object[] options = { "Yes", "No" };
             int n = JOptionPane.showOptionDialog(this, "Delete current Selection?", "Delete?",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
@@ -283,7 +285,6 @@ public class UI extends JFrame {
                 SQL.update(sqlQuery);
                 QueryOutputHandling.nonsenseQuery();
             }
-
         }
     }
 
@@ -305,6 +306,9 @@ public class UI extends JFrame {
         case "CPU":
             p = new CPU();
             break;
+        case "Fertigprodukt":
+            p = new Fertigprodukt();
+            break;
         default:
             p = null;
             break;
@@ -318,25 +322,38 @@ public class UI extends JFrame {
             sqlQuery += " FROM " + p.produktTyp() + " ";
             int added = 0;
             if (!(dropdownSuche2.getSelectedItem().toString().length() <= 1)) {
-                sqlQuery += "WHERE " + dropdownSuche2.getSelectedItem() + "='"
-                        + textField.getText() + "' AND ";
+                System.out.println(sqlQuery);
+
+                sqlQuery += dropdownSuche2.getSelectedItem().equals("ID")
+                        ? dropdownSuche2.getSelectedItem() + "=" + textField.getText() + " AND "
+                        : dropdownSuche2.getSelectedItem() + "='" + textField.getText() + "' AND ";
                 added = 1;
             }
             if (!(dropdownSuche3.getSelectedItem().toString().length() <= 1)) {
                 if (added == 0) {
                     sqlQuery += "WHERE ";
                 }
-                sqlQuery += dropdownSuche3.getSelectedItem() + "='" + textField_1.getText()
-                        + "' AND ";
-                added = 1;
+                System.out.println(sqlQuery);
 
+                sqlQuery += dropdownSuche3.getSelectedItem().equals("ID")
+                        ? dropdownSuche3.getSelectedItem() + "=" + textField_1.getText() + " AND "
+                        : dropdownSuche3.getSelectedItem() + "='" + textField_1.getText()
+                                + "' AND ";
+                added = 1;
             }
             if (!(dropdownSuche4.getSelectedItem().toString().length() <= 1)) {
                 if (added == 0) {
                     sqlQuery += "WHERE ";
                 }
-                sqlQuery += dropdownSuche4.getSelectedItem() + "='" + textField_2.getText() + "'";
+                System.out.println(sqlQuery);
+
+                sqlQuery += dropdownSuche4.getSelectedItem().equals("ID")
+                        ? dropdownSuche4.getSelectedItem() + "=" + textField_2.getText() + " "
+                        : dropdownSuche4.getSelectedItem() + "='" + textField_2.getText()
+                                + "' ";
                 added = 0;
+                System.out.println(sqlQuery);
+
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
             sqlQuery = p == null ? null : sqlQuery;
@@ -364,6 +381,9 @@ public class UI extends JFrame {
             case "CPU":
                 p = new CPU();
                 break;
+            case "Fertigprodukt":
+                p = new Fertigprodukt();
+                break;
             default:
                 p = null;
                 break;
@@ -374,18 +394,21 @@ public class UI extends JFrame {
             }
             if (allRowsFull && p != null) {
                 String sqlQuery = "INSERT INTO " + p.produktTyp() + " (";
-                for (int i = 0; i < p.getTabelleneintraege().length; i++) {
+                for (int i = 0; i < p.getTabelleneintraege().length - 2; i++) {
                     sqlQuery += p.getTabelleneintraege()[i] + ",";
                 }
-                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1) + ")"
+                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1) + ",LAGERPLATZ)"
                         + System.lineSeparator() + "VALUES (";
 
-                for (int i = 0; i < p.getTabelleneintraege().length; i++) {
+                for (int i = 0; i < p.getTabelleneintraege().length - 2; i++) {
+                    System.out.println(einlagerungsTable.getModel().getValueAt(k, i));
                     sqlQuery += "'" + einlagerungsTable.getModel().getValueAt(k, i) + "', ";
                 }
-                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) + " );";
+                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) +", "+SQL.getLagerplatzID(p)+ " );";
+                System.out.println(sqlQuery);
                 SQL.update(sqlQuery);
                 QueryOutputHandling.nonsenseQuery();
+                
             } else {
             }
         }
@@ -419,7 +442,8 @@ public class UI extends JFrame {
         QueryOutputHandling.queryToUI(
                 "SELECT " + "Name, VRAM, Hersteller "
                         + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
-                "Einlagerung", p.getTabelleneintraege());
+                "Einlagerung", Arrays.copyOfRange(p.getTabelleneintraege(), 0,
+                        p.getTabelleneintraege().length - 2));
     }
 
     /*

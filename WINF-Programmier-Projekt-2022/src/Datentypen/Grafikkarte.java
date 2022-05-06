@@ -2,7 +2,7 @@ package Datentypen;
 
 public class Grafikkarte extends Produkt {
     int vram;
-    private String[] tabelleneintraege = {"Name", "VRAM",  "Hersteller", "ID" };
+    private String[] tabelleneintraege = {"Name", "VRAM",  "Hersteller", "ID", "LAGERPLATZ" };
     final static String PRODUKTTYP = "GRAFIKKARTE";
 
     @Override

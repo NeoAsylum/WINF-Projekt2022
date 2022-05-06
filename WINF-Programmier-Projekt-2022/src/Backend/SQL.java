@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import Datentypen.CPU;
+import Datentypen.Fertigprodukt;
 import Datentypen.Festplatte;
 import Datentypen.Grafikkarte;
 import Datentypen.Hauptspeicher;
@@ -66,52 +68,54 @@ public class SQL {
         Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
     }
 
-    /*
-     * Methode welche die in die Einlagern-Tabelle eingefuegten Daten bei
-     * Vollständigkeit Reihenweise in die SQL-Datenbank einfuegt.
-     */
-    public static void queryEinlagern(String selectedItem, JTable table) {
-        for (int k = 0; k < table.getRowCount(); k++) {
-            Produkt p;
-            switch (selectedItem) {
-            case "Grafikkarte":
-                p = new Grafikkarte();
-                break;
-            case "Festplatte":
-                p = new Festplatte();
-                break;
-            case "Hauptspeicher":
-                p = new Hauptspeicher();
-                break;
-            case "CPU":
-                p = new CPU();
-                break;
-            default:
-                p = null;
-                break;
-            }
-
-            boolean allRowsFull = true;
-            for (int i = 0; i < table.getColumnCount(); i++) {
-                allRowsFull = !table.getModel().getValueAt(k, i).equals("");
-            }
-            if (allRowsFull && p != null) {
-                String sqlQuery = "INSERT INTO " + p.produktTyp() + " (";
-                for (int i = 0; i < p.getTabelleneintraege().length; i++) {
-                    sqlQuery += p.getTabelleneintraege()[i] + ",";
-                }
-                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1) + ")"
-                        + System.lineSeparator() + "VALUES (";
-
-                for (int i = 0; i < p.getTabelleneintraege().length; i++) {
-                    sqlQuery += "'" + table.getModel().getValueAt(k, i) + "', ";
-                }
-                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) + " );";
-                SQL.update(sqlQuery);
-                QueryOutputHandling.nonsenseQuery();
+    public static int getLagerplatzIDFertigprodukt(boolean zweiterdurchlauf) {
+        try {
+            Statement stmt = conn.createStatement();
+            Fertigprodukt p = new Fertigprodukt();
+            if (zweiterdurchlauf) {
+                ResultSet rs = stmt.executeQuery(
+                        "SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';");
+                System.out.println(Arrays.deepToString(queryToStringArray("SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';", new String[]{"ID"},
+                        "Suche")));
+                rs.last();
+                System.out.println(rs.getInt(1));
+                return rs.getInt(1);
+                
             } else {
+                stmt.executeUpdate("INSERT INTO LAGERPLATZ (TYP)" + System.lineSeparator()
+                        + "VALUES ('" + p.produktTyp() + "');");
+                return getLagerplatzIDFertigprodukt(true);
             }
+        } catch (SQLException e) {
+            Hauptklasse.log.log(Level.SEVERE, e.getMessage());
         }
+        return 0;
+    }
+
+    public static int getLagerplatzID(Produkt p) {
+        try {
+            Statement stmt = conn.createStatement();
+            if (!(p.produktTyp().equals("FERTIGPRODUKT"))) {
+                ResultSet rs = stmt.executeQuery(
+                        "SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';");
+                rs.first();
+                return rs.getInt(1);
+            } else {
+                return getLagerplatzIDFertigprodukt(false);
+            }
+        } catch (SQLException e) {
+            try {
+                Statement stmt = conn.createStatement();
+                stmt.executeUpdate("INSERT INTO LAGERPLATZ (TYP)" + System.lineSeparator()
+                        + "VALUES ('" + p.produktTyp() + "');");
+                return getLagerplatzID(p);
+            } catch (SQLException e1) {
+                Hauptklasse.log.log(Level.SEVERE, e.getMessage());
+            }
+            // TODO Automatisch generierter Erfassungsblock
+            Hauptklasse.log.log(Level.SEVERE, e.getMessage());
+        }
+        return 0;
     }
 
     public static Object[][] queryToStringArray(String query, String[] tabelleneintrage,

@@ -13,6 +13,10 @@ public class QueryOutputHandling {
         return ergebnis;
     }
 
+    public static void einlagern() {
+        
+    }
+    
     public static void queryToUI(String query, String oberflaeche, String[] tabelleneintraege) {
         try {
             if (oberflaeche.equals("Suche")) {
