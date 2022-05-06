@@ -178,15 +178,13 @@ public class Login extends JFrame {
             	   
             	   dispose();
             	   
-
                }else{
 
-                   String nachricht = "Benutzername oder Passwort ist flasch"; 
+                   String nachricht = "Benutzername oder Passwort ist falsch"; 
 
                    JOptionPane.showMessageDialog(null, nachricht);
                    
                    loeschen();
-
                    
                }
 			}
