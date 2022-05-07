@@ -39,7 +39,8 @@ public class SQL {
             conn = DriverManager.getConnection(
                     props.getProperty("url") + props.getProperty("dbName"),
                     props.getProperty("userName"), props.getProperty("password"));
-            Hauptklasse.frame = new UI(QueryOutputHandling.nonsenseQuery());
+            Hauptklasse.frame = new UI();
+            Hauptklasse.frame.setup(QueryOutputHandling.nonsenseQuery());
             Hauptklasse.frame.setVisible(true);
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

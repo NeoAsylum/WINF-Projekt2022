@@ -25,6 +25,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UI extends JFrame {
     enum tabs {
@@ -80,7 +82,7 @@ public class UI extends JFrame {
      * 
      * @wbp.parser.constructor
      */
-    public UI(Object[][] input) {
+    public void setup(Object [][] input) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 987, 437);
         contentPane = new JPanel();
@@ -153,15 +155,9 @@ public class UI extends JFrame {
         flowLayout_2.setAlignment(FlowLayout.LEFT);
         einlagern.add(panel, BorderLayout.NORTH);
 
-        dropdownSuche1_1 = new JComboBox<String>();
-        for (String a : arr) {
-            dropdownSuche1_1.addItem(a);
-        }
-        panel.add(dropdownSuche1_1);
+        
 
-        okButton_1 = new JButton("OK");
-        panel.add(okButton_1);
-        okButton_1.addActionListener(e -> queryEinlagern());
+        
 
         panel_3 = new JPanel();
         FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
@@ -209,7 +205,18 @@ public class UI extends JFrame {
 
         table_1 = new JTable();
         scrollPane_3.setViewportView(table_1);
+        dropdownSuche1_1 = new JComboBox<String>();
+        dropdownSuche1_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                updateEinlagerungsTable();
+            }
+        });
+        for (String a : arr) {
+            dropdownSuche1_1.addItem(a);
+        }
+        panel.add(dropdownSuche1_1);
     }
+  
 
     /*
      * Methode erzeugt Table neu.
@@ -417,7 +424,7 @@ public class UI extends JFrame {
     /*
      * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
      */
-    public void queryEinlagern() {
+    public void updateEinlagerungsTable() {
         Produkt p;
         switch (dropdownSuche1_1.getSelectedItem().toString()) {
         case "Grafikkarte":
