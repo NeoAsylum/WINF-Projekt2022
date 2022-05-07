@@ -12,9 +12,9 @@ public class Hauptklasse {
 	public static final Logger log = Logger.getLogger(Hauptklasse.class.getName());
 
 	public static void main(String[] args) {
-		
-		Login login = new Login();	
-		login.setVisible(true);
+		SQL.setup();
+		//Login login = new Login();	
+		//login.setVisible(true);
 		
 		
 		

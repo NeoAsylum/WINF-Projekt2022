@@ -4,15 +4,11 @@ import java.sql.SQLException;
 
 public class QueryOutputHandling {
 
-    public static Object[][] queryOutputToStringArray(int counter, String result, int width) {
-        Object[][] ergebnis = new Object[counter][width];
-        ergebnis[0] = result.split("##")[0].split("<<");
-        for (int i = 0; i < counter; i++) {
-            ergebnis[i] = result.split("##")[i].split("<<");
-        }
-        return ergebnis;
-    }
 
+    public static void einlagern() {
+        
+    }
+    
     public static void queryToUI(String query, String oberflaeche, String[] tabelleneintraege) {
         try {
             if (oberflaeche.equals("Suche")) {
