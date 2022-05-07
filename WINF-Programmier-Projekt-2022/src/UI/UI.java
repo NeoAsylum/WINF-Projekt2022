@@ -218,7 +218,7 @@ public class UI extends JFrame {
         Object[][] data = Arrays.copyOfRange(input, 1, input.length);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
-        model = new DefaultTableModel(data, input[0]);
+        model = new DefaultTableModel(input, input[0]);
         table.setModel(model);
     }
 
