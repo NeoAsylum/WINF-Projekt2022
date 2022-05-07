@@ -118,31 +118,32 @@ public class SQL {
         return 0;
     }
 
-    public static Object[][] queryToStringArray(String query, String[] tabelleneintrage,
+    public static Object[][] queryToStringArray(String query, String[] tabelleneintraege,
             String oberflaeche) throws SQLException {
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            int counter = 2;
-            String result = "";
-
-            // Tabelle Spalten benennen
-            for (int i = 0; i < tabelleneintrage.length; i++) {
-                result += tabelleneintrage[i] + "<<";
+            rs.last();
+            Object [][] arr = new Object[rs.getRow()+1][tabelleneintraege.length];
+            rs.beforeFirst();
+            
+            
+            //Spalten benennen
+            for(int i = 0; i<tabelleneintraege.length; i++) {
+            	arr[0][i] = tabelleneintraege[i];
             }
-            result += "<<##";
-            result += " " + "<<" + " " + "<<" + " " + "<<" + "##";
-
-            // Alle Spalten holen
-            while (rs.next()) {
-                for (int i = 0; i < tabelleneintrage.length; i++) {
-                    result += rs.getString(tabelleneintrage[i]) + "<<";
-                }
-                result += "<<##";
-                counter++;
-            }
-            return QueryOutputHandling.queryOutputToStringArray(counter, result,
-                    tabelleneintrage.length + 2);
+        	
+            //Reihen holen
+			for(int i = 1;rs.next(); i++) {
+				
+				for (int j = 0; j<tabelleneintraege.length; j++) {
+					arr[i][j] = rs.getString(tabelleneintraege[j]); 
+				}
+						
+				}
+            
+            return arr;
+            
         } catch (SQLSyntaxErrorException e) {
             Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
