@@ -15,13 +15,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-
-import Datentypen.CPU;
 import Datentypen.Fertigprodukt;
-import Datentypen.Festplatte;
-import Datentypen.Grafikkarte;
-import Datentypen.Hauptspeicher;
 import Datentypen.Produkt;
 import UI.UI;
 
