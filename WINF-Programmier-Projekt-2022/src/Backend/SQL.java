@@ -2,7 +2,6 @@ package Backend;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,6 +23,10 @@ public class SQL {
     static Connection conn;
     static Properties props = new Properties();
 
+    
+    /*
+     * Setup Methode welche SQL-Connection aufsetzt und frame/UI initialisiert.
+     */
     public static void setup() {
         try {
             props.loadFromXML(new FileInputStream("file.txt"));
@@ -51,6 +54,9 @@ public class SQL {
         }
     }
 
+    /*
+     * Send an update Query to the SQL-server.
+     */
     public static void update(String query) {
         Statement stmt;
         try {
