@@ -131,7 +131,7 @@ public class SQL {
      * @throws SQLException
      */
     public static Object[][] queryToStringArray(String query, String[] tabelleneintraege,
-            String oberflaeche) throws SQLException {
+            String oberflaeche){
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -157,6 +157,10 @@ public class SQL {
             return arr;
             
         } catch (SQLSyntaxErrorException e) {
+            Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
+        } catch (SQLException e) {
             Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
