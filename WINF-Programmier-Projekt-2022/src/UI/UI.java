@@ -16,6 +16,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.awt.GridLayout;
+import java.sql.SQLException;
+
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.util.Arrays;
@@ -66,6 +68,7 @@ public class UI extends JFrame {
     private JButton exportieren_1;
     private JScrollPane scrollPane_3;
     private JTable table_1;
+    private JButton aktualisieren_1;
 
     public UI() {
 
@@ -186,6 +189,16 @@ public class UI extends JFrame {
 
         exportieren_1 = new JButton("Exportieren");
         panel_6.add(exportieren_1);
+        
+        aktualisieren_1 = new JButton("Aktualisieren");
+        panel_6.add(aktualisieren_1);
+        
+        aktualisieren_1.addActionListener(e->{
+        	
+        	produktFuerSuche("Grafikkarte");
+        	
+        });
+        
 
         scrollPane_3 = new JScrollPane();
         einlagern_2.add(scrollPane_3, BorderLayout.CENTER);

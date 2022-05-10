@@ -1,7 +1,7 @@
 package Datentypen;
 
 public class Festplatte extends Produkt {
-    private String[] tabelleneintraege = { "Name", "Hersteller", "Groesse", "Betriebssystem","ID", "LAGERPLATZ" };
+    private String[] tabelleneintraege = { "Name", "Hersteller", "Groesse", "Betriebssystem","ID", "LAGERPLATZ", "Menge" };
     private String PRODUKTTYP = "FESTPLATTE";
 
 
