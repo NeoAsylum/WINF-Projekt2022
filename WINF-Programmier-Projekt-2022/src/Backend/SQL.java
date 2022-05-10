@@ -118,7 +118,15 @@ public class SQL {
         }
         return 0;
     }
-
+    
+    /**
+     * 
+     * @param query
+     * @param tabelleneintraege
+     * @param oberflaeche
+     * @return
+     * @throws SQLException
+     */
     public static Object[][] queryToStringArray(String query, String[] tabelleneintraege,
             String oberflaeche) throws SQLException {
         try {
