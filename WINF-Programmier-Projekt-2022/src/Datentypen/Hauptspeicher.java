@@ -1,7 +1,7 @@
 package Datentypen;
 
 public class Hauptspeicher extends Produkt {
-    private String[] tabelleneintraege = { "Name", "Groesse","ID", "LAGERPLATZ", "Menge"};
+    private String[] tabelleneintraege = { "Name", "Groesse","ID", "Lagerplatz", "Menge"};
     private String PRODUKTTYP = "HAUPTSPEICHER";
 
     @Override

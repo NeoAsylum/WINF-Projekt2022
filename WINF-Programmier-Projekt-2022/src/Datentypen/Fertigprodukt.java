@@ -1,7 +1,7 @@
 package Datentypen;
 
 public class Fertigprodukt extends Produkt {
-    private String[] tabelleneintraege = { "CPU", "GRAFIKKARTE","Hauptspeicher", "FESTPLATTE","ID", "LAGERPLATZ", "Menge" };
+    private String[] tabelleneintraege = { "CPU", "Grafikkarte","Hauptspeicher", "Festplatte","ID", "Lagerplatz", "Menge" };
     private String PRODUKTTYP = "FERTIGPRODUKT";
 
     @Override
