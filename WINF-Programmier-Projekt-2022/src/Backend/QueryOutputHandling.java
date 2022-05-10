@@ -9,9 +9,14 @@ public class QueryOutputHandling {
         
     }
     
-    /*
-     * Ruft die Methoden auf welche das jeweilige UI setzen mittels eines Arrays mit Tabelleneinträgen.
-     */
+   /**
+    * Ruft die Methoden auf welche das jeweilige UI setzen mittels 
+    * eines Arrays mit Tabelleneinträgen.
+    * 
+    * @param query
+    * @param oberflaeche
+    * @param tabelleneintraege
+    */
     public static void queryToUI(String query, String oberflaeche, String[] tabelleneintraege) {
         try {
             if (oberflaeche.equals("Suche")) {
@@ -26,9 +31,12 @@ public class QueryOutputHandling {
         }
     }
 
-    /*
-     * Eine nutzlose Query welche einfach die Suchtabelle leeren oder mit nix fuellen soll.
-     */
+   /**
+    * Eine nutzlose Query welche einfach die Suchtabelle
+    * leeren oder mit nichts fuellen soll.
+    * 
+    * @return
+    */
     public static Object[][] nonsenseQuery() {
         try {
             return SQL.queryToStringArray(

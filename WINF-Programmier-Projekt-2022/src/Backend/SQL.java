@@ -24,7 +24,7 @@ public class SQL {
     static Properties props = new Properties();
 
     
-    /*
+    /**
      * Setup Methode welche SQL-Connection aufsetzt und frame/UI initialisiert.
      */
     public static void setup() {
@@ -54,8 +54,10 @@ public class SQL {
         }
     }
 
-    /*
-     * Send an update Query to the SQL-server.
+    /**
+     * Diese Methode sendet ein Update-Query zum SQL-Server
+     * 
+     * @param query
      */
     public static void update(String query) {
         Statement stmt;
@@ -113,13 +115,14 @@ public class SQL {
             } catch (SQLException e1) {
                 Hauptklasse.log.log(Level.SEVERE, e.getMessage());
             }
-            // TODO Automatisch generierter Erfassungsblock
             Hauptklasse.log.log(Level.SEVERE, e.getMessage());
         }
         return 0;
     }
     
     /**
+     * Diese Methode macht aus den Daten in der Datenbank ein Object[][] Array,
+     * damit dieses für die JTable verarbeitet werden kann.
      * 
      * @param query
      * @param tabelleneintraege
@@ -160,4 +163,6 @@ public class SQL {
         }
         return null;
     }
+    
+  
 }
