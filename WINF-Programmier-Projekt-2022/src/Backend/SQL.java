@@ -2,7 +2,6 @@ package Backend;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,13 +14,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-
-import Datentypen.CPU;
 import Datentypen.Fertigprodukt;
-import Datentypen.Festplatte;
-import Datentypen.Grafikkarte;
-import Datentypen.Hauptspeicher;
 import Datentypen.Produkt;
 import UI.UI;
 
@@ -30,6 +23,10 @@ public class SQL {
     static Connection conn;
     static Properties props = new Properties();
 
+    
+    /**
+     * Setup Methode welche SQL-Connection aufsetzt und frame/UI initialisiert.
+     */
     public static void setup() {
         try {
             props.loadFromXML(new FileInputStream("file.txt"));
@@ -45,7 +42,8 @@ public class SQL {
             conn = DriverManager.getConnection(
                     props.getProperty("url") + props.getProperty("dbName"),
                     props.getProperty("userName"), props.getProperty("password"));
-            Hauptklasse.frame = new UI(QueryOutputHandling.nonsenseQuery());
+            Hauptklasse.frame = new UI();
+            Hauptklasse.frame.setup(QueryOutputHandling.nonsenseQuery());
             Hauptklasse.frame.setVisible(true);
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -56,6 +54,11 @@ public class SQL {
         }
     }
 
+    /**
+     * Diese Methode sendet ein Update-Query zum SQL-Server
+     * 
+     * @param query
+     */
     public static void update(String query) {
         Statement stmt;
         try {
@@ -112,14 +115,23 @@ public class SQL {
             } catch (SQLException e1) {
                 Hauptklasse.log.log(Level.SEVERE, e.getMessage());
             }
-            // TODO Automatisch generierter Erfassungsblock
             Hauptklasse.log.log(Level.SEVERE, e.getMessage());
         }
         return 0;
     }
-
+    
+    /**
+     * Diese Methode macht aus den Daten in der Datenbank ein Object[][] Array,
+     * damit dieses für die JTable verarbeitet werden kann.
+     * 
+     * @param query
+     * @param tabelleneintraege
+     * @param oberflaeche
+     * @return
+     * @throws SQLException
+     */
     public static Object[][] queryToStringArray(String query, String[] tabelleneintraege,
-            String oberflaeche) throws SQLException {
+            String oberflaeche){
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -148,7 +160,13 @@ public class SQL {
             Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
+        } catch (SQLException e) {
+            Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
         }
         return null;
     }
+    
+  
 }

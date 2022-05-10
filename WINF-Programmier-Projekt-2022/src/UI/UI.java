@@ -1,7 +1,6 @@
 package UI;
 
 import java.awt.BorderLayout;
-
 import Backend.QueryOutputHandling;
 import Backend.SQL;
 import Datentypen.CPU;
@@ -15,9 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import javax.swing.JTable;
 import java.awt.GridLayout;
+import java.sql.SQLException;
+
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.util.Arrays;
@@ -51,12 +51,10 @@ public class UI extends JFrame {
     private JTextField textField;
     private JTextField textField_1;
     private JTextField textField_2;
-    private JButton okButton;
     private JPanel einlagern;
     private JPanel panel;
     private JPanel panel_3;
     private JComboBox<String> dropdownSuche1_1;
-    private JButton okButton_1;
     JScrollPane scrollPane_2;
     private JButton btnNewButton_1;
     private JTable einlagerungsTable;
@@ -70,6 +68,7 @@ public class UI extends JFrame {
     private JButton exportieren_1;
     private JScrollPane scrollPane_3;
     private JTable table_1;
+    private JButton aktualisieren_1;
 
     public UI() {
 
@@ -80,7 +79,7 @@ public class UI extends JFrame {
      * 
      * @wbp.parser.constructor
      */
-    public UI(Object[][] input) {
+    public void setup(Object[][] input) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 987, 437);
         contentPane = new JPanel();
@@ -135,9 +134,6 @@ public class UI extends JFrame {
         textField_2 = new JTextField();
         panel_2.add(textField_2);
         textField_2.setColumns(10);
-        okButton = new JButton("OK");
-        okButton.addActionListener(e -> querySuche());
-        panel_2.add(okButton);
         scrollPane = new JScrollPane();
         suche.add(scrollPane, BorderLayout.CENTER);
         table = new JTable();
@@ -152,16 +148,6 @@ public class UI extends JFrame {
         FlowLayout flowLayout_2 = (FlowLayout) panel.getLayout();
         flowLayout_2.setAlignment(FlowLayout.LEFT);
         einlagern.add(panel, BorderLayout.NORTH);
-
-        dropdownSuche1_1 = new JComboBox<String>();
-        for (String a : arr) {
-            dropdownSuche1_1.addItem(a);
-        }
-        panel.add(dropdownSuche1_1);
-
-        okButton_1 = new JButton("OK");
-        panel.add(okButton_1);
-        okButton_1.addActionListener(e -> queryEinlagern());
 
         panel_3 = new JPanel();
         FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
@@ -203,12 +189,30 @@ public class UI extends JFrame {
 
         exportieren_1 = new JButton("Exportieren");
         panel_6.add(exportieren_1);
+        
+        aktualisieren_1 = new JButton("Aktualisieren");
+        panel_6.add(aktualisieren_1);
+        
+        aktualisieren_1.addActionListener(e->{
+        	
+        	produktFuerSuche("Grafikkarte");
+        	
+        });
+        
 
         scrollPane_3 = new JScrollPane();
         einlagern_2.add(scrollPane_3, BorderLayout.CENTER);
 
         table_1 = new JTable();
         scrollPane_3.setViewportView(table_1);
+        dropdownSuche1_1 = new JComboBox<String>();
+        dropdownSuche1_1.addActionListener(e -> updateEinlagerungsTable());
+        for (String a : arr) {
+            dropdownSuche1_1.addItem(a);
+        }
+        panel.add(dropdownSuche1_1);
+        dropdownSuche1.addActionListener(e -> querySuche());
+
     }
 
     /*
@@ -218,13 +222,17 @@ public class UI extends JFrame {
         Object[][] data = Arrays.copyOfRange(input, 1, input.length);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
-        model = new DefaultTableModel(input, input[0]);
+        model = new DefaultTableModel(data, input[0]);
         table.setModel(model);
     }
 
-    public void deletion() {
+    /*
+     * Methode welche von einem Produktnamen ausgehend ein Produkt erstellt.
+     */
+    public Produkt produktFuerSuche(String dropdownname) {
         Produkt p;
-        switch (dropdownSuche1.getSelectedItem().toString()) {
+        System.out.println(dropdownname);
+        switch (dropdownname) {
         case "Grafikkarte":
             p = new Grafikkarte();
             break;
@@ -241,9 +249,18 @@ public class UI extends JFrame {
             p = new Fertigprodukt();
             break;
         default:
-            p = null;
+            p = new Grafikkarte();
             break;
         }
+        return p;
+    }
+
+    /*
+     * Methode welche Query zum Loeschen der in der Suchtabelle angezeigten
+     * Komponenten erstellt.
+     */
+    public void deletion() {
+        Produkt p = produktFuerSuche(dropdownSuche1.getSelectedItem().toString());
         if (p != null) {
             String sqlQuery = "DELETE ";
 
@@ -271,8 +288,7 @@ public class UI extends JFrame {
                 }
                 sqlQuery += dropdownSuche4.getSelectedItem().equals("ID")
                         ? dropdownSuche4.getSelectedItem() + "=" + textField_2.getText() + " "
-                        : dropdownSuche4.getSelectedItem() + "='" + textField_2.getText()
-                                + "' ";
+                        : dropdownSuche4.getSelectedItem() + "='" + textField_2.getText() + "' ";
                 added = 0;
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
@@ -289,30 +305,10 @@ public class UI extends JFrame {
     }
 
     /*
-     * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
+     * Methode welche eine Such-Query basierend auf dem Zustand des UI erstellt.
      */
     public void querySuche() {
-        Produkt p;
-        switch (dropdownSuche1.getSelectedItem().toString()) {
-        case "Grafikkarte":
-            p = new Grafikkarte();
-            break;
-        case "Festplatte":
-            p = new Festplatte();
-            break;
-        case "Hauptspeicher":
-            p = new Hauptspeicher();
-            break;
-        case "CPU":
-            p = new CPU();
-            break;
-        case "Fertigprodukt":
-            p = new Fertigprodukt();
-            break;
-        default:
-            p = null;
-            break;
-        }
+        Produkt p = produktFuerSuche(dropdownSuche1.getSelectedItem().toString());
         if (p != null) {
             String sqlQuery = "SELECT ";
             for (int i = 0; i < p.getTabelleneintraege().length; i++) {
@@ -349,8 +345,7 @@ public class UI extends JFrame {
 
                 sqlQuery += dropdownSuche4.getSelectedItem().equals("ID")
                         ? dropdownSuche4.getSelectedItem() + "=" + textField_2.getText() + " "
-                        : dropdownSuche4.getSelectedItem() + "='" + textField_2.getText()
-                                + "' ";
+                        : dropdownSuche4.getSelectedItem() + "='" + textField_2.getText() + "' ";
                 added = 0;
                 System.out.println(sqlQuery);
 
@@ -367,27 +362,7 @@ public class UI extends JFrame {
      */
     public void queryAdd() {
         for (int k = 0; k < einlagerungsTable.getRowCount(); k++) {
-            Produkt p;
-            switch (dropdownSuche1_1.getSelectedItem().toString()) {
-            case "Grafikkarte":
-                p = new Grafikkarte();
-                break;
-            case "Festplatte":
-                p = new Festplatte();
-                break;
-            case "Hauptspeicher":
-                p = new Hauptspeicher();
-                break;
-            case "CPU":
-                p = new CPU();
-                break;
-            case "Fertigprodukt":
-                p = new Fertigprodukt();
-                break;
-            default:
-                p = null;
-                break;
-            }
+            Produkt p = produktFuerSuche(dropdownSuche1_1.getSelectedItem().toString());
             boolean allRowsFull = true;
             for (int i = 0; i < einlagerungsTable.getColumnCount(); i++) {
                 allRowsFull = !einlagerungsTable.getModel().getValueAt(k, i).equals("");
@@ -404,11 +379,12 @@ public class UI extends JFrame {
                     System.out.println(einlagerungsTable.getModel().getValueAt(k, i));
                     sqlQuery += "'" + einlagerungsTable.getModel().getValueAt(k, i) + "', ";
                 }
-                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) +", "+SQL.getLagerplatzID(p)+ " );";
+                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) + ", "
+                        + SQL.getLagerplatzID(p) + " );";
                 System.out.println(sqlQuery);
                 SQL.update(sqlQuery);
                 QueryOutputHandling.nonsenseQuery();
-                
+
             } else {
             }
         }
@@ -417,28 +393,8 @@ public class UI extends JFrame {
     /*
      * Methode welche eine Query basierend auf dem Zustand des UI erstellt.
      */
-    public void queryEinlagern() {
-        Produkt p;
-        switch (dropdownSuche1_1.getSelectedItem().toString()) {
-        case "Grafikkarte":
-            p = new Grafikkarte();
-            break;
-        case "Festplatte":
-            p = new Festplatte();
-            break;
-        case "Hauptspeicher":
-            p = new Hauptspeicher();
-            break;
-        case "CPU":
-            p = new CPU();
-            break;
-        case "Fertigprodukt":
-            p = new Fertigprodukt();
-            break;
-        default:
-            p = null;
-            break;
-        }
+    public void updateEinlagerungsTable() {
+        Produkt p = produktFuerSuche(dropdownSuche1_1.getSelectedItem().toString());
         QueryOutputHandling.queryToUI(
                 "SELECT " + "Name, VRAM, Hersteller "
                         + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
@@ -447,7 +403,7 @@ public class UI extends JFrame {
     }
 
     /*
-     * 
+     * Tabelle in Tab Einlagerung wird gefuellt.
      */
     public void setEinlagerungTable(Object[][] input) {
         Object[][] data = new Object[8][input[0].length];
@@ -463,7 +419,7 @@ public class UI extends JFrame {
     }
 
     /*
-     * Methode welche die JComboBoxen refresht
+     * Methode welche die JComboBoxen refresht.
      */
     public void updateDropdown2() {
         Produkt p;
