@@ -70,6 +70,23 @@ public class SQL {
         Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
     }
 
+    public static void anzahlImLagerHochzählen(int id, String tablename) {
+        update("UPDATE " + tablename + " SET MENGE = " + (stueckzahlImLager(id,tablename)+1) +"WHERE ID="+id);
+    }
+
+    public static int stueckzahlImLager(int id, String tablename) {
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt
+                    .executeQuery("SELECT MENGE FROM " + tablename + " WHERE ID='" + id + "';");
+            rs.last();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            Hauptklasse.log.log(Level.SEVERE, e.getMessage());
+        }
+        return -1;
+    }
+
     public static int getLagerplatzIDFertigprodukt(boolean zweiterdurchlauf) {
         try {
             Statement stmt = conn.createStatement();
@@ -77,9 +94,6 @@ public class SQL {
             if (zweiterdurchlauf) {
                 ResultSet rs = stmt.executeQuery(
                         "SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';");
-                System.out.println(Arrays.deepToString(queryToStringArray(
-                        "SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';",
-                        new String[] { "ID" }, "Suche")));
                 rs.last();
                 System.out.println(rs.getInt(1));
                 return rs.getInt(1);
