@@ -25,6 +25,7 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class UI extends JFrame {
     enum tabs {
@@ -70,6 +71,9 @@ public class UI extends JFrame {
     private JTable table_1;
     private JButton aktualisieren_1;
     private JButton okSuche;
+    private JPanel panel_7;
+    private JComboBox<String> dropdownSuche1_2;
+    private JLabel lblNewLabel;
 
     /**
      * Fuegt alle UI-Elemente hinzu.
@@ -185,6 +189,9 @@ public class UI extends JFrame {
 
         panel_6 = new JPanel();
         einlagern_2.add(panel_6, BorderLayout.SOUTH);
+        
+        lblNewLabel = new JLabel("New label");
+        panel_6.add(lblNewLabel);
 
         exportieren_1 = new JButton("Exportieren");
         panel_6.add(exportieren_1);
@@ -201,6 +208,16 @@ public class UI extends JFrame {
 
         table_1 = new JTable();
         scrollPane_3.setViewportView(table_1);
+        
+        panel_7 = new JPanel();
+        einlagern_2.add(panel_7, BorderLayout.NORTH);
+        
+        dropdownSuche1_2 = new JComboBox<String>();
+        dropdownSuche1_2.addItem("");
+        for (String a : arr) {
+            dropdownSuche1_2.addItem(a);
+        }
+        panel_7.add(dropdownSuche1_2);
         dropdownSuche1_1 = new JComboBox<String>();
         for (String a : arr) {
             dropdownSuche1_1.addItem(a);
