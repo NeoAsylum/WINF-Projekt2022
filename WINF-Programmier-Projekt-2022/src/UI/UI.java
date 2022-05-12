@@ -333,8 +333,12 @@ public class UI extends JFrame {
         
         aktualisieren_1.addActionListener(e->{
         	
-        	
+        	//table_1
+        	//queryToUI(String query, String oberflaeche, String[] tabelleneintraege)
         });
+        
+        
+       
         
 
 
@@ -368,6 +372,16 @@ public class UI extends JFrame {
         model = new DefaultTableModel(data, input[0]);
         table.setModel(model);
     }
+    
+    public void setBestellTable(Object[][] input) {
+    	
+   	 Object[][] data = Arrays.copyOfRange(input, 1, input.length);
+        DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+        model.setRowCount(0);
+        model = new DefaultTableModel(data, input[0]);
+        table_1.setModel(model);
+   	
+   }
 
     /*
      * Methode welche von einem Produktnamen ausgehend ein Produkt erstellt.

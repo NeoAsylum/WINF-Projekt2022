@@ -21,7 +21,12 @@ public class QueryOutputHandling {
         } else if (oberflaeche.equals("Einlagerung")) {
             Hauptklasse.frame.setEinlagerungTable(
                     SQL.queryToStringArray(query, tabelleneintraege, oberflaeche));
+            
+        } else if (oberflaeche.equals("Bestelliste")) {
+            Hauptklasse.frame.setBestellTable(
+                    SQL.queryToStringArray(query, tabelleneintraege, oberflaeche));
         }
+
 
     }
 
