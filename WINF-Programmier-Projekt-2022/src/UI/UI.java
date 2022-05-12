@@ -25,7 +25,6 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
 
 public class UI extends JFrame {
     enum tabs {
@@ -73,7 +72,6 @@ public class UI extends JFrame {
     private JButton okSuche;
     private JPanel panel_7;
     private JComboBox<String> dropdownSuche1_2;
-    private JLabel lblNewLabel;
 
     /**
      * Fuegt alle UI-Elemente hinzu.
@@ -189,9 +187,6 @@ public class UI extends JFrame {
 
         panel_6 = new JPanel();
         einlagern_2.add(panel_6, BorderLayout.SOUTH);
-        
-        lblNewLabel = new JLabel("New label");
-        panel_6.add(lblNewLabel);
 
         exportieren_1 = new JButton("Exportieren");
         panel_6.add(exportieren_1);
@@ -199,9 +194,42 @@ public class UI extends JFrame {
         aktualisieren_1 = new JButton("Aktualisieren");
         panel_6.add(aktualisieren_1);
 
-        aktualisieren_1.addActionListener(e ->
+        aktualisieren_1.addActionListener(e ->{
+        	
+        	Produkt p = produktFuerSuche(dropdownSuche1_2.getSelectedItem().toString());
+        	
+        	String tabelle;
+        	
+        	switch(dropdownSuche1_2.getSelectedItem().toString()) {
+        	case "Grafikkarte":
+        		tabelle = "grafikkarte";
+        		
+        	case "CPU":
+        		tabelle = "cpu";
+        		
+        	case "Fertigprodukt":
+        		tabelle = "fertigprodukt";
+        		
+        	case "Hauptspeicher":
+        		tabelle = "hauptspeicher";
+        		
+        	case "Festplatte":
+        		tabelle = "festplatte";
+        		
+        	default:
+        		tabelle = "grafikkarte";
+        	}
+        	
+        	QueryOutputHandling.queryToUI("SELECT * FROM " + tabelle +" WHERE mindestmenge > menge", "Bestellliste", p.getTabelleneintraege());
+        	
+        	
+        	
+        	
+        });
+        
+        
 
-        produktFuerSuche("Grafikkarte"));
+      
 
         scrollPane_3 = new JScrollPane();
         einlagern_2.add(scrollPane_3, BorderLayout.CENTER);
@@ -466,4 +494,15 @@ public class UI extends JFrame {
             }
         }
     }
+    
+    public void setBestellTable(Object[][] input) {
+        Object[][] data = Arrays.copyOfRange(input, 1, input.length);
+        DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+        model.setRowCount(0);
+        model = new DefaultTableModel(data, input[0]);
+        table_1.setModel(model);
+    }
+    
+
+	
 }
