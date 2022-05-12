@@ -521,6 +521,9 @@ public class UI extends JFrame {
                         + SQL.getLagerplatzID(p) + " );";
                 System.out.println(sqlQuery);
                 SQL.update(sqlQuery);
+                if(!p.produktTyp().equals("Fertigprodukt")) {
+                    SQL.anzahlImLagerHochzählen(SQL.getLagerplatzID(p), p.produktTyp());
+                }
                 QueryOutputHandling.nonsenseQuery();
 
             } else {
