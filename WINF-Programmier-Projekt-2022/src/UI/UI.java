@@ -195,7 +195,6 @@ public class UI extends JFrame {
         
         aktualisieren_1.addActionListener(e->{
         	
-        	produktFuerSuche("Grafikkarte");
         	
         });
         
