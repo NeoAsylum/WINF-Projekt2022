@@ -17,12 +17,11 @@ public class QueryOutputHandling {
     public static void queryToUI(String query, String oberflaeche, String[] tabelleneintraege) {
         if (oberflaeche.equals("Suche")) {
             Hauptklasse.frame
-                    .setSuchTable(SQL.queryToStringArray(query, tabelleneintraege, oberflaeche));
+                    .setSuchTable(SQL.queryToStringArray(query, tabelleneintraege));
         } else if (oberflaeche.equals("Einlagerung")) {
             Hauptklasse.frame.setEinlagerungTable(
-                    SQL.queryToStringArray(query, tabelleneintraege, oberflaeche));
+                    SQL.queryToStringArray(query, tabelleneintraege));
         }
-
     }
 
     /**
@@ -35,6 +34,6 @@ public class QueryOutputHandling {
         return SQL.queryToStringArray(
                 "SELECT " + "Name, VRAM, Hersteller "
                         + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
-                new String[] { "Name", "VRAM", "Hersteller" }, "Suche");
+                new String[] { "Name", "VRAM", "Hersteller" });
     }
 }
