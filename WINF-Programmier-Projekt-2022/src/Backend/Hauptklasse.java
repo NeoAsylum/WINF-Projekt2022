@@ -1,5 +1,6 @@
 package Backend;
 
+import UI.Login;
 import UI.UI;
 
 import java.util.logging.Logger;
@@ -16,9 +17,10 @@ public class Hauptklasse {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SQL.setup();
-		//Login login = new Login();	
-		//login.setVisible(true);
+
+		
+		Login login = new Login();	
+		login.setVisible(true);
 		
 		
 		
