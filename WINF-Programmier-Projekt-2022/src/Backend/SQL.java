@@ -42,7 +42,7 @@ public class SQL {
                     props.getProperty("url") + props.getProperty("dbName"),
                     props.getProperty("userName"), props.getProperty("password"));
             Hauptklasse.frame = new UI();
-            Hauptklasse.frame.addActionListeners();
+            Hauptklasse.frame.addActionListenersToUi();
             Hauptklasse.frame.setVisible(true);
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -56,13 +56,13 @@ public class SQL {
     /**
      * Diese Methode sendet ein Update-Query zum SQL-Server
      * 
-     * @param query
+     * @param sqlQueryText
      */
-    public static void update(String query) {
+    public static void update(String sqlQueryText) {
         Statement stmt;
         try {
             stmt = conn.createStatement();
-            stmt.executeUpdate(query);
+            stmt.executeUpdate(sqlQueryText);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, e.getMessage());
@@ -70,16 +70,24 @@ public class SQL {
         Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
     }
 
-    public static void anzahlImLagerHochzählen(int id, String tablename) {
-        update("UPDATE " + tablename + " SET MENGE = " + (stueckzahlImLager(id,tablename)+1) +"WHERE ID="+id);
+    public static void anzahlImLagerHochzählen(int produktId, String tablename) {
+        update("UPDATE " + tablename + " SET MENGE = " + (stueckzahlImLager(produktId,tablename)+1) +"WHERE ID="+produktId);
     }
 
+    /**
+     * Methode welche fuer ein Produkt die Stueckzahl im Lager ausgibt.
+     * @param id    ID des gesuchten Produktes.
+     * @param tablename Name der betroffenen Tabelle/Produkttyp.
+     * @return
+     */
     public static int stueckzahlImLager(int id, String tablename) {
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt
-                    .executeQuery("SELECT MENGE FROM " + tablename + " WHERE ID='" + id + "';");
+                    .executeQuery("SELECT LAGERPLATZ FROM " + tablename + " WHERE ID=" + id + ";");
             rs.last();
+            rs = stmt
+                    .executeQuery("SELECT MENGE FROM LAGERPLATZ WHERE ID=" + rs.getInt(1) + ";");
             return rs.getInt(1);
         } catch (SQLException e) {
             Hauptklasse.log.log(Level.SEVERE, e.getMessage());
@@ -87,17 +95,21 @@ public class SQL {
         return -1;
     }
 
-    public static int getLagerplatzIDFertigprodukt(boolean zweiterdurchlauf) {
+    /**
+     * Methode welche die LagerplatzID fuer ein Fertigprodukt ausgibt.
+     * @param istZweiterDurchlauf Ist wahr wenn die Methode rekursiv das zweite Mal aufgerufen wird.
+     * @return
+     */
+    public static int getLagerplatzIDFertigprodukt(boolean istZweiterDurchlauf) {
         try {
             Statement stmt = conn.createStatement();
             Fertigprodukt p = new Fertigprodukt();
-            if (zweiterdurchlauf) {
+            if (istZweiterDurchlauf) {
                 ResultSet rs = stmt.executeQuery(
                         "SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';");
                 rs.last();
                 System.out.println(rs.getInt(1));
                 return rs.getInt(1);
-
             } else {
                 stmt.executeUpdate("INSERT INTO LAGERPLATZ (TYP)" + System.lineSeparator()
                         + "VALUES ('" + p.produktTyp() + "');");
@@ -106,15 +118,21 @@ public class SQL {
         } catch (SQLException e) {
             Hauptklasse.log.log(Level.SEVERE, e.getMessage());
         }
-        return 0;
+        return -1;
     }
 
-    public static int getLagerplatzID(Produkt p) {
+    
+    /**
+     * Methode welche die LagerplatzID fuer ein Produkt ausgibt.
+     * @param produktTyp    Der Produkttyp des Produktes.
+     * @return
+     */
+    public static int getLagerplatzID(Produkt produktTyp) {
         try {
             Statement stmt = conn.createStatement();
-            if (!(p.produktTyp().equals("FERTIGPRODUKT"))) {
+            if (!(produktTyp.produktTyp().equals("FERTIGPRODUKT"))) {
                 ResultSet rs = stmt.executeQuery(
-                        "SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';");
+                        "SELECT ID FROM LAGERPLATZ WHERE TYP='" + produktTyp.produktTyp() + "';");
                 rs.first();
                 return rs.getInt(1);
             } else {
@@ -124,49 +142,44 @@ public class SQL {
             try {
                 Statement stmt = conn.createStatement();
                 stmt.executeUpdate("INSERT INTO LAGERPLATZ (TYP)" + System.lineSeparator()
-                        + "VALUES ('" + p.produktTyp() + "');");
-                return getLagerplatzID(p);
+                        + "VALUES ('" + produktTyp.produktTyp() + "');");
+                return getLagerplatzID(produktTyp);
             } catch (SQLException e1) {
                 Hauptklasse.log.log(Level.SEVERE, e.getMessage());
             }
             Hauptklasse.log.log(Level.SEVERE, e.getMessage());
         }
-        return 0;
+        return -1;
     }
 
     /**
      * Diese Methode macht aus den Daten in der Datenbank ein Object[][] Array,
      * damit dieses für die JTable verarbeitet werden kann.
      * 
-     * @param query
-     * @param tabelleneintraege
-     * @param oberflaeche
+     * @param queryText Die Query welche ausgefuehrt werden soll.
+     * @param spaltenNamen Spaltennamen fuer die Tabelle
      * @return
      */
-    public static Object[][] queryToStringArray(String query, String[] tabelleneintraege,
-            String oberflaeche) {
+    public static Object[][] queryToStringArray(String queryText, String[] spaltenNamen) {
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rs = stmt.executeQuery(queryText);
             rs.last();
-            Object[][] arr = new Object[rs.getRow() + 1][tabelleneintraege.length];
+            Object[][] arr = new Object[rs.getRow() + 1][spaltenNamen.length];
             rs.beforeFirst();
 
             // Spalten benennen
-            for (int i = 0; i < tabelleneintraege.length; i++) {
-                arr[0][i] = tabelleneintraege[i];
+            for (int i = 0; i < spaltenNamen.length; i++) {
+                arr[0][i] = spaltenNamen[i];
             }
 
             // Reihen holen
             for (int i = 1; rs.next(); i++) {
-
-                for (int j = 0; j < tabelleneintraege.length; j++) {
-                    arr[i][j] = rs.getString(tabelleneintraege[j]);
+                for (int j = 0; j < spaltenNamen.length; j++) {
+                    arr[i][j] = rs.getString(spaltenNamen[j]);
                 }
             }
-
             return arr;
-
         } catch (SQLSyntaxErrorException e) {
             Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
