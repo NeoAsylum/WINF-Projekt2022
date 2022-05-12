@@ -16,8 +16,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.awt.GridLayout;
-import java.sql.SQLException;
-
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.util.Arrays;
@@ -25,6 +23,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UI extends JFrame {
     enum tabs {
@@ -69,9 +69,148 @@ public class UI extends JFrame {
     private JScrollPane scrollPane_3;
     private JTable table_1;
     private JButton aktualisieren_1;
+    private JButton okSuche;
 
     public UI() {
+        Object[][] input = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" } };
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 987, 437);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(new GridLayout(0, 1, 0, 0));
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        contentPane.add(tabbedPane);
+        suche = new JPanel();
+        tabbedPane.addTab("Suche", null, suche, null);
 
+        suche.setLayout(new BorderLayout(0, 0));
+        panel_1 = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+        flowLayout.setAlignment(FlowLayout.RIGHT);
+        suche.add(panel_1, BorderLayout.SOUTH);
+        deleteSuche = new JButton("delete");
+        deleteSuche.addActionListener(e -> deletion());
+        deleteSuche.setToolTipText("put x in 'delete' column");
+        panel_1.add(deleteSuche);
+        btnNewButton = new JButton("Export");
+        panel_1.add(btnNewButton);
+        panel_2 = new JPanel();
+        suche.add(panel_2, BorderLayout.NORTH);
+        String[] arr = new String[] { "Grafikkarte", "Festplatte", "Hauptspeicher",
+                "Fertigprodukt", "CPU" };
+        dropdownSuche1 = new JComboBox<String>();
+        dropdownSuche1.addItem("");
+        for (String a : arr) {
+            dropdownSuche1.addItem(a);
+        }
+        panel_2.add(dropdownSuche1);
+        dropdownSuche2 = new JComboBox<String>();
+        dropdownSuche2.addItem("");
+        dropdownSuche2.setSelectedIndex(0);
+        panel_2.add(dropdownSuche2);
+        textField = new JTextField();
+        panel_2.add(textField);
+        textField.setColumns(10);
+        dropdownSuche3 = new JComboBox<String>();
+        dropdownSuche3.addItem("");
+        dropdownSuche3.setSelectedIndex(0);
+        panel_2.add(dropdownSuche3);
+        textField_1 = new JTextField();
+        panel_2.add(textField_1);
+        textField_1.setColumns(10);
+        dropdownSuche4 = new JComboBox<String>();
+        dropdownSuche4.addItem("");
+        dropdownSuche4.setSelectedIndex(0);
+        panel_2.add(dropdownSuche4);
+        textField_2 = new JTextField();
+        panel_2.add(textField_2);
+        textField_2.setColumns(10);
+
+        okSuche = new JButton("OK");
+
+        panel_2.add(okSuche);
+        scrollPane = new JScrollPane();
+        suche.add(scrollPane, BorderLayout.CENTER);
+        table = new JTable();
+        setSuchTable(input);
+        scrollPane.setViewportView(table);
+
+        einlagern = new JPanel();
+        tabbedPane.addTab("Einlagern", null, einlagern, null);
+        einlagern.setLayout(new BorderLayout(0, 0));
+
+        panel = new JPanel();
+        FlowLayout flowLayout_2 = (FlowLayout) panel.getLayout();
+        flowLayout_2.setAlignment(FlowLayout.LEFT);
+        einlagern.add(panel, BorderLayout.NORTH);
+
+        panel_3 = new JPanel();
+        FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
+        flowLayout_1.setAlignment(FlowLayout.RIGHT);
+        einlagern.add(panel_3, BorderLayout.SOUTH);
+
+        btnNewButton_1 = new JButton("Lagerplaetze ausgeben");
+        btnNewButton_1.addActionListener(e -> queryAdd());
+        panel_3.add(btnNewButton_1);
+
+        JScrollPane scrollPane_2 = new JScrollPane();
+        einlagern.add(scrollPane_2, BorderLayout.CENTER);
+
+        einlagerungsTable = new JTable();
+        scrollPane_2.setViewportView(einlagerungsTable);
+
+        einlagern_1 = new JPanel();
+        tabbedPane.addTab("Inventar", null, einlagern_1, null);
+        einlagern_1.setLayout(new BorderLayout(0, 0));
+
+        panel_4 = new JPanel();
+        einlagern_1.add(panel_4, BorderLayout.NORTH);
+
+        panel_5 = new JPanel();
+        einlagern_1.add(panel_5, BorderLayout.SOUTH);
+
+        exportieren = new JButton("Exportieren");
+        panel_5.add(exportieren);
+
+        scrollPane_1 = new JScrollPane();
+        einlagern_1.add(scrollPane_1, BorderLayout.WEST);
+
+        einlagern_2 = new JPanel();
+        tabbedPane.addTab("Bestellliste", null, einlagern_2, null);
+        einlagern_2.setLayout(new BorderLayout(0, 0));
+
+        panel_6 = new JPanel();
+        einlagern_2.add(panel_6, BorderLayout.SOUTH);
+
+        exportieren_1 = new JButton("Exportieren");
+        panel_6.add(exportieren_1);
+
+        aktualisieren_1 = new JButton("Aktualisieren");
+        panel_6.add(aktualisieren_1);
+
+        aktualisieren_1.addActionListener(e ->
+
+        produktFuerSuche("Grafikkarte"));
+
+        scrollPane_3 = new JScrollPane();
+        einlagern_2.add(scrollPane_3, BorderLayout.CENTER);
+
+        table_1 = new JTable();
+        scrollPane_3.setViewportView(table_1);
+        dropdownSuche1_1 = new JComboBox<String>();
+        for (String a : arr) {
+            dropdownSuche1_1.addItem(a);
+        }
+        panel.add(dropdownSuche1_1);
+
+    }
+
+    public void addActionListeners() {
+        dropdownSuche1_1.addActionListener(e -> updateEinlagerungsTable());
+        dropdownSuche1.addActionListener(e -> querySuche());
+        dropdownSuche1.addActionListener(e -> updateDropdown2());
+        okSuche.addActionListener(e -> querySuche());
     }
 
     /**
@@ -111,7 +250,6 @@ public class UI extends JFrame {
         for (String a : arr) {
             dropdownSuche1.addItem(a);
         }
-        dropdownSuche1.addActionListener(e -> updateDropdown2());
         panel_2.add(dropdownSuche1);
         dropdownSuche2 = new JComboBox<String>();
         dropdownSuche2.addItem("");
@@ -189,7 +327,7 @@ public class UI extends JFrame {
 
         exportieren_1 = new JButton("Exportieren");
         panel_6.add(exportieren_1);
-        
+
         aktualisieren_1 = new JButton("Aktualisieren");
         panel_6.add(aktualisieren_1);
         
@@ -198,6 +336,9 @@ public class UI extends JFrame {
         	
         });
         
+
+
+
 
         scrollPane_3 = new JScrollPane();
         einlagern_2.add(scrollPane_3, BorderLayout.CENTER);
@@ -211,7 +352,10 @@ public class UI extends JFrame {
         }
         panel.add(dropdownSuche1_1);
         dropdownSuche1.addActionListener(e -> querySuche());
-
+        dropdownSuche1.addActionListener(e -> updateDropdown2());
+        dropdownSuche4.addActionListener(e -> updateDropdown2());
+        dropdownSuche2.addActionListener(e -> updateDropdown2());
+        dropdownSuche3.addActionListener(e -> updateDropdown2());
     }
 
     /*
@@ -382,6 +526,9 @@ public class UI extends JFrame {
                         + SQL.getLagerplatzID(p) + " );";
                 System.out.println(sqlQuery);
                 SQL.update(sqlQuery);
+                if(!p.produktTyp().equals("Fertigprodukt")) {
+                    SQL.anzahlImLagerHochzählen(SQL.getLagerplatzID(p), p.produktTyp());
+                }
                 QueryOutputHandling.nonsenseQuery();
 
             } else {
@@ -421,28 +568,10 @@ public class UI extends JFrame {
      * Methode welche die JComboBoxen refresht.
      */
     public void updateDropdown2() {
-        Produkt p;
+        Produkt p = produktFuerSuche(dropdownSuche1.getSelectedItem().toString());
         dropdownSuche2.removeAllItems();
         dropdownSuche3.removeAllItems();
         dropdownSuche4.removeAllItems();
-
-        switch (dropdownSuche1.getSelectedItem().toString()) {
-        case "Grafikkarte":
-            p = new Grafikkarte();
-            break;
-        case "Festplatte":
-            p = new Festplatte();
-            break;
-        case "Hauptspeicher":
-            p = new Hauptspeicher();
-            break;
-        case "CPU":
-            p = new CPU();
-            break;
-        default:
-            p = null;
-            break;
-        }
         dropdownSuche2.addItem("");
         dropdownSuche3.addItem("");
         dropdownSuche4.addItem("");

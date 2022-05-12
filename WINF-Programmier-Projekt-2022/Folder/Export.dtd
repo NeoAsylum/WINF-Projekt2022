@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT Liste (Grafikkarte*, CPU*, Fertigprodukt*,Festplatte*,Hauptspeicher*)>
+	<!ELEMENT Grafikkarte (Name, VRAM, Hersteller, ID, Lagerplatz )>
+		<!ELEMENT Name (#PCDATA)>
+		<!ELEMENT VRAM (#PCDATA)>	
+		<!ELEMENT Hersteller (#PCDATA)>
+		<!ELEMENT ID (#PCDATA)>
+		<!ELEMENT Lagerplatz (#PCDATA)>
+	<!ELEMENT CPU (Name, Hersteller, MHz,ID, LAGERPLATZ)>
+		<!ELEMENT Name (#PCDATA)>
+		<!ELEMENT VRAM (#PCDATA)>	
+		<!ELEMENT Hersteller (#PCDATA)>
+		<!ELEMENT ID (#PCDATA)>
+		<!ELEMENT Lagerplatz (#PCDATA)>
+	<!ELEMENT Fertigprodukt (CPU, GRAFIKKARTE,Hauptspeicher, FESTPLATTE,ID, LAGERPLATZ )>
+		<!ELEMENT CPU (#PCDATA)>
+		<!ELEMENT GRAFIKKARTE (#PCDATA)>	
+		<!ELEMENT Hauptspeicher (#PCDATA)>
+		<!ELEMENT FESTPLATTE (#PCDATA)>
+		<!ELEMENT ID (#PCDATA)>
+		<!ELEMENT LAGERPLATZ (#PCDATA)>
+	<!ELEMENT Festplatte (Name, Hersteller, Groesse, Betriebssystem,ID, LAGERPLATZ)>
+		<!ELEMENT Name (#PCDATA)>
+		<!ELEMENT Hersteller (#PCDATA)>
+		<!ELEMENT Groesse (#PCDATA)>	
+		<!ELEMENT ID (#PCDATA)>
+		<!ELEMENT Betriebssystem (#PCDATA)>
+		<!ELEMENT Lagerplatz (#PCDATA)>
+	<!ELEMENT Hauptspeicher (Name, Groesse,ID, LAGERPLATZ)>
+		<!ELEMENT Name (#PCDATA)>
+		<!ELEMENT Groesse (#PCDATA)>	
+		<!ELEMENT ID (#PCDATA)>
+		<!ELEMENT Lagerplatz (#PCDATA)>
+	
+	
+		
+		
+		
+		
+<!
