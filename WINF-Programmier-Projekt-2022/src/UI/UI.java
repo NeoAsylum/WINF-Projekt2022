@@ -324,6 +324,9 @@ public class UI extends JFrame {
             sqlQuery += " FROM " + p.produktTyp() + " ";
             int added = 0;
             if (!(dropdownSuche2.getSelectedItem().toString().length() <= 1)) {
+                if (added == 0) {
+                    sqlQuery += "WHERE ";
+                }
                 System.out.println(sqlQuery);
 
                 sqlQuery += dropdownSuche2.getSelectedItem().equals("ID")
@@ -348,15 +351,16 @@ public class UI extends JFrame {
                     sqlQuery += "WHERE ";
                 }
                 System.out.println(sqlQuery);
-
                 sqlQuery += dropdownSuche4.getSelectedItem().equals("ID")
                         ? dropdownSuche4.getSelectedItem() + "=" + textField_2.getText() + " "
                         : dropdownSuche4.getSelectedItem() + "='" + textField_2.getText() + "' ";
                 added = 0;
-                System.out.println(sqlQuery);
 
             }
+
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
+            System.out.println(sqlQuery);
+
             sqlQuery = p == null ? null : sqlQuery;
             QueryOutputHandling.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());
         }
