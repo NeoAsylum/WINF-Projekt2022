@@ -23,7 +23,6 @@ public class SQL {
     static Connection conn;
     static Properties props = new Properties();
 
-    
     /**
      * Setup Methode welche SQL-Connection aufsetzt und frame/UI initialisiert.
      */
@@ -43,7 +42,7 @@ public class SQL {
                     props.getProperty("url") + props.getProperty("dbName"),
                     props.getProperty("userName"), props.getProperty("password"));
             Hauptklasse.frame = new UI();
-            Hauptklasse.frame.setup(QueryOutputHandling.nonsenseQuery());
+            Hauptklasse.frame.addActionListeners();
             Hauptklasse.frame.setVisible(true);
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -78,12 +77,13 @@ public class SQL {
             if (zweiterdurchlauf) {
                 ResultSet rs = stmt.executeQuery(
                         "SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';");
-                System.out.println(Arrays.deepToString(queryToStringArray("SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';", new String[]{"ID"},
-                        "Suche")));
+                System.out.println(Arrays.deepToString(queryToStringArray(
+                        "SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';",
+                        new String[] { "ID" }, "Suche")));
                 rs.last();
                 System.out.println(rs.getInt(1));
                 return rs.getInt(1);
-                
+
             } else {
                 stmt.executeUpdate("INSERT INTO LAGERPLATZ (TYP)" + System.lineSeparator()
                         + "VALUES ('" + p.produktTyp() + "');");
@@ -119,7 +119,7 @@ public class SQL {
         }
         return 0;
     }
-    
+
     /**
      * Diese Methode macht aus den Daten in der Datenbank ein Object[][] Array,
      * damit dieses für die JTable verarbeitet werden kann.
@@ -128,34 +128,31 @@ public class SQL {
      * @param tabelleneintraege
      * @param oberflaeche
      * @return
-     * @throws SQLException
      */
     public static Object[][] queryToStringArray(String query, String[] tabelleneintraege,
-            String oberflaeche){
+            String oberflaeche) {
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             rs.last();
-            Object [][] arr = new Object[rs.getRow()+1][tabelleneintraege.length];
+            Object[][] arr = new Object[rs.getRow() + 1][tabelleneintraege.length];
             rs.beforeFirst();
-            
-            
-            //Spalten benennen
-            for(int i = 0; i<tabelleneintraege.length; i++) {
-            	arr[0][i] = tabelleneintraege[i];
+
+            // Spalten benennen
+            for (int i = 0; i < tabelleneintraege.length; i++) {
+                arr[0][i] = tabelleneintraege[i];
             }
-        	
-            //Reihen holen
-			for(int i = 1;rs.next(); i++) {
-				
-				for (int j = 0; j<tabelleneintraege.length; j++) {
-					arr[i][j] = rs.getString(tabelleneintraege[j]); 
-				}
-						
-				}
-            
+
+            // Reihen holen
+            for (int i = 1; rs.next(); i++) {
+
+                for (int j = 0; j < tabelleneintraege.length; j++) {
+                    arr[i][j] = rs.getString(tabelleneintraege[j]);
+                }
+            }
+
             return arr;
-            
+
         } catch (SQLSyntaxErrorException e) {
             Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -167,6 +164,5 @@ public class SQL {
         }
         return null;
     }
-    
-  
+
 }
