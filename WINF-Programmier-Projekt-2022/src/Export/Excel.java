@@ -2,6 +2,7 @@ package Export;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,7 +15,7 @@ public class Excel {
 		try {
 			
 			TableModel table_model = table.getModel();
-			FileWriter file_writer = new FileWriter("WINF-Programmier-Projekt-2022\\Folder\\" + name + ".xls");
+			FileWriter file_writer = new FileWriter("WINF-Programmier-Projekt-2022" + FileSystems.getDefault().getSeparator()+ "Folder"+ FileSystems.getDefault().getSeparator()+ name + ".xls");
 			for(int i = 0; i<table_model.getColumnCount(); i++) {
 				file_writer.write(table_model.getColumnName(i) + "\t");
 			}
