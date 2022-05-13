@@ -202,9 +202,11 @@ public class UI extends JFrame {
         	
         	switch(dropdownSuche1_2.getSelectedItem().toString()) {
         	case "Grafikkarte":
+        		System.out.println("check2");
         		tabelle = "grafikkarte";
         		
         	case "CPU":
+        		System.out.println("check1");
         		tabelle = "cpu";
         		
         	case "Fertigprodukt":
@@ -217,7 +219,8 @@ public class UI extends JFrame {
         		tabelle = "festplatte";
         		
         	default:
-        		tabelle = "grafikkarte";
+        		tabelle = "cpu";
+        		
         	}
         	
         	QueryOutputHandling.queryToUI("SELECT * FROM " + tabelle +" WHERE mindestmenge > menge", "Bestellliste", p.getTabelleneintraege());
