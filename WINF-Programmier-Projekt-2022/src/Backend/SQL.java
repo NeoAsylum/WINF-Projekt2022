@@ -107,7 +107,6 @@ public class SQL {
                 ResultSet rs = stmt.executeQuery(
                         "SELECT ID FROM LAGERPLATZ WHERE TYP='" + p.produktTyp() + "';");
                 rs.last();
-                System.out.println(rs.getInt(1));
                 return rs.getInt(1);
             } else {
                 stmt.executeUpdate("INSERT INTO LAGERPLATZ (TYP)" + System.lineSeparator()

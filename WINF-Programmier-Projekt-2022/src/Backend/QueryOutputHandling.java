@@ -70,7 +70,6 @@ public class QueryOutputHandling {
         List<Object> a = Arrays.asList(names);
         Map<Object, Long> mape = a.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        mape.forEach((key, value) -> System.out.println(key + "  " + value));
         return mape;
     }
 

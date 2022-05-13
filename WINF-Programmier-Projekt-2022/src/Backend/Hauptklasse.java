@@ -18,7 +18,7 @@ public class Hauptklasse {
 	 */
 	public static void main(String[] args) {
 	    SQL.setup();
-	    QueryOutputHandling.queryNachNamenStueckzahlen("cpu");
+	    //QueryOutputHandling.queryNachNamenStueckzahlen("cpu");
         //QueryOutputHandling.stueckzahlen(new String[]{"a","a","b","c"});
 		//Login login = new Login();	
 		//login.setVisible(true);
