@@ -11,6 +11,12 @@ import javax.swing.table.TableModel;
 
 public class Excel {
 	
+	/**
+	 * Exportieren einer JTable als Excel-Datei
+	 * 
+	 * @param table
+	 * @param name
+	 */
 	public static void exportieren(JTable table, String name) {
 		try {
 			
