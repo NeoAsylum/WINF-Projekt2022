@@ -9,6 +9,8 @@ import Datentypen.Festplatte;
 import Datentypen.Grafikkarte;
 import Datentypen.Hauptspeicher;
 import Datentypen.Produkt;
+import Export.Excel;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -73,6 +75,9 @@ public class UI extends JFrame {
     private JTable table_1;
     private JButton aktualisieren_1;
     private JButton okSuche;
+    private JPanel panel_7;
+    private JComboBox<String> dropdownSuche1_2;
+    private JTextField export_tf;
 
     /**
      * Fuegt alle UI-Elemente hinzu.
@@ -96,10 +101,17 @@ public class UI extends JFrame {
         suche.add(panel_1, BorderLayout.SOUTH);
         deleteSuche = new JButton("delete");
         deleteSuche.addActionListener(e -> deletionSuchTabelle());
+        
+        export_tf = new JTextField();
+        panel_1.add(export_tf);
+        export_tf.setColumns(10);
         deleteSuche.setToolTipText("put x in 'delete' column");
         panel_1.add(deleteSuche);
-        btnNewButton = new JButton("Export");
+        btnNewButton = new JButton("Exportieren");
         panel_1.add(btnNewButton);
+        btnNewButton.addActionListener(e->{
+        	Excel.exportieren(table, export_tf.getText());
+        });
         panel_2 = new JPanel();
         suche.add(panel_2, BorderLayout.NORTH);
         String[] arr = new String[] { "Grafikkarte", "Festplatte", "Hauptspeicher",
@@ -177,6 +189,7 @@ public class UI extends JFrame {
 
         exportieren = new JButton("Exportieren");
         panel_5.add(exportieren);
+       
 
         scrollPane_1 = new JScrollPane();
         einlagern_1.add(scrollPane_1, BorderLayout.WEST);
@@ -194,15 +207,61 @@ public class UI extends JFrame {
         aktualisieren_1 = new JButton("Aktualisieren");
         panel_6.add(aktualisieren_1);
 
-        aktualisieren_1.addActionListener(e ->
+        aktualisieren_1.addActionListener(e ->{
+        	
+        	Produkt p = produktFuerSuche(dropdownSuche1_2.getSelectedItem().toString());
+        	
+        	String tabelle;
+        	
+        	switch(dropdownSuche1_2.getSelectedItem().toString()) {
+        	case "Grafikkarte":
+        		System.out.println("check2");
+        		tabelle = "grafikkarte";
+        		
+        	case "CPU":
+        		System.out.println("check1");
+        		tabelle = "cpu";
+        		
+        	case "Fertigprodukt":
+        		tabelle = "fertigprodukt";
+        		
+        	case "Hauptspeicher":
+        		tabelle = "hauptspeicher";
+        		
+        	case "Festplatte":
+        		tabelle = "festplatte";
+        		
+        	default:
+        		tabelle = "cpu";
+        		
+        	}
+        	
+        	QueryOutputHandling.queryToUI("SELECT * FROM " + tabelle +" WHERE mindestmenge > menge", "Bestellliste", p.getTabelleneintraege());
+        	
+        	
+        	
+        	
+        });
+        
+        
 
-        produktFuerSuche("Grafikkarte"));
+      
 
         scrollPane_3 = new JScrollPane();
         einlagern_2.add(scrollPane_3, BorderLayout.CENTER);
 
         table_1 = new JTable();
         scrollPane_3.setViewportView(table_1);
+        
+        panel_7 = new JPanel();
+        einlagern_2.add(panel_7, BorderLayout.NORTH);
+        
+        dropdownSuche1_2 = new JComboBox<String>();
+        dropdownSuche1_2.addItem("");
+        for (String a : arr) {
+            dropdownSuche1_2.addItem(a);
+        }
+        panel_7.add(dropdownSuche1_2);
         dropdownSuche1_1 = new JComboBox<String>();
         for (String a : arr) {
             dropdownSuche1_1.addItem(a);
@@ -211,7 +270,9 @@ public class UI extends JFrame {
 
     }
 
-    /**
+   
+
+	/**
      * Methode welche den UI-Elementen Action-Listener hinzufuegt.
      */
     public void addActionListenersToUi() {
@@ -452,4 +513,15 @@ public class UI extends JFrame {
             }
         }
     }
+    
+    public void setBestellTable(Object[][] input) {
+        Object[][] data = Arrays.copyOfRange(input, 1, input.length);
+        DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+        model.setRowCount(0);
+        model = new DefaultTableModel(data, input[0]);
+        table_1.setModel(model);
+    }
+    
+
+	
 }

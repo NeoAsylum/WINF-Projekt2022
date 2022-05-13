@@ -11,11 +11,18 @@ import javax.swing.JOptionPane;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
+import javax.swing.JWindow;
 import javax.swing.JPasswordField;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JToolBar;
+import javax.swing.JTable;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class Login extends JFrame {
@@ -24,6 +31,7 @@ public class Login extends JFrame {
     private JPanel contentPane;
 	private JTextField username;
 	private JPasswordField password;
+	
 
 	/**
 	 * Launch the application.
@@ -54,8 +62,8 @@ public class Login extends JFrame {
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{212, 212, 0};
 		gbl_panel_1.rowHeights = new int[]{51, 51, 51, 51, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
 		JLabel label_1 = new JLabel("");
@@ -119,24 +127,35 @@ public class Login extends JFrame {
 		gbc_password.gridy = 2;
 		panel_1.add(password, gbc_password);
 		
-		JLabel label_3 = new JLabel("");
-		GridBagConstraints gbc_label_3 = new GridBagConstraints();
-		gbc_label_3.weighty = 1.0;
-		gbc_label_3.weightx = 1.0;
-		gbc_label_3.fill = GridBagConstraints.BOTH;
-		gbc_label_3.insets = new Insets(0, 0, 0, 5);
-		gbc_label_3.gridx = 0;
-		gbc_label_3.gridy = 3;
-		panel_1.add(label_3, gbc_label_3);
+		JPanel panel_3 = new JPanel();
+		panel_3.setLayout(null);
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_3.gridx = 0;
+		gbc_panel_3.gridy = 3;
+		panel_1.add(panel_3, gbc_panel_3);
 		
-		JLabel label_4 = new JLabel("");
-		GridBagConstraints gbc_label_4 = new GridBagConstraints();
-		gbc_label_4.weighty = 1.0;
-		gbc_label_4.weightx = 1.0;
-		gbc_label_4.fill = GridBagConstraints.BOTH;
-		gbc_label_4.gridx = 1;
-		gbc_label_4.gridy = 3;
-		panel_1.add(label_4, gbc_label_4);
+		JButton btnNewButton = new JButton("Passwort vergessen");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(e.getSource() == btnNewButton) {
+					
+					 PasswortVergessen myWindow = new PasswortVergessen();
+					 myWindow.setVisible(true);
+					 
+					 dispose();
+					 
+				}
+			}
+		});
+		btnNewButton.setBounds(0, 10, 160, 21);
+		panel_3.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Benutzer anlegen");
+		btnNewButton_1.setBounds(0, 41, 160, 21);
+		panel_3.add(btnNewButton_1);
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
@@ -159,8 +178,8 @@ public class Login extends JFrame {
 		JButton enter = new JButton("Enter");
 		enter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String benutzername = "Benutzer123";
-                String passwort = "Passwort123";
+				String benutzername = "1";
+                String passwort = "1";
 
                String name = String.valueOf(username.getText());
                String passwort1 = String.valueOf(password.getPassword());
@@ -171,15 +190,13 @@ public class Login extends JFrame {
             	   
             	   dispose();
             	   
-
                }else{
 
-                   String nachricht = "Benutzername oder Passwort ist flasch"; 
+                   String nachricht = "Benutzername oder Passwort ist falsch"; 
 
                    JOptionPane.showMessageDialog(null, nachricht);
                    
                    loeschen();
-
                    
                }
 			}
@@ -199,8 +216,23 @@ public class Login extends JFrame {
 	password.setText("");
 			
 	}
-	
-	
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 	
 
 }
