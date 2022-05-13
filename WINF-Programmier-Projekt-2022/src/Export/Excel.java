@@ -14,7 +14,7 @@ public class Excel {
 		try {
 			
 			TableModel table_model = table.getModel();
-			FileWriter file_writer = new FileWriter("C:\\Users\\yann.MSI\\Documents\\JAVA_PROJEKTE\\" + name + ".xls");
+			FileWriter file_writer = new FileWriter("WINF-Programmier-Projekt-2022\\Folder\\" + name + ".xls");
 			for(int i = 0; i<table_model.getColumnCount(); i++) {
 				file_writer.write(table_model.getColumnName(i) + "\t");
 			}
