@@ -9,6 +9,8 @@ import Datentypen.Festplatte;
 import Datentypen.Grafikkarte;
 import Datentypen.Hauptspeicher;
 import Datentypen.Produkt;
+import Export.Excel;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -72,6 +74,7 @@ public class UI extends JFrame {
     private JButton okSuche;
     private JPanel panel_7;
     private JComboBox<String> dropdownSuche1_2;
+    private JTextField export_tf;
 
     /**
      * Fuegt alle UI-Elemente hinzu.
@@ -96,10 +99,17 @@ public class UI extends JFrame {
         suche.add(panel_1, BorderLayout.SOUTH);
         deleteSuche = new JButton("delete");
         deleteSuche.addActionListener(e -> deletionSuchTabelle());
+        
+        export_tf = new JTextField();
+        panel_1.add(export_tf);
+        export_tf.setColumns(10);
         deleteSuche.setToolTipText("put x in 'delete' column");
         panel_1.add(deleteSuche);
         btnNewButton = new JButton("Export");
         panel_1.add(btnNewButton);
+        btnNewButton.addActionListener(e->{
+        	Excel.exportieren(table, export_tf.getText());
+        });
         panel_2 = new JPanel();
         suche.add(panel_2, BorderLayout.NORTH);
         String[] arr = new String[] { "Grafikkarte", "Festplatte", "Hauptspeicher",
@@ -257,7 +267,9 @@ public class UI extends JFrame {
 
     }
 
-    /**
+   
+
+	/**
      * Methode welche den UI-Elementen Action-Listener hinzufuegt.
      */
     public void addActionListenersToUi() {
