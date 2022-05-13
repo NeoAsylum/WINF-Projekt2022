@@ -23,9 +23,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
+/**
+ * 
+ * @author All-Stars
+ *
+ */
 public class UI extends JFrame {
     enum tabs {
         Suche, Einlagerung
@@ -86,7 +89,6 @@ public class UI extends JFrame {
         contentPane.add(tabbedPane);
         suche = new JPanel();
         tabbedPane.addTab("Suche", null, suche, null);
-
         suche.setLayout(new BorderLayout(0, 0));
         panel_1 = new JPanel();
         FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
@@ -219,8 +221,7 @@ public class UI extends JFrame {
         okSuche.addActionListener(e -> querySuche());
     }
 
-    
-    /*
+    /**
      * Methode erzeugt Table neu.
      */
     public void setSuchTable(Object[][] input) {
@@ -231,8 +232,9 @@ public class UI extends JFrame {
         table.setModel(model);
     }
 
-    /*
+    /**
      * Methode welche von einem Produktnamen ausgehend ein Produkt erstellt.
+     * 
      * @param Name des Produktes.
      */
     public Produkt produktFuerSuche(String produktname) {
@@ -260,8 +262,8 @@ public class UI extends JFrame {
         }
         return p;
     }
-    
-    /*
+
+    /**
      * Methode welche Query zum Loeschen der in der Suchtabelle angezeigten
      * Komponenten erstellt.
      */
@@ -310,8 +312,9 @@ public class UI extends JFrame {
         }
     }
 
-    /*
-     * Methode welche eine Such-Query basierend auf dem Zustand des UI erstellt und dann den Such-Table direkt nach den Ergebnissen setzt.
+    /**
+     * Methode welche eine Such-Query basierend auf dem Zustand des UI erstellt und
+     * dann den Such-Table direkt nach den Ergebnissen setzt.
      */
     public void querySuche() {
         Produkt p = produktFuerSuche(dropdownSuche1.getSelectedItem().toString());
@@ -366,7 +369,7 @@ public class UI extends JFrame {
         }
     }
 
-    /*
+    /**
      * Methode welche die in die Einlagern-Tabelle eingefuegten Daten bei
      * Vollständigkeit Reihenweise in die SQL-Datenbank einfuegt.
      */
@@ -392,7 +395,7 @@ public class UI extends JFrame {
                         + SQL.getLagerplatzID(p) + " );";
                 System.out.println(sqlQuery);
                 SQL.update(sqlQuery);
-                if(!p.produktTyp().equals("Fertigprodukt")) {
+                if (!p.produktTyp().equals("Fertigprodukt")) {
                     SQL.anzahlImLagerHochzählen(SQL.getLagerplatzID(p), p.produktTyp());
                 }
                 QueryOutputHandling.nonsenseQuery();
@@ -402,7 +405,7 @@ public class UI extends JFrame {
         }
     }
 
-    /*
+    /**
      * Methode welche den Einlagerungstable fuellt.
      */
     public void updateEinlagerungsTable() {
@@ -414,7 +417,7 @@ public class UI extends JFrame {
                         p.getTabelleneintraege().length - 2));
     }
 
-    /*
+    /**
      * Tabelle in Tab Einlagerung wird gefuellt.
      */
     public void setEinlagerungTable(Object[][] input) {
@@ -430,7 +433,7 @@ public class UI extends JFrame {
         einlagerungsTable.setModel(model);
     }
 
-    /*
+    /**
      * Methode welche die JComboBoxen refresht.
      */
     public void updateDropdown2() {
