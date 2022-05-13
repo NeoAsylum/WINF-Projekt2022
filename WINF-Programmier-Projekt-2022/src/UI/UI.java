@@ -105,7 +105,7 @@ public class UI extends JFrame {
         export_tf.setColumns(10);
         deleteSuche.setToolTipText("put x in 'delete' column");
         panel_1.add(deleteSuche);
-        btnNewButton = new JButton("Export");
+        btnNewButton = new JButton("Exportieren");
         panel_1.add(btnNewButton);
         btnNewButton.addActionListener(e->{
         	Excel.exportieren(table, export_tf.getText());
@@ -187,6 +187,7 @@ public class UI extends JFrame {
 
         exportieren = new JButton("Exportieren");
         panel_5.add(exportieren);
+       
 
         scrollPane_1 = new JScrollPane();
         einlagern_1.add(scrollPane_1, BorderLayout.WEST);
