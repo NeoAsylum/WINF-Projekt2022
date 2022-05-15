@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -61,7 +62,7 @@ public class SQL {
         Statement stmt;
         try {
             stmt = conn.createStatement();
-            Hauptklasse.log.info(sqlQueryText+" update Query");
+            Hauptklasse.log.info(sqlQueryText + " update Query");
             stmt.executeUpdate(sqlQueryText);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -79,13 +80,13 @@ public class SQL {
     public static int einlagern(Produkt produktTyp, String name) {
         try {
             Statement stmt = conn.createStatement();
-            
-                ResultSet rs = stmt.executeQuery("SELECT ID FROM LAGERPLATZ WHERE TYP='"
-                        + produktTyp.produktTyp() + "' AND NAME='" + name + "';");
-                rs.first();
-                anzahlImLagerHochzaehlen(rs.getInt(1),produktTyp.produktTyp(),name);  
-                return rs.getInt(1);
-           
+
+            ResultSet rs = stmt.executeQuery("SELECT ID FROM LAGERPLATZ WHERE TYP='"
+                    + produktTyp.produktTyp() + "' AND NAME='" + name + "';");
+            rs.first();
+            anzahlImLagerHochzaehlen(rs.getInt(1), produktTyp.produktTyp(), name);
+            return rs.getInt(1);
+
         } catch (SQLException e) {
             Hauptklasse.log.log(Level.SEVERE, "fuck", e);
             try {
@@ -93,7 +94,7 @@ public class SQL {
                 ResultSet rs = stmt.executeQuery("SELECT ID FROM LAGERPLATZ WHERE Menge=0;");
                 rs.first();
                 stmt.executeUpdate("UPDATE LAGERPLATZ SET TYP='" + produktTyp.produktTyp()
-                        + "', name='"+name + "' WHERE ID=" + rs.getInt(1) + ";");
+                        + "', name='" + name + "' WHERE ID=" + rs.getInt(1) + ";");
                 return einlagern(produktTyp, name);
             } catch (SQLException e1) {
                 System.out.println("There is no more free space!!!");
@@ -108,12 +109,24 @@ public class SQL {
         update("UPDATE LAGERPLATZ SET Name='" + name + "', Menge=Menge+1 WHERE ID=" + lagerplatzID
                 + ";");
     }
-    
-    public static void anzahlImLagerrunterzaehlen(int lagerplatzID, String tablename, String name) {
+
+    public static void anhandEinesArraysAlleRunterzaehlen(Object[][] array, String tablename) {
+        array=Arrays.copyOfRange(array, 1, array.length);
+        System.out.println(Arrays.deepToString(array));
+        for (int i = 0; i < array.length; i++) {
+            for (int a = 0; a < array[0].length; a++) {
+                anzahlImLagerrunterzaehlen(Integer.parseInt((String)array[i][1]), tablename, (String)array[i][0]);
+            }
+        }
+
+    }
+
+    public static void anzahlImLagerrunterzaehlen(int lagerplatzID, String tablename,
+            String name) {
+        System.out.println("lagerplatzID: "+ lagerplatzID+"tablename "+ tablename);
         update("UPDATE LAGERPLATZ SET Name='" + name + "', Menge=Menge-1 WHERE ID=" + lagerplatzID
                 + ";");
     }
-
 
     /**
      * Methode welche fuer ein Produkt die Stueckzahl im Lager ausgibt.

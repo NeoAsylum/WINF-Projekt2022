@@ -326,7 +326,7 @@ public class UI extends JFrame {
         Produkt p = produktFuerSuche(dropdownSucheProdukttyp.getSelectedItem().toString());
         if (p != null) {
             String sqlQuery = "DELETE ";
-            String sqlQuery2 = "SELECT LAGERPLATZ ";
+            String sqlQuery2 = "SELECT NAME, LAGERPLATZ ";
             sqlQuery2 += "FROM " + p.produktTyp() + " ";
 
             sqlQuery += "FROM " + p.produktTyp() + " ";
@@ -347,7 +347,7 @@ public class UI extends JFrame {
             if (!(dropdownSucheAttribut2.getSelectedItem().toString().length() <= 1)) {
                 if (added == 0) {
                     sqlQuery += "WHERE ";
-                    sqlQuery2 +="WHERE";
+                    sqlQuery2 += "WHERE";
                 }
                 sqlQuery += dropdownSucheAttribut2.getSelectedItem().equals("ID")
                         ? dropdownSucheAttribut2.getSelectedItem() + "="
@@ -360,20 +360,28 @@ public class UI extends JFrame {
                         : dropdownSucheAttribut2.getSelectedItem() + "='"
                                 + textFieldSucheAttribut2.getText() + "' AND ";
                 added = 1;
-                
+
             }
             if (!(dropdownSucheAttribut3.getSelectedItem().toString().length() <= 1)) {
                 if (added == 0) {
                     sqlQuery += "WHERE ";
-                    sqlQuery2 +="WHERE";
+                    sqlQuery2 += "WHERE";
                 }
                 sqlQuery += dropdownSucheAttribut3.getSelectedItem().equals("ID")
                         ? dropdownSucheAttribut3.getSelectedItem() + "="
                                 + textFieldSucheAttribut3.getText() + " "
                         : dropdownSucheAttribut3.getSelectedItem() + "='"
                                 + textFieldSucheAttribut3.getText() + "' ";
+                sqlQuery2 += dropdownSucheAttribut3.getSelectedItem().equals("ID")
+                        ? dropdownSucheAttribut3.getSelectedItem() + "="
+                                + textFieldSucheAttribut3.getText() + " "
+                        : dropdownSucheAttribut3.getSelectedItem() + "='"
+                                + textFieldSucheAttribut3.getText() + "' ";
                 added = 0;
             }
+            sqlQuery2 = sqlQuery2.substring(0, sqlQuery2.length() - 1 - added * 4) + ";";
+            System.out.println(sqlQuery2);
+            SQL.anhandEinesArraysAlleRunterzaehlen(SQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }), p.produktTyp());
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
             System.out.println(sqlQuery);
 
