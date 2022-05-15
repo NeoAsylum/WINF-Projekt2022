@@ -17,18 +17,18 @@ public class Hauptklasse {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	    SQL.setup();
+	    //SQL.setup();
 	    //QueryOutputHandling.queryNachNamenStueckzahlen("cpu");
         //QueryOutputHandling.stueckzahlen(new String[]{"a","a","b","c"});
 		//Login login = new Login();	
 		//login.setVisible(true);
-
+	    //SQL.erstelleAlleLagerplaetze();
 		
-		Login login = new Login();	
-		login.setVisible(true);
-		
-		
+		//Login login = new Login();	
+		//login.setVisible(true);		
 	}
+	
+	
 	
 	
 	

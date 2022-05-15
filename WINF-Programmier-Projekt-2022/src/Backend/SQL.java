@@ -69,34 +69,11 @@ public class SQL {
         Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
     }
 
-    public static void anzahlImLagerHochzählen(int produktId, String tablename) {
-        update("UPDATE " + tablename + " SET MENGE = " + (stueckzahlImLager(produktId,tablename)+1) +"WHERE ID="+produktId);
-    }
-
-    /**
-     * Methode welche fuer ein Produkt die Stueckzahl im Lager ausgibt.
-     * @param id    ID des gesuchten Produktes.
-     * @param tablename Name der betroffenen Tabelle/Produkttyp.
-     * @return
-     */
-    public static int stueckzahlImLager(int id, String tablename) {
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt
-                    .executeQuery("SELECT LAGERPLATZ FROM " + tablename + " WHERE ID=" + id + ";");
-            rs.last();
-            rs = stmt
-                    .executeQuery("SELECT MENGE FROM LAGERPLATZ WHERE ID=" + rs.getInt(1) + ";");
-            return rs.getInt(1);
-        } catch (SQLException e) {
-            Hauptklasse.log.log(Level.SEVERE, e.getMessage());
-        }
-        return -1;
-    }
-
     /**
      * Methode welche die LagerplatzID fuer ein Fertigprodukt ausgibt.
-     * @param istZweiterDurchlauf Ist wahr wenn die Methode rekursiv das zweite Mal aufgerufen wird.
+     * 
+     * @param istZweiterDurchlauf Ist wahr wenn die Methode rekursiv das zweite Mal
+     *                            aufgerufen wird.
      * @return
      */
     public static int getLagerplatzIDFertigprodukt(boolean istZweiterDurchlauf) {
@@ -119,10 +96,10 @@ public class SQL {
         return -1;
     }
 
-    
     /**
      * Methode welche die LagerplatzID fuer ein Produkt ausgibt.
-     * @param produktTyp    Der Produkttyp des Produktes.
+     * 
+     * @param produktTyp Der Produkttyp des Produktes.
      * @return
      */
     public static int getLagerplatzID(Produkt produktTyp) {
@@ -154,7 +131,7 @@ public class SQL {
      * Diese Methode macht aus den Daten in der Datenbank ein Object[][] Array,
      * damit dieses für die JTable verarbeitet werden kann.
      * 
-     * @param queryText Die Query welche ausgefuehrt werden soll.
+     * @param queryText    Die Query welche ausgefuehrt werden soll.
      * @param spaltenNamen Spaltennamen fuer die Tabelle
      * @return
      */
@@ -189,5 +166,7 @@ public class SQL {
         }
         return null;
     }
+
+    
 
 }
