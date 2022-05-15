@@ -105,6 +105,7 @@ public class UI extends JFrame {
         deleteSuche = new JButton("delete");
         deleteSuche.addActionListener(e -> deletionSuchTabelle());
         export_tf = new JTextField();
+
         suchePanelButtonsUnten.add(export_tf);
         export_tf.setColumns(10);
         deleteSuche.setToolTipText("put x in 'delete' column");
@@ -132,6 +133,7 @@ public class UI extends JFrame {
         suchePanelButtonsOben.add(dropdownSucheAttribut1);
         // Textfield Suche
         textFieldSucheAttribut1 = new JTextField();
+        textFieldSucheAttribut1.setColumns(11);
         suchePanelButtonsOben.add(textFieldSucheAttribut1);
         // dropdownSuche3 Suche
         dropdownSucheAttribut2 = new JComboBox<String>();
@@ -140,6 +142,7 @@ public class UI extends JFrame {
         suchePanelButtonsOben.add(dropdownSucheAttribut2);
         // textField Suche
         textFieldSucheAttribut2 = new JTextField();
+        textFieldSucheAttribut2.setColumns(11);
         suchePanelButtonsOben.add(textFieldSucheAttribut2);
         // dropdownSuche4
         dropdownSucheAttribut3 = new JComboBox<String>();
@@ -148,6 +151,7 @@ public class UI extends JFrame {
         suchePanelButtonsOben.add(dropdownSucheAttribut3);
         // textField Suche
         textFieldSucheAttribut3 = new JTextField();
+        textFieldSucheAttribut3.setColumns(11);
         suchePanelButtonsOben.add(textFieldSucheAttribut3);
         // ok Button Suche
         okSuche = new JButton("OK");
@@ -164,27 +168,29 @@ public class UI extends JFrame {
         tabbedPane.addTab("Einlagern", null, einlagern, null);
         einlagern.setLayout(new BorderLayout(0, 0));
 
-        //panel Buttons oben
+        // panel Buttons oben
         panelEinlagerungButtonsOben = new JPanel();
-        FlowLayout fl_panelEinlagerungButtonsOben = (FlowLayout) panelEinlagerungButtonsOben.getLayout();
+        FlowLayout fl_panelEinlagerungButtonsOben = (FlowLayout) panelEinlagerungButtonsOben
+                .getLayout();
         fl_panelEinlagerungButtonsOben.setAlignment(FlowLayout.LEFT);
         einlagern.add(panelEinlagerungButtonsOben, BorderLayout.NORTH);
-        //panel Buttons unten
+        // panel Buttons unten
         panelEinlagerungButtonsUnten = new JPanel();
-        FlowLayout fl_panelEinlagerungButtonsUnten = (FlowLayout) panelEinlagerungButtonsUnten.getLayout();
+        FlowLayout fl_panelEinlagerungButtonsUnten = (FlowLayout) panelEinlagerungButtonsUnten
+                .getLayout();
         fl_panelEinlagerungButtonsUnten.setAlignment(FlowLayout.RIGHT);
         einlagern.add(panelEinlagerungButtonsUnten, BorderLayout.SOUTH);
 
-        //Button einlagerung
+        // Button einlagerung
         btnNewButton_1 = new JButton("Lagerplaetze ausgeben");
         btnNewButton_1.addActionListener(e -> queryAdd());
         panelEinlagerungButtonsUnten.add(btnNewButton_1);
 
-        //Scrollpane Einlagerung
+        // Scrollpane Einlagerung
         JScrollPane scrollpaneEinlagerungTabelle = new JScrollPane();
         einlagern.add(scrollpaneEinlagerungTabelle, BorderLayout.CENTER);
 
-        //tabelle Einlagerung
+        // tabelle Einlagerung
         einlagerungsTabelle = new JTable();
         scrollpaneEinlagerungTabelle.setViewportView(einlagerungsTabelle);
 
@@ -320,31 +326,46 @@ public class UI extends JFrame {
         Produkt p = produktFuerSuche(dropdownSucheProdukttyp.getSelectedItem().toString());
         if (p != null) {
             String sqlQuery = "DELETE ";
+            String sqlQuery2 = "SELECT LAGERPLATZ ";
+            sqlQuery2 += "FROM " + p.produktTyp() + " ";
 
-            sqlQuery += " FROM " + p.produktTyp() + " ";
+            sqlQuery += "FROM " + p.produktTyp() + " ";
             int added = 0;
             if (!(dropdownSucheAttribut1.getSelectedItem().toString().length() <= 1)) {
-                sqlQuery += dropdownSucheAttribut1.getSelectedItem().equals("ID")
+                sqlQuery += "WHERE " + (dropdownSucheAttribut1.getSelectedItem().equals("ID")
                         ? dropdownSucheAttribut1.getSelectedItem() + "="
                                 + textFieldSucheAttribut1.getText() + " AND "
                         : dropdownSucheAttribut1.getSelectedItem() + "='"
-                                + textFieldSucheAttribut1.getText() + "' AND ";
+                                + textFieldSucheAttribut1.getText() + "' AND ");
+                sqlQuery2 += "WHERE " + (dropdownSucheAttribut1.getSelectedItem().equals("ID")
+                        ? dropdownSucheAttribut1.getSelectedItem() + "="
+                                + textFieldSucheAttribut1.getText() + " AND "
+                        : dropdownSucheAttribut1.getSelectedItem() + "='"
+                                + textFieldSucheAttribut1.getText() + "' AND ");
                 added = 1;
             }
             if (!(dropdownSucheAttribut2.getSelectedItem().toString().length() <= 1)) {
                 if (added == 0) {
                     sqlQuery += "WHERE ";
+                    sqlQuery2 +="WHERE";
                 }
                 sqlQuery += dropdownSucheAttribut2.getSelectedItem().equals("ID")
                         ? dropdownSucheAttribut2.getSelectedItem() + "="
                                 + textFieldSucheAttribut2.getText() + " AND "
                         : dropdownSucheAttribut2.getSelectedItem() + "='"
                                 + textFieldSucheAttribut2.getText() + "' AND ";
+                sqlQuery2 += dropdownSucheAttribut2.getSelectedItem().equals("ID")
+                        ? dropdownSucheAttribut2.getSelectedItem() + "="
+                                + textFieldSucheAttribut2.getText() + " AND "
+                        : dropdownSucheAttribut2.getSelectedItem() + "='"
+                                + textFieldSucheAttribut2.getText() + "' AND ";
                 added = 1;
+                
             }
             if (!(dropdownSucheAttribut3.getSelectedItem().toString().length() <= 1)) {
                 if (added == 0) {
                     sqlQuery += "WHERE ";
+                    sqlQuery2 +="WHERE";
                 }
                 sqlQuery += dropdownSucheAttribut3.getSelectedItem().equals("ID")
                         ? dropdownSucheAttribut3.getSelectedItem() + "="
@@ -354,12 +375,14 @@ public class UI extends JFrame {
                 added = 0;
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
+            System.out.println(sqlQuery);
+
             sqlQuery = p == null ? null : sqlQuery;
             Object[] options = { "Yes", "No" };
             int n = JOptionPane.showOptionDialog(this, "Delete current Selection?", "Delete?",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
                     options[1]);
-            if (n == 1) {
+            if (n == 0) {
                 SQL.update(sqlQuery);
                 QueryOutputHandling.nonsenseQuery();
             }
@@ -426,6 +449,7 @@ public class UI extends JFrame {
      */
     public void queryAdd() {
         for (int k = 0; k < einlagerungsTabelle.getRowCount(); k++) {
+            Object name = "";
             Produkt p = produktFuerSuche(
                     dropdownEinlagerungProdukttyp.getSelectedItem().toString());
             boolean allRowsFull = true;
@@ -434,22 +458,23 @@ public class UI extends JFrame {
             }
             if (allRowsFull && p != null) {
                 String sqlQuery = "INSERT INTO " + p.produktTyp() + " (";
+                // Alle Spaltennamen werden eingegeben.
                 for (int i = 0; i < p.getTabelleneintraege().length - 2; i++) {
                     sqlQuery += p.getTabelleneintraege()[i] + ",";
                 }
                 sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1) + ",LAGERPLATZ)"
                         + System.lineSeparator() + "VALUES (";
+                // Alle Tabelleneintraege werden ausgelesen.
                 for (int i = 0; i < p.getTabelleneintraege().length - 2; i++) {
+                    if (i == 0) {
+                        name = einlagerungsTabelle.getModel().getValueAt(k, i);
+                    }
                     sqlQuery += "'" + einlagerungsTabelle.getModel().getValueAt(k, i) + "', ";
                 }
-                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) + ", "
-                        + SQL.getLagerplatzID(p) + " );";
+                int lagerplatzID = SQL.einlagern(p, (String) name);
+                sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) + ", " + lagerplatzID
+                        + " );";
                 SQL.update(sqlQuery);
-                if (!p.produktTyp().equals("Fertigprodukt")) {
-                    SQL.anzahlImLagerHochzählen(SQL.getLagerplatzID(p), p.produktTyp());
-                }
-                QueryOutputHandling.nonsenseQuery();
-
             } else {
             }
         }

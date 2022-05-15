@@ -43,6 +43,7 @@ public class QueryOutputHandling {
         Object[][] arr = SQL.queryToStringArray("SELECT Name FROM " + tabellenname + ";",
                 new String[] { "Name" });
         Object[] two = Arrays.copyOfRange(getColumn(arr, 0), 1, getColumn(arr, 0).length);
+        System.out.println(Arrays.toString(two));
         return stueckzahlen(two);
     }
 
@@ -68,9 +69,9 @@ public class QueryOutputHandling {
      */
     public static Map<Object, Long> stueckzahlen(Object[] names) {
         List<Object> a = Arrays.asList(names);
-        Map<Object, Long> mape = a.stream()
+        Map<Object, Long> mapMitStueckzahlen = a.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        return mape;
+        return mapMitStueckzahlen;
     }
 
     /**
