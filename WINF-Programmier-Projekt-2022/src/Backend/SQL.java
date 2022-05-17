@@ -68,7 +68,6 @@ public class SQL {
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, e.getMessage());
         }
-        Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
     }
 
     /**
@@ -111,19 +110,17 @@ public class SQL {
     }
 
     public static void anhandEinesArraysAlleRunterzaehlen(Object[][] array, String tablename) {
-        array=Arrays.copyOfRange(array, 1, array.length);
+        array = Arrays.copyOfRange(array, 1, array.length);
         System.out.println(Arrays.deepToString(array));
         for (int i = 0; i < array.length; i++) {
-            for (int a = 0; a < array[0].length; a++) {
-                anzahlImLagerrunterzaehlen(Integer.parseInt((String)array[i][1]), tablename, (String)array[i][0]);
-            }
+            anzahlImLagerrunterzaehlen(Integer.parseInt((String) array[i][1]), tablename,
+                    (String) array[i][0]);
         }
-
     }
 
     public static void anzahlImLagerrunterzaehlen(int lagerplatzID, String tablename,
             String name) {
-        System.out.println("lagerplatzID: "+ lagerplatzID+"tablename "+ tablename);
+        System.out.println("lagerplatzID: " + lagerplatzID + "tablename " + tablename);
         update("UPDATE LAGERPLATZ SET Name='" + name + "', Menge=Menge-1 WHERE ID=" + lagerplatzID
                 + ";");
     }
@@ -180,6 +177,7 @@ public class SQL {
             }
             return arr;
         } catch (SQLSyntaxErrorException e) {
+            
             Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
