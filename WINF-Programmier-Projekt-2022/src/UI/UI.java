@@ -1,6 +1,8 @@
 package UI;
 
 import java.awt.BorderLayout;
+
+import Backend.Hauptklasse;
 import Backend.QueryOutputHandling;
 import Backend.SQL;
 import Datentypen.CPU;
@@ -80,6 +82,7 @@ public class UI extends JFrame {
     private JButton okSuche;
     private JPanel panel_7;
     private JComboBox<String> dropdownSuche1_2;
+
     /**
      * Fuegt alle UI-Elemente hinzu.
      */
@@ -107,7 +110,6 @@ public class UI extends JFrame {
         deleteSuche = new JButton("Delete");
         deleteSuche.addActionListener(e -> deletionSuchTabelle());
 
-      
         deleteSuche.setToolTipText("put x in 'delete' column");
         suchePanelButtonsUnten.add(deleteSuche);
         btnNewButton = new JButton("Exportieren");
@@ -247,12 +249,11 @@ public class UI extends JFrame {
                 tabelle = "festplatte";
                 break;
             default:
-            	System.out.println(dropdownSuche1_2.getSelectedItem().toString());
+                System.out.println(dropdownSuche1_2.getSelectedItem().toString());
                 tabelle = "cpu";
                 break;
             }
-            QueryOutputHandling.queryToUI(
-                    "SELECT * FROM " + tabelle , "Bestellliste",
+            QueryOutputHandling.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
                     p.getTabelleneintraege());
         });
         scrollPane_3 = new JScrollPane();
@@ -388,18 +389,19 @@ public class UI extends JFrame {
             }
             sqlQuery2 = sqlQuery2.substring(0, sqlQuery2.length() - 1 - added * 4) + ";";
             System.out.println(sqlQuery2);
-            SQL.anhandEinesArraysAlleRunterzaehlen(SQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }), p.produktTyp());
+
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
             System.out.println(sqlQuery);
 
             sqlQuery = p == null ? null : sqlQuery;
-            Object[] options = { "Yes", "No" };
-            int n = JOptionPane.showOptionDialog(this, "Delete current Selection?", "Delete?",
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-                    options[1]);
-            if (n == 0) {
+            int selection = JOptionPane.showConfirmDialog(null, "Delete current Selection?",
+                    "Delete : ", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if (selection == JOptionPane.OK_OPTION) {
+                SQL.anhandEinesArraysAlleRunterzaehlen(
+                        SQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
+                        p.produktTyp());
                 SQL.update(sqlQuery);
-                QueryOutputHandling.nonsenseQuery();
+                Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
             }
         }
     }
@@ -554,53 +556,48 @@ public class UI extends JFrame {
         model = new DefaultTableModel(data, input[0]);
         table_1.setModel(model);
     }
-    
-    
-    
-    public void formatieren(Object[][] input){
-    	try {
-    	
-    	Object[][] strings = Arrays.copyOfRange(input, 1, input.length);
-    	
-    	List<Object[]> strings2 = Arrays.asList(strings);
-		
-		Map<Object, Object> map = new HashMap<>();
-		
-		String name = null;
-		
-		
-		for(Object[] o : strings2) {
-			
-			name = (String) o[0];
-			int count = map.containsKey(name)?  (int) map.get(name): 0;
-			map.put(name, count + 1);
-			
-		}
-		
-		map.forEach((k,v) -> System.out.println(k + " " + v));
-		
-		Object[] k = map.keySet().toArray();
-		Object[] v = map.values().toArray();
-		Object[][] arr = new Object[k.length+1][k.length+1];
-		arr[0][0] = "Name";
-		arr[0][1] = "Menge";
-		
-		
-		for(int i = 1; i<k.length+1; i++) {
-			arr[i][0] = k[i-1];
-			arr[i][1] = v[i-1];
-		}
-		
-		for(int i = 0; i<k.length+1; i++) {
-			System.out.println(arr[i][0]);
-			System.out.println(arr[i][1]);
-		}
-		
-		setBestellTable(arr);
-    	}catch(Exception e) {}
-	
+
+    public void formatieren(Object[][] input) {
+        try {
+
+            Object[][] strings = Arrays.copyOfRange(input, 1, input.length);
+
+            List<Object[]> strings2 = Arrays.asList(strings);
+
+            Map<Object, Object> map = new HashMap<>();
+
+            String name = null;
+
+            for (Object[] o : strings2) {
+
+                name = (String) o[0];
+                int count = map.containsKey(name) ? (int) map.get(name) : 0;
+                map.put(name, count + 1);
+
+            }
+
+            map.forEach((k, v) -> System.out.println(k + " " + v));
+
+            Object[] k = map.keySet().toArray();
+            Object[] v = map.values().toArray();
+            Object[][] arr = new Object[k.length + 1][k.length + 1];
+            arr[0][0] = "Name";
+            arr[0][1] = "Menge";
+
+            for (int i = 1; i < k.length + 1; i++) {
+                arr[i][0] = k[i - 1];
+                arr[i][1] = v[i - 1];
+            }
+
+            for (int i = 0; i < k.length + 1; i++) {
+                System.out.println(arr[i][0]);
+                System.out.println(arr[i][1]);
+            }
+
+            setBestellTable(arr);
+        } catch (Exception e) {
+        }
+
     }
-    
-    
 
 }
