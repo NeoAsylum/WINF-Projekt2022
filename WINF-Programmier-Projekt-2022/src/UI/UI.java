@@ -76,8 +76,6 @@ public class UI extends JFrame {
     private JButton okSuche;
     private JPanel panel_7;
     private JComboBox<String> dropdownSuche1_2;
-    private JTextField export_tf;
-
     /**
      * Fuegt alle UI-Elemente hinzu.
      */
@@ -104,16 +102,14 @@ public class UI extends JFrame {
         suche.add(suchePanelButtonsUnten, BorderLayout.SOUTH);
         deleteSuche = new JButton("delete");
         deleteSuche.addActionListener(e -> deletionSuchTabelle());
-        export_tf = new JTextField();
 
-        suchePanelButtonsUnten.add(export_tf);
-        export_tf.setColumns(10);
+      
         deleteSuche.setToolTipText("put x in 'delete' column");
         suchePanelButtonsUnten.add(deleteSuche);
         btnNewButton = new JButton("Exportieren");
         suchePanelButtonsUnten.add(btnNewButton);
         btnNewButton.addActionListener(e -> {
-            Excel.exportieren(tabelleSuche, export_tf.getText());
+            Excel.exportieren(tabelleSuche);
         });
         suchePanelButtonsOben = new JPanel();
         suche.add(suchePanelButtonsOben, BorderLayout.NORTH);
