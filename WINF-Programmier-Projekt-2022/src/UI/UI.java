@@ -251,7 +251,7 @@ public class UI extends JFrame {
             default:
                 System.out.println(dropdownSuche1_2.getSelectedItem().toString());
                 tabelle = "cpu";
-                break;
+                return;
             }
             QueryOutputHandling.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
                     p.getTabelleneintraege());
@@ -556,6 +556,7 @@ public class UI extends JFrame {
         model = new DefaultTableModel(data, input[0]);
         table_1.setModel(model);
     }
+<<<<<<< HEAD
 
     public void formatieren(Object[][] input) {
         try {
@@ -598,6 +599,56 @@ public class UI extends JFrame {
         } catch (Exception e) {
         }
 
+=======
+    
+    
+    
+    public void formatieren(Object[][] input){
+    	try {
+    	
+    	Object[][] strings = Arrays.copyOfRange(input, 1, input.length);
+    	
+    	List<Object[]> strings2 = Arrays.asList(strings);
+		
+		Map<Object, Object> map = new HashMap<>();
+		
+		String name = null;
+		
+		
+		for(Object[] o : strings2) {
+			
+			name = (String) o[0];
+			int count = map.containsKey(name)?  (int) map.get(name): 0;
+			map.put(name, count + 1);
+			
+		}
+		
+		map.forEach((k,v) -> System.out.println(k + " " + v));
+		
+		Object[] k = map.keySet().toArray();
+		Object[] v = map.values().toArray();
+		Object[][] arr = new Object[k.length+1][2];
+		arr[0][0] = "Name";
+		arr[0][1] = "Menge";
+		
+		
+		for(int i = 1; i<k.length+1; i++) {
+			arr[i][0] = k[i-1];
+			arr[i][1] = v[i-1];
+		}
+		
+		for(int i = 0; i<k.length+1; i++) {
+			System.out.println(arr[i][0]);
+			System.out.println(arr[i][1]);
+		}
+		
+		
+		setBestellTable(arr);
+    	}catch(Exception e) {
+    		
+    	}
+	
+>>>>>>> branch 'master' of https://github.com/NeoAsylum/WINF-Projekt2022.git
     }
 
 }
