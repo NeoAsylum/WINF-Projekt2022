@@ -30,7 +30,7 @@ public class QueryOutputHandling {
                     SQL.queryToStringArray(query, tabelleneintraege));
             
         }else if (oberflaeche.equals("Bestellliste")) {
-            Hauptklasse.frame.setBestellTable(
+            Hauptklasse.frame.formatieren(
                     SQL.queryToStringArray(query, tabelleneintraege));
         }
     }

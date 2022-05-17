@@ -20,6 +20,10 @@ import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
@@ -248,7 +252,7 @@ public class UI extends JFrame {
                 break;
             }
             QueryOutputHandling.queryToUI(
-                    "SELECT * FROM " + tabelle + " WHERE mindestmenge > menge", "Bestellliste",
+                    "SELECT * FROM " + tabelle , "Bestellliste",
                     p.getTabelleneintraege());
         });
         scrollPane_3 = new JScrollPane();
@@ -550,5 +554,53 @@ public class UI extends JFrame {
         model = new DefaultTableModel(data, input[0]);
         table_1.setModel(model);
     }
+    
+    
+    
+    public void formatieren(Object[][] input){
+    	try {
+    	
+    	Object[][] strings = Arrays.copyOfRange(input, 1, input.length);
+    	
+    	List<Object[]> strings2 = Arrays.asList(strings);
+		
+		Map<Object, Object> map = new HashMap<>();
+		
+		String name = null;
+		
+		
+		for(Object[] o : strings2) {
+			
+			name = (String) o[0];
+			int count = map.containsKey(name)?  (int) map.get(name): 0;
+			map.put(name, count + 1);
+			
+		}
+		
+		map.forEach((k,v) -> System.out.println(k + " " + v));
+		
+		Object[] k = map.keySet().toArray();
+		Object[] v = map.values().toArray();
+		Object[][] arr = new Object[k.length+1][k.length+1];
+		arr[0][0] = "Name";
+		arr[0][1] = "Menge";
+		
+		
+		for(int i = 1; i<k.length; i++) {
+			arr[i][0] = k[i];
+			arr[i][1] = v[i];
+		}
+		
+		for(int i = 0; i<k.length; i++) {
+			System.out.println(arr[i][0]);
+			System.out.println(arr[i][1]);
+		}
+		
+		setBestellTable(arr);
+    	}catch(Exception e) {}
+	
+    }
+    
+    
 
 }
