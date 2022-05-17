@@ -100,7 +100,7 @@ public class UI extends JFrame {
         FlowLayout fl_suchePanelButtonsUnten = (FlowLayout) suchePanelButtonsUnten.getLayout();
         fl_suchePanelButtonsUnten.setAlignment(FlowLayout.RIGHT);
         suche.add(suchePanelButtonsUnten, BorderLayout.SOUTH);
-        deleteSuche = new JButton("delete");
+        deleteSuche = new JButton("Delete");
         deleteSuche.addActionListener(e -> deletionSuchTabelle());
 
       
@@ -178,7 +178,7 @@ public class UI extends JFrame {
         einlagern.add(panelEinlagerungButtonsUnten, BorderLayout.SOUTH);
 
         // Button einlagerung
-        btnNewButton_1 = new JButton("Lagerplaetze ausgeben");
+        btnNewButton_1 = new JButton("Lagerpl\u00E4tze ausgeben");
         btnNewButton_1.addActionListener(e -> queryAdd());
         panelEinlagerungButtonsUnten.add(btnNewButton_1);
 
@@ -229,16 +229,23 @@ public class UI extends JFrame {
             switch (dropdownSuche1_2.getSelectedItem().toString()) {
             case "Grafikkarte":
                 tabelle = "grafikkarte";
+                break;
             case "CPU":
                 tabelle = "cpu";
+                break;
             case "Fertigprodukt":
                 tabelle = "fertigprodukt";
+                break;
             case "Hauptspeicher":
                 tabelle = "hauptspeicher";
+                break;
             case "Festplatte":
                 tabelle = "festplatte";
+                break;
             default:
+            	System.out.println(dropdownSuche1_2.getSelectedItem().toString());
                 tabelle = "cpu";
+                break;
             }
             QueryOutputHandling.queryToUI(
                     "SELECT * FROM " + tabelle + " WHERE mindestmenge > menge", "Bestellliste",
