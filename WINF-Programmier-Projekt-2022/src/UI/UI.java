@@ -249,7 +249,7 @@ public class UI extends JFrame {
             default:
             	System.out.println(dropdownSuche1_2.getSelectedItem().toString());
                 tabelle = "cpu";
-                break;
+                return;
             }
             QueryOutputHandling.queryToUI(
                     "SELECT * FROM " + tabelle , "Bestellliste",
@@ -581,7 +581,7 @@ public class UI extends JFrame {
 		
 		Object[] k = map.keySet().toArray();
 		Object[] v = map.values().toArray();
-		Object[][] arr = new Object[k.length+1][k.length+1];
+		Object[][] arr = new Object[k.length+1][2];
 		arr[0][0] = "Name";
 		arr[0][1] = "Menge";
 		
@@ -596,8 +596,11 @@ public class UI extends JFrame {
 			System.out.println(arr[i][1]);
 		}
 		
+		
 		setBestellTable(arr);
-    	}catch(Exception e) {}
+    	}catch(Exception e) {
+    		
+    	}
 	
     }
     
