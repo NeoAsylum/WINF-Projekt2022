@@ -586,12 +586,12 @@ public class UI extends JFrame {
 		arr[0][1] = "Menge";
 		
 		
-		for(int i = 1; i<k.length; i++) {
-			arr[i][0] = k[i];
-			arr[i][1] = v[i];
+		for(int i = 1; i<k.length+1; i++) {
+			arr[i][0] = k[i-1];
+			arr[i][1] = v[i-1];
 		}
 		
-		for(int i = 0; i<k.length; i++) {
+		for(int i = 0; i<k.length+1; i++) {
 			System.out.println(arr[i][0]);
 			System.out.println(arr[i][1]);
 		}
