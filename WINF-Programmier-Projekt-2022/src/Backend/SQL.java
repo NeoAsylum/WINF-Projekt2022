@@ -177,6 +177,7 @@ public class SQL {
             }
             return arr;
         } catch (SQLSyntaxErrorException e) {
+            
             Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
