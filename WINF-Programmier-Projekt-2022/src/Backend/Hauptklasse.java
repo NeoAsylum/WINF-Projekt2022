@@ -3,6 +3,7 @@ package Backend;
 import UI.Login;
 import UI.UI;
 
+import java.time.LocalTime;
 import java.util.logging.Logger;
 
 public class Hauptklasse {
@@ -17,10 +18,8 @@ public class Hauptklasse {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	    International i = new International();
-	    i.setSprache("en");
-	    System.out.println(i.getUebersetzung("Suche"));
-	    //SQL.setup();
+	    
+	    SQL.setup();
 	    //QueryOutputHandling.queryNachNamenStueckzahlen("cpu");
         //QueryOutputHandling.stueckzahlen(new String[]{"a","a","b","c"});
 		//Login login = new Login();	
