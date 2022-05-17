@@ -577,7 +577,6 @@ public class UI extends JFrame {
 			
 		}
 		
-		map.forEach((k,v) -> System.out.println(k + " " + v));
 		
 		Object[] k = map.keySet().toArray();
 		Object[] v = map.values().toArray();
@@ -589,11 +588,6 @@ public class UI extends JFrame {
 		for(int i = 1; i<k.length+1; i++) {
 			arr[i][0] = k[i-1];
 			arr[i][1] = v[i-1];
-		}
-		
-		for(int i = 0; i<k.length+1; i++) {
-			System.out.println(arr[i][0]);
-			System.out.println(arr[i][1]);
 		}
 		
 		
