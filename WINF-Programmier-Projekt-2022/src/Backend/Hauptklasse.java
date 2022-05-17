@@ -17,7 +17,10 @@ public class Hauptklasse {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	    SQL.setup();
+	    International i = new International();
+	    i.setSprache("en");
+	    System.out.println(i.getUebersetzung("Suche"));
+	    //SQL.setup();
 	    //QueryOutputHandling.queryNachNamenStueckzahlen("cpu");
         //QueryOutputHandling.stueckzahlen(new String[]{"a","a","b","c"});
 		//Login login = new Login();	
