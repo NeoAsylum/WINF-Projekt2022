@@ -77,6 +77,11 @@ public class SQL {
         }
     }
 
+    /**
+     * Methode welche mit einem String eine Query erstellt.
+     * @param query Die zu stellende Query.
+     * @return  Der Rueckgabewert als ResultSet.
+     */
     public static ResultSet makeAQuery(String query) {
         Statement stmt;
         try {

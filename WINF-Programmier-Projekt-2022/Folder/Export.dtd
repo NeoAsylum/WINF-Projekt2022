@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ELEMENT Liste (Grafikkarte*, CPU*, Fertigprodukt*,Festplatte*,Hauptspeicher*)>
-	<!ELEMENT Grafikkarte (Name, VRAM, Hersteller, ID, Lagerplatz )>
-		<!ELEMENT Name (#PCDATA)>
-		<!ELEMENT VRAM (#PCDATA)>	
-		<!ELEMENT Hersteller (#PCDATA)>
-		<!ELEMENT ID (#PCDATA)>
-		<!ELEMENT Lagerplatz (#PCDATA)>
-	<!ELEMENT CPU (Name, Hersteller, MHz,ID, LAGERPLATZ)>
-		<!ELEMENT Name (#PCDATA)>
-		<!ELEMENT VRAM (#PCDATA)>	
-		<!ELEMENT Hersteller (#PCDATA)>
-		<!ELEMENT ID (#PCDATA)>
-		<!ELEMENT Lagerplatz (#PCDATA)>
-	<!ELEMENT Fertigprodukt (CPU, GRAFIKKARTE,Hauptspeicher, FESTPLATTE,ID, LAGERPLATZ )>
-		<!ELEMENT CPU (#PCDATA)>
-		<!ELEMENT GRAFIKKARTE (#PCDATA)>	
-		<!ELEMENT Hauptspeicher (#PCDATA)>
-		<!ELEMENT FESTPLATTE (#PCDATA)>
-		<!ELEMENT ID (#PCDATA)>
-		<!ELEMENT LAGERPLATZ (#PCDATA)>
-	<!ELEMENT Festplatte (Name, Hersteller, Groesse, Betriebssystem,ID, LAGERPLATZ)>
-		<!ELEMENT Name (#PCDATA)>
-		<!ELEMENT Hersteller (#PCDATA)>
-		<!ELEMENT Groesse (#PCDATA)>	
-		<!ELEMENT ID (#PCDATA)>
-		<!ELEMENT Betriebssystem (#PCDATA)>
-		<!ELEMENT Lagerplatz (#PCDATA)>
-	<!ELEMENT Hauptspeicher (Name, Groesse,ID, LAGERPLATZ)>
-		<!ELEMENT Name (#PCDATA)>
-		<!ELEMENT Groesse (#PCDATA)>	
-		<!ELEMENT ID (#PCDATA)>
-		<!ELEMENT Lagerplatz (#PCDATA)>
-	
+	<!ELEMENT Grafikkarte (#PCDATA)>
+		<!ATTLIST Grafikkarte
+			Name CDATA #REQUIRED
+			VRAM CDATA #REQUIRED
+			Hersteller CDATA #REQUIRED
+			ID CDATA #REQUIRED
+			Lagerplatz CDATA #REQUIRED>
+	<!ELEMENT CPU (#PCDATA)>
+		<!ATTLIST CPU
+			Name CDATA #REQUIRED
+			Hersteller CDATA #REQUIRED
+			MHz CDATA #REQUIRED
+			ID CDATA #REQUIRED
+			Lagerplatz CDATA #REQUIRED>
+	<!ELEMENT Fertigprodukt (#PCDATA)>
+		<!ATTLIST Fertigprodukt
+			Name CDATA #REQUIRED
+			CPU CDATA #REQUIRED
+			Grafikkarte CDATA #REQUIRED
+			Hauptspeicher CDATA #REQUIRED
+			Festplatte CDATA #REQUIRED
+			ID CDATA #REQUIRED
+			Lagerplatz CDATA #REQUIRED>
+	<!ELEMENT Festplatte (FestplatteName, FestplatteHersteller, FestplatteGroesse, FestplatteBetriebssystem,FestplatteID, FestplatteLAGERPLATZ)>
+		<!ATTLIST Festplatte
+			Name CDATA #REQUIRED
+			Hersteller CDATA #REQUIRED
+			Groesse CDATA #REQUIRED
+			Festplatte CDATA #REQUIRED
+			ID CDATA #REQUIRED
+			Lagerplatz CDATA #REQUIRED>
+	<!ELEMENT Hauptspeicher (HauptspeicherName, HauptspeicherGroesse,HauptspeicherID, HauptspeicherLAGERPLATZ)>
+		<!ATTLIST Hauptspeicher
+			Name CDATA #REQUIRED
+			Groesse CDATA #REQUIRED
+			ID CDATA #REQUIRED
+			Lagerplatz CDATA #REQUIRED>
+
 	
 		
 		
