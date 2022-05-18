@@ -3,7 +3,6 @@ package UI;
 import java.awt.BorderLayout;
 
 import Backend.Hauptklasse;
-import Backend.International;
 import Backend.QueryOutputHandling;
 import Backend.SQL;
 import Datentypen.CPU;
@@ -33,19 +32,17 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 
 /**
+ * Klasse fuer das grafische Nutzerinterface.
  * 
  * @author All-Stars
  *
  */
+@SuppressWarnings("serial")
 public class UI extends JFrame {
     enum tabs {
         Suche, Einlagerung
     };
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTabbedPane tabbedPane;
     private JTable tabelleSuche;
@@ -83,7 +80,7 @@ public class UI extends JFrame {
     private JButton okSuche;
     private JPanel panel_7;
     private JComboBox<String> dropdownSuche1_2;
-    private JComboBox sprachwahl;
+    private JComboBox<String> sprachwahl;
 
     /**
      * Fuegt alle UI-Elemente hinzu.
@@ -113,7 +110,7 @@ public class UI extends JFrame {
         deleteSuche = new JButton(Hauptklasse.uebersetzer.getUebersetzung("Delete"));
         deleteSuche.addActionListener(e -> deletionSuchTabelle());
 
-        sprachwahl = new JComboBox();
+        sprachwahl = new JComboBox<String>();
         sprachwahl.addItem("");
         sprachwahl.addItem("English");
         sprachwahl.addItem("Deutsch");
@@ -176,7 +173,8 @@ public class UI extends JFrame {
         scrollPaneSucheTabelle.setViewportView(tabelleSuche);
         // Einlagerung
         einlagern = new JPanel();
-        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Einlagern"), null, einlagern, null);
+        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Einlagern"), null, einlagern,
+                null);
         einlagern.setLayout(new BorderLayout(0, 0));
 
         // panel Buttons oben
@@ -207,7 +205,8 @@ public class UI extends JFrame {
 
         //
         einlagern_1 = new JPanel();
-        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Inventar"), null, einlagern_1, null);
+        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Inventar"), null, einlagern_1,
+                null);
         einlagern_1.setLayout(new BorderLayout(0, 0));
 
         panel_4 = new JPanel();
@@ -223,7 +222,8 @@ public class UI extends JFrame {
         einlagern_1.add(scrollPane_1, BorderLayout.WEST);
 
         einlagern_2 = new JPanel();
-        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Inventar"), null, einlagern_2, null);
+        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Inventar"), null, einlagern_2,
+                null);
         einlagern_2.setLayout(new BorderLayout(0, 0));
 
         panel_6 = new JPanel();

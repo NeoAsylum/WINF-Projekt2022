@@ -1,15 +1,13 @@
 package Datentypen;
 
-public class Festplatte extends Produkt {
-    private String[] tabelleneintraege = { "Name", "Hersteller", "Groesse", "Betriebssystem","ID", "Lagerplatz"};
-    private String PRODUKTTYP = "FESTPLATTE";
-
-
+public class Festplatte implements Produkt {
+    String[] tabelleneintraege = { "Name", "Hersteller", "Groesse", "Betriebssystem","ID", "Lagerplatz"};
+    String PRODUKTTYP = "FESTPLATTE";
+    
     @Override
     public String[] getTabelleneintraege() {
         return tabelleneintraege;
-    } 
-    
+    }
     @Override
     public String produktTyp() {
         return PRODUKTTYP;

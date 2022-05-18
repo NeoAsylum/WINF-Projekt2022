@@ -11,36 +11,28 @@ import javax.swing.JOptionPane;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
-import javax.swing.JWindow;
 import javax.swing.JPasswordField;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JToolBar;
-import javax.swing.JTable;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
+@SuppressWarnings("serial")
 public class Login extends JFrame {
 
-	private static final long serialVersionUID = 1L;
     private JPanel contentPane;
 	private JTextField username;
 	private JPasswordField password;
 	
 
 	/**
-	 * Launch the application.
-	 */
-	/**
 	 *
 	 * Create the frame.
 	 */
-	//
 	public Login() {
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,11 +41,9 @@ public class Login extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		
 		JLabel lblNewLabel = new JLabel("Login:");
 		panel.add(lblNewLabel);
 		

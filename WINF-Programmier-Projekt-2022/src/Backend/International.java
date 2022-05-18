@@ -3,16 +3,18 @@ package Backend;
 import java.nio.file.FileSystems;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import Annotations.ZuEditieren;
 
+@ZuEditieren(mussUeberarbeitetWerden=true, zugewiesen="Adrian")
 public class International {
     Locale current = Locale.getDefault();
     ResourceBundle rb = ResourceBundle.getBundle("sprachen"+FileSystems.getDefault().getSeparator()+"sprache",current);
     
     public void setSprache(String localcode) {
-        if(localcode=="Deutsch") {
+        if(localcode=="Deutsch"||localcode=="de-DE") {
             localcode="de";
         }
-        if(localcode=="English") {
+        if(localcode=="English"||localcode=="en-EN") {
             localcode="en";
         }
         current = new Locale(localcode);

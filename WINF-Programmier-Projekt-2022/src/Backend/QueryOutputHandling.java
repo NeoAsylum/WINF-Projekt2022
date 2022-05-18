@@ -6,18 +6,22 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Eine Klasse welche die Ausgaben der SQL-Querys verarbeitet.
+ * 
+ * @author Team 4
+ *
+ */
 public class QueryOutputHandling {
 
-    public static void einlagern() {
-
-    }
 
     /**
      * Ruft die Methoden auf welche das jeweilige UI setzen mittels eines Arrays mit
      * Tabelleneinträgen.
      * 
-     * @param query Die auszufuehrende Query.
-     * @param oberflaeche Die Oberflaeche in welcher die Query auszufuehren ist.
+     * @param query             Die auszufuehrende Query.
+     * @param oberflaeche       Die Oberflaeche in welcher die Query auszufuehren
+     *                          ist.
      * @param tabelleneintraege Die Spalten der Tabelle.
      */
     public static void queryToUI(String query, String oberflaeche, String[] tabelleneintraege) {
@@ -26,18 +30,20 @@ public class QueryOutputHandling {
         } else if (oberflaeche.equals("Einlagerung")) {
             Hauptklasse.frame
                     .setEinlagerungTable(SQL.queryToStringArray(query, tabelleneintraege));
-            Hauptklasse.frame.setEinlagerungTable(
-                    SQL.queryToStringArray(query, tabelleneintraege));
-            
-        }else if (oberflaeche.equals("Bestellliste")) {
-            Hauptklasse.frame.formatieren(
-                    SQL.queryToStringArray(query, tabelleneintraege));
+            Hauptklasse.frame
+                    .setEinlagerungTable(SQL.queryToStringArray(query, tabelleneintraege));
+
+        } else if (oberflaeche.equals("Bestellliste")) {
+            Hauptklasse.frame.formatieren(SQL.queryToStringArray(query, tabelleneintraege));
         }
     }
 
     /**
-     * Eine Methode welche eine Query ueber eine ganze Tabelle erstellt und dann die Zahl der Produkte zu ihren Namen zu mappt.
-     * @param tabellenname  Der Name der Tabelle.
+     * Eine Methode welche eine Query ueber eine ganze Tabelle erstellt und dann die
+     * Zahl der Produkte zu ihren Namen zu mappt.
+     * 
+     * @param tabellenname Der Name der Tabelle in der SQL Datenbank.
+     * @return Eine Map mit Namen und Stueckzahlen fuer alle Objekte der Tabelle.
      */
     public static Map<Object, Long> queryNachNamenStueckzahlen(String tabellenname) {
         Object[][] arr = SQL.queryToStringArray("SELECT Name FROM " + tabellenname + ";",
@@ -49,9 +55,10 @@ public class QueryOutputHandling {
 
     /**
      * Methode welche eine Spalte von einem zweidimensionalen Array zurueckgibt.
+     * 
      * @param array Der betroffene Array.
      * @param index Der Index der Spalte.
-     * @return  Die Spalte als Array.
+     * @return Die Spalte als Array.
      */
     public static Object[] getColumn(Object[][] array, int index) {
         Object[] column = new Object[array.length];
@@ -78,7 +85,8 @@ public class QueryOutputHandling {
      * Eine nutzlose Query welche einfach die Suchtabelle leeren oder mit nichts
      * fuellen soll.
      * 
-     * @return
+     * @return Gibt einen leeren Array zurueck, da die Query keine ergebnisse
+     *         zurueckgeben sollte.
      */
     public static Object[][] nonsenseQuery() {
         return SQL.queryToStringArray(

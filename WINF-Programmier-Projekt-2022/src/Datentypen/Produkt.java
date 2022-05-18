@@ -1,6 +1,8 @@
 package Datentypen;
 
-public abstract class Produkt extends EinObjekt {
-    public abstract String[] getTabelleneintraege();
-    public abstract String produktTyp();
+public interface Produkt extends EinObjekt {
+  
+    public String[] getTabelleneintraege();
+
+    public String produktTyp();
 }

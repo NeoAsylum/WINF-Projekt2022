@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>a comment</comment>
+<comment>Written in 2022-05-18, 19:15</comment>
 <entry key="password">!db4.hfts22?</entry>
 <entry key="driver">com.mysql.cj.jdbc.Driver</entry>
 <entry key="dbName">db4</entry>
 <entry key="userName">db4</entry>
+<entry key="Sprache">de-DE</entry>
 <entry key="url">jdbc:mysql://3.69.96.96:3306/</entry>
 </properties>

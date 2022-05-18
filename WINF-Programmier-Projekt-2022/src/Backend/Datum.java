@@ -3,7 +3,10 @@ package Backend;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import Annotations.ZuEditieren;
+
+@ZuEditieren(mussUeberarbeitetWerden = true, zugewiesen = "Adrian")
 public class Datum {
     LocalDate datum = LocalDate.now();
-    LocalTime zeit = LocalTime.now();
+    String zeit = LocalTime.now().getHour() + ":" + LocalTime.now().getMinute();
 }

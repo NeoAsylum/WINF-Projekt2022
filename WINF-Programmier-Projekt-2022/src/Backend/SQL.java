@@ -2,6 +2,7 @@ package Backend;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,11 +11,11 @@ import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
-import Datentypen.Fertigprodukt;
 import Datentypen.Produkt;
 import UI.UI;
 
@@ -29,6 +30,11 @@ public class SQL {
     public static void setup() {
         try {
             props.loadFromXML(new FileInputStream("file.txt"));
+            props.setProperty("Sprache", Locale.getDefault().toLanguageTag());
+            props.storeToXML(new FileOutputStream("file.txt"),
+                    "Written in " + new Datum().datum + ", " + new Datum().zeit);
+            Hauptklasse.uebersetzer.setSprache(props.getProperty("Sprache"));
+            System.out.println(Locale.getDefault().toLanguageTag());
         } catch (FileNotFoundException e1) {
             JOptionPane.showMessageDialog(null, e1.getMessage());
             e1.printStackTrace();
@@ -56,7 +62,8 @@ public class SQL {
     /**
      * Diese Methode sendet ein Update-Query zum SQL-Server
      * 
-     * @param sqlQueryText
+     * @param sqlQueryText Der Text der Query welche zum Server geschickt werden
+     *                     soll.
      */
     public static void update(String sqlQueryText) {
         Statement stmt;
@@ -70,10 +77,24 @@ public class SQL {
         }
     }
 
+    public static ResultSet makeAQuery(String query) {
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            return stmt.executeQuery(query);
+        } catch (SQLException e) {
+            Hauptklasse.log.log(Level.SEVERE, e.getMessage(), e);
+        }
+
+        return makeAQuery("SELECT " + "Name, VRAM, Hersteller "
+                + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';");
+    }
+
     /**
      * Methode welche die LagerplatzID fuer ein Produkt ausgibt.
      * 
      * @param produktTyp Der Produkttyp des Produktes.
+     * @param Der        Name des Produktes welches eingelagert werden soll.
      * @return
      */
     public static int einlagern(Produkt produktTyp, String name) {
@@ -104,11 +125,25 @@ public class SQL {
         return -1;
     }
 
+    /**
+     * Methode welche die Stueckzahl im Lager hochzaehlt.
+     * 
+     * @param lagerplatzID Die ID des Lagerplatzes.
+     * @param tablename    Der Name der Tabelle in der SQL Datenbank.
+     * @param name         Der Name des PRoduktes als Identifikator.
+     */
     public static void anzahlImLagerHochzaehlen(int lagerplatzID, String tablename, String name) {
         update("UPDATE LAGERPLATZ SET Name='" + name + "', Menge=Menge+1 WHERE ID=" + lagerplatzID
                 + ";");
     }
 
+    /**
+     * Eine Methode welche die 'anzahlImLagerHochzaehlen()' Methode auf alle Objekte
+     * einer Tabelle anwendet.
+     * 
+     * @param array     Der Array.
+     * @param tablename Der Name der Tabelle in der SQL-Datenbank.
+     */
     public static void anhandEinesArraysAlleRunterzaehlen(Object[][] array, String tablename) {
         array = Arrays.copyOfRange(array, 1, array.length);
         System.out.println(Arrays.deepToString(array));
@@ -118,6 +153,13 @@ public class SQL {
         }
     }
 
+    /**
+     * Methode welche die Stueckzahl im Lager runterzaehlt.
+     * 
+     * @param lagerplatzID Die ID des Lagerplatzes.
+     * @param tablename    Der Name der Tabelle in der SQL Datenbank.
+     * @param name         Der Name des PRoduktes als Identifikator.
+     */
     public static void anzahlImLagerrunterzaehlen(int lagerplatzID, String tablename,
             String name) {
         System.out.println("lagerplatzID: " + lagerplatzID + "tablename " + tablename);
@@ -126,38 +168,17 @@ public class SQL {
     }
 
     /**
-     * Methode welche fuer ein Produkt die Stueckzahl im Lager ausgibt.
-     * 
-     * @param id        ID des gesuchten Produktes.
-     * @param tablename Name der betroffenen Tabelle/Produkttyp.
-     * @return
-     */
-    public static int stueckzahlImLager(int id, String tablename) {
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt
-                    .executeQuery("SELECT LAGERPLATZ FROM " + tablename + " WHERE ID=" + id + ";");
-            rs.last();
-            rs = stmt.executeQuery("SELECT MENGE FROM LAGERPLATZ WHERE ID=" + rs.getInt(1) + ";");
-            return rs.getInt(1);
-        } catch (SQLException e) {
-            Hauptklasse.log.log(Level.SEVERE, e.getMessage());
-        }
-        return -1;
-    }
-
-    /**
      * Diese Methode macht aus den Daten in der Datenbank ein Object[][] Array,
      * damit dieses für die JTable verarbeitet werden kann.
      * 
      * @param queryText    Die Query welche ausgefuehrt werden soll.
      * @param spaltenNamen Spaltennamen fuer die Tabelle
-     * @return
+     * @return Gibt den Array mit Spalten fuer Attribute und Zeilen fuer Elemente
+     *         aus.
      */
     public static Object[][] queryToStringArray(String queryText, String[] spaltenNamen) {
         try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(queryText);
+            ResultSet rs = makeAQuery(queryText);
             Hauptklasse.log.info(queryText);
 
             rs.last();
@@ -177,7 +198,7 @@ public class SQL {
             }
             return arr;
         } catch (SQLSyntaxErrorException e) {
-            
+
             Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
@@ -189,6 +210,9 @@ public class SQL {
         return null;
     }
 
+    /**
+     * Eine Methode welche all unsere Lagerplaetze leer nochmal anlegt.
+     */
     public static void erstelleAlleLagerplaetze() {
         Statement stmt;
         try {
