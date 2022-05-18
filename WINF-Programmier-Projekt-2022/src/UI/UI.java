@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
@@ -578,6 +579,10 @@ public class UI extends JFrame {
 
     public void formatieren(Object[][] input) {
         try {
+        	
+        	Produkt p = produktFuerSuche(dropdownSuche1_2.getSelectedItem().toString());
+        	//System.out.println(p.getMindestmenge());
+        	
 
             Object[][] strings = Arrays.copyOfRange(input, 1, input.length);
 
@@ -594,7 +599,21 @@ public class UI extends JFrame {
                 map.put(name, count + 1);
 
             }
-
+            
+            
+            map.forEach((key,value) -> {
+            	System.out.println(value);
+            	System.out.println(key);
+            	if((Integer)value>=p.getMindestmenge()) {
+            		System.out.println("check");
+            		map.remove(key);
+            	}
+            });
+            
+            map.forEach((k,v)->System.out.println(k + " " + v));
+            
+            
+            
             Object[] k = map.keySet().toArray();
             Object[] v = map.values().toArray();
             Object[][] arr = new Object[k.length + 1][2];
@@ -602,12 +621,15 @@ public class UI extends JFrame {
             arr[0][1] = "Menge";
 
             for (int i = 1; i < k.length + 1; i++) {
+            	
                 arr[i][0] = k[i - 1];
                 arr[i][1] = v[i - 1];
+  
             }
 
             setBestellTable(arr);
         } catch (Exception e) {
+    
 
         }
 
