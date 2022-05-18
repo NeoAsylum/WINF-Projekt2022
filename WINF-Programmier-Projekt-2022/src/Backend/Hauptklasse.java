@@ -1,14 +1,12 @@
 package Backend;
 
-import UI.Login;
 import UI.UI;
-
-import java.time.LocalTime;
 import java.util.logging.Logger;
 
 public class Hauptklasse {
 
 	public static UI frame;
+    public static International uebersetzer = new International();
 
 	public static final Logger log = Logger.getLogger(Hauptklasse.class.getName());
 	

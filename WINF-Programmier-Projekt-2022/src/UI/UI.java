@@ -1,6 +1,9 @@
 package UI;
 
 import java.awt.BorderLayout;
+
+import Backend.Hauptklasse;
+import Backend.International;
 import Backend.QueryOutputHandling;
 import Backend.SQL;
 import Datentypen.CPU;
@@ -80,10 +83,13 @@ public class UI extends JFrame {
     private JButton okSuche;
     private JPanel panel_7;
     private JComboBox<String> dropdownSuche1_2;
+    private JComboBox sprachwahl;
+
     /**
      * Fuegt alle UI-Elemente hinzu.
      */
     public UI() {
+
         // Frame setup
         Object[][] input = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" } };
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,19 +104,24 @@ public class UI extends JFrame {
         contentPane.add(tabbedPane);
         // suche
         suche = new JPanel();
-        tabbedPane.addTab("Suche", null, suche, null);
+        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Suche"), null, suche, null);
         suche.setLayout(new BorderLayout(0, 0));
         suchePanelButtonsUnten = new JPanel();
         FlowLayout fl_suchePanelButtonsUnten = (FlowLayout) suchePanelButtonsUnten.getLayout();
         fl_suchePanelButtonsUnten.setAlignment(FlowLayout.RIGHT);
         suche.add(suchePanelButtonsUnten, BorderLayout.SOUTH);
-        deleteSuche = new JButton("Delete");
+        deleteSuche = new JButton(Hauptklasse.uebersetzer.getUebersetzung("Delete"));
         deleteSuche.addActionListener(e -> deletionSuchTabelle());
 
-      
+        sprachwahl = new JComboBox();
+        sprachwahl.addItem("");
+        sprachwahl.addItem("English");
+        sprachwahl.addItem("Deutsch");
+        suchePanelButtonsUnten.add(sprachwahl);
+
         deleteSuche.setToolTipText("put x in 'delete' column");
         suchePanelButtonsUnten.add(deleteSuche);
-        btnNewButton = new JButton("Exportieren");
+        btnNewButton = new JButton(Hauptklasse.uebersetzer.getUebersetzung("Exportieren"));
         suchePanelButtonsUnten.add(btnNewButton);
         btnNewButton.addActionListener(e -> {
             Excel.exportieren(tabelleSuche);
@@ -165,7 +176,7 @@ public class UI extends JFrame {
         scrollPaneSucheTabelle.setViewportView(tabelleSuche);
         // Einlagerung
         einlagern = new JPanel();
-        tabbedPane.addTab("Einlagern", null, einlagern, null);
+        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Einlagern"), null, einlagern, null);
         einlagern.setLayout(new BorderLayout(0, 0));
 
         // panel Buttons oben
@@ -196,7 +207,7 @@ public class UI extends JFrame {
 
         //
         einlagern_1 = new JPanel();
-        tabbedPane.addTab("Inventar", null, einlagern_1, null);
+        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Inventar"), null, einlagern_1, null);
         einlagern_1.setLayout(new BorderLayout(0, 0));
 
         panel_4 = new JPanel();
@@ -212,7 +223,7 @@ public class UI extends JFrame {
         einlagern_1.add(scrollPane_1, BorderLayout.WEST);
 
         einlagern_2 = new JPanel();
-        tabbedPane.addTab("Bestellliste", null, einlagern_2, null);
+        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Inventar"), null, einlagern_2, null);
         einlagern_2.setLayout(new BorderLayout(0, 0));
 
         panel_6 = new JPanel();
@@ -225,11 +236,8 @@ public class UI extends JFrame {
         panel_6.add(aktualisieren_1);
 
         aktualisieren_1.addActionListener(e -> {
-
             Produkt p = produktFuerSuche(dropdownSuche1_2.getSelectedItem().toString());
-
             String tabelle;
-
             switch (dropdownSuche1_2.getSelectedItem().toString()) {
             case "Grafikkarte":
                 tabelle = "grafikkarte";
@@ -247,12 +255,11 @@ public class UI extends JFrame {
                 tabelle = "festplatte";
                 break;
             default:
-            	System.out.println(dropdownSuche1_2.getSelectedItem().toString());
+                System.out.println(dropdownSuche1_2.getSelectedItem().toString());
                 tabelle = "cpu";
                 return;
             }
-            QueryOutputHandling.queryToUI(
-                    "SELECT * FROM " + tabelle , "Bestellliste",
+            QueryOutputHandling.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
                     p.getTabelleneintraege());
         });
         scrollPane_3 = new JScrollPane();
@@ -274,10 +281,22 @@ public class UI extends JFrame {
         panelEinlagerungButtonsOben.add(dropdownEinlagerungProdukttyp);
     }
 
+    public void updateSprache() {
+        System.out.println(sprachwahl.getSelectedItem().toString());
+        Hauptklasse.uebersetzer.setSprache(sprachwahl.getSelectedItem().toString());
+        System.out.println(Hauptklasse.uebersetzer.getUebersetzung("Suche"));
+        this.setVisible(false);
+        dispose();
+        Hauptklasse.frame = new UI();
+        Hauptklasse.frame.setVisible(true);
+        Hauptklasse.frame.addActionListenersToUi();
+    }
+
     /**
      * Methode welche den UI-Elementen Action-Listener hinzufuegt.
      */
     public void addActionListenersToUi() {
+        sprachwahl.addActionListener(e -> updateSprache());
         dropdownEinlagerungProdukttyp.addActionListener(e -> updateEinlagerungsTable());
         dropdownSucheProdukttyp.addActionListener(e -> querySuche());
         dropdownSucheProdukttyp.addActionListener(e -> updateDropdown2());
@@ -388,7 +407,9 @@ public class UI extends JFrame {
             }
             sqlQuery2 = sqlQuery2.substring(0, sqlQuery2.length() - 1 - added * 4) + ";";
             System.out.println(sqlQuery2);
-            SQL.anhandEinesArraysAlleRunterzaehlen(SQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }), p.produktTyp());
+            SQL.anhandEinesArraysAlleRunterzaehlen(
+                    SQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
+                    p.produktTyp());
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
             System.out.println(sqlQuery);
 
@@ -554,50 +575,42 @@ public class UI extends JFrame {
         model = new DefaultTableModel(data, input[0]);
         table_1.setModel(model);
     }
-    
-    
-    
-    public void formatieren(Object[][] input){
-    	try {
-    	
-    	Object[][] strings = Arrays.copyOfRange(input, 1, input.length);
-    	
-    	List<Object[]> strings2 = Arrays.asList(strings);
-		
-		Map<Object, Object> map = new HashMap<>();
-		
-		String name = null;
-		
-		
-		for(Object[] o : strings2) {
-			
-			name = (String) o[0];
-			int count = map.containsKey(name)?  (int) map.get(name): 0;
-			map.put(name, count + 1);
-			
-		}
-		
-		
-		Object[] k = map.keySet().toArray();
-		Object[] v = map.values().toArray();
-		Object[][] arr = new Object[k.length+1][2];
-		arr[0][0] = "Name";
-		arr[0][1] = "Menge";
-		
-		
-		for(int i = 1; i<k.length+1; i++) {
-			arr[i][0] = k[i-1];
-			arr[i][1] = v[i-1];
-		}
-		
-		
-		setBestellTable(arr);
-    	}catch(Exception e) {
-    		
-    	}
-	
+
+    public void formatieren(Object[][] input) {
+        try {
+
+            Object[][] strings = Arrays.copyOfRange(input, 1, input.length);
+
+            List<Object[]> strings2 = Arrays.asList(strings);
+
+            Map<Object, Object> map = new HashMap<>();
+
+            String name = null;
+
+            for (Object[] o : strings2) {
+
+                name = (String) o[0];
+                int count = map.containsKey(name) ? (int) map.get(name) : 0;
+                map.put(name, count + 1);
+
+            }
+
+            Object[] k = map.keySet().toArray();
+            Object[] v = map.values().toArray();
+            Object[][] arr = new Object[k.length + 1][2];
+            arr[0][0] = "Name";
+            arr[0][1] = "Menge";
+
+            for (int i = 1; i < k.length + 1; i++) {
+                arr[i][0] = k[i - 1];
+                arr[i][1] = v[i - 1];
+            }
+
+            setBestellTable(arr);
+        } catch (Exception e) {
+
+        }
+
     }
-    
-    
 
 }
