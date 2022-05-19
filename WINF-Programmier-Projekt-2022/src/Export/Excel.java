@@ -22,7 +22,7 @@ public class Excel {
 		try {
 			
 		    String a = JOptionPane.showInputDialog("Welchen Namen soll das File haben?");
-			
+			if(a!=null) {
 			TableModel table_model = table.getModel();
 			FileWriter file_writer = new FileWriter("WINF-Programmier-Projekt-2022" + FileSystems.getDefault().getSeparator()+ "Folder"+ FileSystems.getDefault().getSeparator()+ a + ".xls");
 			for(int i = 0; i<table_model.getColumnCount(); i++) {
@@ -43,6 +43,7 @@ public class Excel {
 		      
 		      JFrame jf = new JFrame();
 		      JOptionPane.showMessageDialog(jf, "Die Datei " + a + " wurde exportiert.");
+			}
 		      
 			
 		} catch (IOException e1) {

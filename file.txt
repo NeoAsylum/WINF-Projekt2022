@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Written in 2022-05-19, 9:55</comment>
+<comment>Written in 2022-05-19, 10:14</comment>
 <entry key="password">!db4.hfts22?</entry>
 <entry key="driver">com.mysql.cj.jdbc.Driver</entry>
 <entry key="dbName">db4</entry>

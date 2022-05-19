@@ -227,7 +227,7 @@ public class UI extends JFrame {
         einlagern_1.add(scrollPane_1, BorderLayout.WEST);
 
         einlagern_2 = new JPanel();
-        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Inventar"), null, einlagern_2,
+        tabbedPane.addTab("Bestellliste", null, einlagern_2,
                 null);
         einlagern_2.setLayout(new BorderLayout(0, 0));
 
@@ -236,6 +236,10 @@ public class UI extends JFrame {
 
         exportieren_1 = new JButton("Exportieren");
         panel_6.add(exportieren_1);
+        
+        exportieren_1.addActionListener(e->{
+        	Excel.exportieren(table_1);
+        });
 
         aktualisieren_1 = new JButton("Aktualisieren");
         panel_6.add(aktualisieren_1);
@@ -615,7 +619,6 @@ public class UI extends JFrame {
             namen.addAll(Arrays.asList(map.keySet().toArray()));
             namen.stream().filter(e->(Integer) map.get(e)>=p.getMindestmenge()).forEach(e->map.remove(e));
             
-            map.forEach((k,v)->System.out.println(k + " " + v));
             
             
             
