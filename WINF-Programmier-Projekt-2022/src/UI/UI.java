@@ -580,7 +580,14 @@ public class UI extends JFrame {
         model = new DefaultTableModel(data, input[0]);
         table_1.setModel(model);
     }
-
+    
+    /**
+     * Formatiert den gegebenen 2d-Object-Array zu einem 2*x Object-Array
+     * und filtert nach Produkten, die auch wirklich unter der Mindestmenge sind 
+     * für die Bestellliste. 
+     * 
+     * @param input
+     */
     public void formatieren(Object[][] input) {
         try {
         	
