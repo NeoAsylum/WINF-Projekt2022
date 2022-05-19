@@ -3,7 +3,7 @@ package Datentypen;
 public class CPU implements Produkt {
     String[] tabelleneintraege = { "Name", "Hersteller", "MHz","ID", "Lagerplatz"};
     String PRODUKTTYP = "cpu";
-    private int mindestmenge = 12;
+    private int mindestmenge = 2;
     
     @Override
     public String[] getTabelleneintraege() {

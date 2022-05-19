@@ -21,11 +21,15 @@ import javax.swing.JTable;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
@@ -600,15 +604,9 @@ public class UI extends JFrame {
 
             }
             
-            
-            map.forEach((key,value) -> {
-            	System.out.println(value);
-            	System.out.println(key);
-            	if((Integer)value>=p.getMindestmenge()) {
-            		System.out.println("check");
-            		map.remove(key);
-            	}
-            });
+            List<Object> namen = new ArrayList<>();
+            namen.addAll(Arrays.asList(map.keySet().toArray()));
+            namen.stream().filter(e->(Integer) map.get(e)>=p.getMindestmenge()).forEach(e->map.remove(e));
             
             map.forEach((k,v)->System.out.println(k + " " + v));
             
@@ -629,7 +627,7 @@ public class UI extends JFrame {
 
             setBestellTable(arr);
         } catch (Exception e) {
-    
+        	e.printStackTrace();
 
         }
 
