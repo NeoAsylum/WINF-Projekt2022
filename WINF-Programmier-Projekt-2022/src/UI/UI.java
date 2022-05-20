@@ -296,9 +296,9 @@ public class UI extends JFrame {
         System.out.println(Hauptklasse.uebersetzer.getUebersetzung("Suche"));
         this.setVisible(false);
         dispose();
-        Hauptklasse.frame = new UI();
-        Hauptklasse.frame.setVisible(true);
-        Hauptklasse.frame.addActionListenersToUi();
+        Hauptklasse.setUI(new UI()); 
+        Hauptklasse.getUI().setVisible(true);
+        Hauptklasse.getUI().addActionListenersToUi();
     }
 
     /**

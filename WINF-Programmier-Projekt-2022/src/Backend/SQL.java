@@ -4,12 +4,21 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
@@ -47,9 +56,9 @@ public class SQL {
             conn = DriverManager.getConnection(
                     props.getProperty("url") + props.getProperty("dbName"),
                     props.getProperty("userName"), props.getProperty("password"));
-            Hauptklasse.frame = new UI();
-            Hauptklasse.frame.addActionListenersToUi();
-            Hauptklasse.frame.setVisible(true);
+            Hauptklasse.setUI(new UI());
+            Hauptklasse.getUI().addActionListenersToUi();
+            Hauptklasse.getUI().setVisible(true);
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
@@ -79,8 +88,9 @@ public class SQL {
 
     /**
      * Methode welche mit einem String eine Query erstellt.
+     * 
      * @param query Die zu stellende Query.
-     * @return  Der Rueckgabewert als ResultSet.
+     * @return Der Rueckgabewert als ResultSet.
      */
     public static ResultSet makeAQuery(String query) {
         Statement stmt;
@@ -138,7 +148,7 @@ public class SQL {
      * @param name         Der Name des PRoduktes als Identifikator.
      */
     public static void anzahlImLagerHochzaehlen(int lagerplatzID, String tablename, String name) {
-        update("UPDATE LAGERPLATZ SET Name='" + name + "', Menge=Menge+1 WHERE ID=" + lagerplatzID
+        update("UPDATE LAGERPLATZ SET Name=' " + name + "', Menge=Menge+1 WHERE ID=" + lagerplatzID
                 + ";");
     }
 
@@ -204,11 +214,11 @@ public class SQL {
             return arr;
         } catch (SQLSyntaxErrorException e) {
 
-            Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
+            Hauptklasse.getUI().setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
         } catch (SQLException e) {
-            Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
+            Hauptklasse.getUI().setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
         }
@@ -235,7 +245,7 @@ public class SQL {
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, e.getMessage());
         }
-        Hauptklasse.frame.setSuchTable(QueryOutputHandling.nonsenseQuery());
+        Hauptklasse.getUI().setSuchTable(QueryOutputHandling.nonsenseQuery());
     }
 
 }

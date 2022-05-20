@@ -26,15 +26,15 @@ public class QueryOutputHandling {
      */
     public static void queryToUI(String query, String oberflaeche, String[] tabelleneintraege) {
         if (oberflaeche.equals("Suche")) {
-            Hauptklasse.frame.setSuchTable(SQL.queryToStringArray(query, tabelleneintraege));
+            Hauptklasse.getUI().setSuchTable(SQL.queryToStringArray(query, tabelleneintraege));
         } else if (oberflaeche.equals("Einlagerung")) {
-            Hauptklasse.frame
+            Hauptklasse.getUI()
                     .setEinlagerungTable(SQL.queryToStringArray(query, tabelleneintraege));
-            Hauptklasse.frame
+            Hauptklasse.getUI()
                     .setEinlagerungTable(SQL.queryToStringArray(query, tabelleneintraege));
 
         } else if (oberflaeche.equals("Bestellliste")) {
-            Hauptklasse.frame.formatieren(SQL.queryToStringArray(query, tabelleneintraege));
+            Hauptklasse.getUI().formatieren(SQL.queryToStringArray(query, tabelleneintraege));
         }
     }
 
@@ -89,6 +89,10 @@ public class QueryOutputHandling {
      *         zurueckgeben sollte.
      */
     public static Object[][] nonsenseQuery() {
+        System.out.println(Arrays.deepToString(SQL.queryToStringArray(
+                "SELECT " + "Name, VRAM, Hersteller "
+                        + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
+                new String[] { "Name", "VRAM", "Hersteller" }))+",,");
         return SQL.queryToStringArray(
                 "SELECT " + "Name, VRAM, Hersteller "
                         + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
