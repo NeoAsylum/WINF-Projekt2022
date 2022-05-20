@@ -3,6 +3,7 @@ package Backend;
 import UI.UI;
 
 import java.util.Arrays;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ public class Hauptklasse {
      * @param args
      */
     public static void main(String[] args) {
-        
+        TreeMap tm=new TreeMap();
         if (args.length < 1) {
             SQL.setup();
         } else if (Arrays.stream(args).collect(Collectors.toList()).contains("no login")) {

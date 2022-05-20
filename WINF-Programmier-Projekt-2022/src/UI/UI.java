@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import javax.swing.JTabbedPane;
@@ -47,7 +48,7 @@ public class UI extends JFrame {
     enum tabs {
         Suche, Einlagerung
     };
-
+    
     private JPanel contentPane;
     private JTabbedPane tabbedPane;
     private JTable tabelleSuche;
@@ -416,18 +417,17 @@ public class UI extends JFrame {
             }
             sqlQuery2 = sqlQuery2.substring(0, sqlQuery2.length() - 1 - added * 4) + ";";
             System.out.println(sqlQuery2);
-            SQL.anhandEinesArraysAlleRunterzaehlen(
-                    SQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
-                    p.produktTyp());
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
             System.out.println(sqlQuery);
-
             sqlQuery = p == null ? null : sqlQuery;
             Object[] options = { "Yes", "No" };
             int n = JOptionPane.showOptionDialog(this, "Delete current Selection?", "Delete?",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
                     options[1]);
             if (n == 0) {
+                SQL.anhandEinesArraysAlleRunterzaehlen(
+                        SQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
+                        p.produktTyp());
                 SQL.update(sqlQuery);
                 QueryOutputHandling.nonsenseQuery();
             }
