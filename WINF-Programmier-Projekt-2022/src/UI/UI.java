@@ -21,17 +21,11 @@ import javax.swing.JTable;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.stream.Stream;
-
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
@@ -48,7 +42,7 @@ public class UI extends JFrame {
     enum tabs {
         Suche, Einlagerung
     };
-    
+
     private JPanel contentPane;
     private JTabbedPane tabbedPane;
     private JTable tabelleSuche;
@@ -107,13 +101,13 @@ public class UI extends JFrame {
         contentPane.add(tabbedPane);
         // suche
         suche = new JPanel();
-        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Suche"), null, suche, null);
+        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Suche"), null, suche, null);
         suche.setLayout(new BorderLayout(0, 0));
         suchePanelButtonsUnten = new JPanel();
         FlowLayout fl_suchePanelButtonsUnten = (FlowLayout) suchePanelButtonsUnten.getLayout();
         fl_suchePanelButtonsUnten.setAlignment(FlowLayout.RIGHT);
         suche.add(suchePanelButtonsUnten, BorderLayout.SOUTH);
-        deleteSuche = new JButton(Hauptklasse.uebersetzer.getUebersetzung("Delete"));
+        deleteSuche = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Delete"));
         deleteSuche.addActionListener(e -> deletionSuchTabelle());
 
         sprachwahl = new JComboBox<String>();
@@ -124,7 +118,7 @@ public class UI extends JFrame {
 
         deleteSuche.setToolTipText("put x in 'delete' column");
         suchePanelButtonsUnten.add(deleteSuche);
-        btnNewButton = new JButton(Hauptklasse.uebersetzer.getUebersetzung("Exportieren"));
+        btnNewButton = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Exportieren"));
         suchePanelButtonsUnten.add(btnNewButton);
         btnNewButton.addActionListener(e -> {
             Excel.exportieren(tabelleSuche);
@@ -179,7 +173,7 @@ public class UI extends JFrame {
         scrollPaneSucheTabelle.setViewportView(tabelleSuche);
         // Einlagerung
         einlagern = new JPanel();
-        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Einlagern"), null, einlagern,
+        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Einlagern"), null, einlagern,
                 null);
         einlagern.setLayout(new BorderLayout(0, 0));
 
@@ -211,7 +205,7 @@ public class UI extends JFrame {
 
         //
         einlagern_1 = new JPanel();
-        tabbedPane.addTab(Hauptklasse.uebersetzer.getUebersetzung("Inventar"), null, einlagern_1,
+        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Inventar"), null, einlagern_1,
                 null);
         einlagern_1.setLayout(new BorderLayout(0, 0));
 
@@ -228,8 +222,7 @@ public class UI extends JFrame {
         einlagern_1.add(scrollPane_1, BorderLayout.WEST);
 
         einlagern_2 = new JPanel();
-        tabbedPane.addTab("Bestellliste", null, einlagern_2,
-                null);
+        tabbedPane.addTab("Bestellliste", null, einlagern_2, null);
         einlagern_2.setLayout(new BorderLayout(0, 0));
 
         panel_6 = new JPanel();
@@ -237,9 +230,9 @@ public class UI extends JFrame {
 
         exportieren_1 = new JButton("Exportieren");
         panel_6.add(exportieren_1);
-        
-        exportieren_1.addActionListener(e->{
-        	Excel.exportieren(table_1);
+
+        exportieren_1.addActionListener(e -> {
+            Excel.exportieren(table_1);
         });
 
         aktualisieren_1 = new JButton("Aktualisieren");
@@ -293,11 +286,11 @@ public class UI extends JFrame {
 
     public void updateSprache() {
         System.out.println(sprachwahl.getSelectedItem().toString());
-        Hauptklasse.uebersetzer.setSprache(sprachwahl.getSelectedItem().toString());
-        System.out.println(Hauptklasse.uebersetzer.getUebersetzung("Suche"));
+        Hauptklasse.getUebersetzer().setSprache(sprachwahl.getSelectedItem().toString());
+        System.out.println(Hauptklasse.getUebersetzer().getUebersetzung("Suche"));
         this.setVisible(false);
         dispose();
-        Hauptklasse.setUI(new UI()); 
+        Hauptklasse.setUI(new UI());
         Hauptklasse.getUI().setVisible(true);
         Hauptklasse.getUI().addActionListenersToUi();
     }
@@ -584,20 +577,19 @@ public class UI extends JFrame {
         model = new DefaultTableModel(data, input[0]);
         table_1.setModel(model);
     }
-    
+
     /**
-     * Formatiert den gegebenen 2d-Object-Array zu einem 2*x Object-Array
-     * und filtert nach Produkten, die auch wirklich unter der Mindestmenge sind 
-     * für die Bestellliste. 
+     * Formatiert den gegebenen 2d-Object-Array zu einem 2*x Object-Array und
+     * filtert nach Produkten, die auch wirklich unter der Mindestmenge sind für die
+     * Bestellliste.
      * 
      * @param input
      */
     public void formatieren(Object[][] input) {
         try {
-        	
-        	Produkt p = produktFuerSuche(dropdownSuche1_2.getSelectedItem().toString());
-        	//System.out.println(p.getMindestmenge());
-        	
+
+            Produkt p = produktFuerSuche(dropdownSuche1_2.getSelectedItem().toString());
+            // System.out.println(p.getMindestmenge());
 
             Object[][] strings = Arrays.copyOfRange(input, 1, input.length);
 
@@ -614,14 +606,12 @@ public class UI extends JFrame {
                 map.put(name, count + 1);
 
             }
-            
+
             List<Object> namen = new ArrayList<>();
             namen.addAll(Arrays.asList(map.keySet().toArray()));
-            namen.stream().filter(e->(Integer) map.get(e)>=p.getMindestmenge()).forEach(e->map.remove(e));
-            
-            
-            
-            
+            namen.stream().filter(e -> (Integer) map.get(e) >= p.getMindestmenge())
+                    .forEach(e -> map.remove(e));
+
             Object[] k = map.keySet().toArray();
             Object[] v = map.values().toArray();
             Object[][] arr = new Object[k.length + 1][2];
@@ -629,15 +619,15 @@ public class UI extends JFrame {
             arr[0][1] = "Menge";
 
             for (int i = 1; i < k.length + 1; i++) {
-            	
+
                 arr[i][0] = k[i - 1];
                 arr[i][1] = v[i - 1];
-  
+
             }
 
             setBestellTable(arr);
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
 
         }
 

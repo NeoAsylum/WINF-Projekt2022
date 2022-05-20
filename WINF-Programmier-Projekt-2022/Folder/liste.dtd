@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT Liste (Grafikkarte*, CPU*, Fertigprodukt*,Festplatte*,Hauptspeicher*)>
+<!ELEMENT Listen (Grafikkarte*, CPU*,Fertigprodukt*,Festplatte*,Hauptspeicher*)>
 	<!ELEMENT Grafikkarte (#PCDATA)>
 		<!ATTLIST Grafikkarte
 			Name CDATA #REQUIRED
@@ -37,10 +37,3 @@
 			Groesse CDATA #REQUIRED
 			ID CDATA #REQUIRED
 			Lagerplatz CDATA #REQUIRED>
-
-	
-		
-		
-		
-		
-<!

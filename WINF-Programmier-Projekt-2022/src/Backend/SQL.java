@@ -2,28 +2,17 @@ package Backend;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
-
 import javax.swing.JOptionPane;
 import Datentypen.Produkt;
 import UI.UI;
@@ -34,15 +23,18 @@ public class SQL {
     static Properties props = new Properties();
 
     /**
-     * Setup Methode welche SQL-Connection aufsetzt und frame/UI initialisiert.
+     * Setup Methode welche SQL-Connection aufsetzt, frame/UI initialisiert und
+     * Properties lädt/die Sprache anhand der vorher gespeicherten Sprache festlegt.
      */
     public static void setup() {
         try {
-            props.loadFromXML(new FileInputStream("file.txt"));
-            props.setProperty("Sprache", Locale.getDefault().toLanguageTag());
-            props.storeToXML(new FileOutputStream("file.txt"),
-                    "Written in " + new Datum().datum + ", " + new Datum().zeit);
-            Hauptklasse.uebersetzer.setSprache(props.getProperty("Sprache"));
+            props.loadFromXML(new FileInputStream("resources/properties.txt"));
+            /*
+             * props.setProperty("Sprache", Locale.getDefault().toLanguageTag());
+             * props.storeToXML(new FileOutputStream("resources/properties.txt"),
+             * "Written in " + new Datum().datum + ", " + new Datum().zeit);
+             */
+            Hauptklasse.getUebersetzer().setSprache(props.getProperty("Sprache"));
             System.out.println(Locale.getDefault().toLanguageTag());
         } catch (FileNotFoundException e1) {
             JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -69,7 +61,7 @@ public class SQL {
     }
 
     /**
-     * Diese Methode sendet ein Update-Query zum SQL-Server
+     * Diese Methode sendet ein Update-Query zum SQL-Server.
      * 
      * @param sqlQueryText Der Text der Query welche zum Server geschickt werden
      *                     soll.
@@ -109,27 +101,23 @@ public class SQL {
      * Methode welche die LagerplatzID fuer ein Produkt ausgibt.
      * 
      * @param produktTyp Der Produkttyp des Produktes.
-     * @param Der        Name des Produktes welches eingelagert werden soll.
+     * @param name       Der Name des Produktes welches eingelagert werden soll.
      * @return
      */
     public static int einlagern(Produkt produktTyp, String name) {
         try {
-            Statement stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery("SELECT ID FROM LAGERPLATZ WHERE TYP='"
-                    + produktTyp.produktTyp() + "' AND NAME='" + name + "';");
+            ResultSet rs = makeAQuery("SELECT ID FROM LAGERPLATZ WHERE TYP='"
+                    + produktTyp.produktTyp() + "' AND Name='" + name + "';");
             rs.first();
             anzahlImLagerHochzaehlen(rs.getInt(1), produktTyp.produktTyp(), name);
             return rs.getInt(1);
-
         } catch (SQLException e) {
-            Hauptklasse.log.log(Level.SEVERE, "fuck", e);
+            Hauptklasse.log.log(Level.SEVERE, "es muss ein neuer Lagerplatz zugewiesen werden", e);
             try {
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT ID FROM LAGERPLATZ WHERE Menge=0;");
+                ResultSet rs = makeAQuery("SELECT ID FROM LAGERPLATZ WHERE Menge=0;");
                 rs.first();
-                stmt.executeUpdate("UPDATE LAGERPLATZ SET TYP='" + produktTyp.produktTyp()
-                        + "', name='" + name + "' WHERE ID=" + rs.getInt(1) + ";");
+                update("UPDATE LAGERPLATZ SET TYP='" + produktTyp.produktTyp() + "',name='"
+                        + name.toString() + "' WHERE ID=" + rs.getInt(1) + ";");
                 return einlagern(produktTyp, name);
             } catch (SQLException e1) {
                 System.out.println("There is no more free space!!!");
@@ -148,7 +136,7 @@ public class SQL {
      * @param name         Der Name des PRoduktes als Identifikator.
      */
     public static void anzahlImLagerHochzaehlen(int lagerplatzID, String tablename, String name) {
-        update("UPDATE LAGERPLATZ SET Name=' " + name + "', Menge=Menge+1 WHERE ID=" + lagerplatzID
+        update("UPDATE LAGERPLATZ SET Name='" + name + "', Menge=Menge+1 WHERE ID=" + lagerplatzID
                 + ";");
     }
 
@@ -213,7 +201,6 @@ public class SQL {
             }
             return arr;
         } catch (SQLSyntaxErrorException e) {
-
             Hauptklasse.getUI().setSuchTable(QueryOutputHandling.nonsenseQuery());
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);

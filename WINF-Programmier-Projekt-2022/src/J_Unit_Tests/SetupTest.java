@@ -15,16 +15,16 @@ public class SetupTest {
     @BeforeEach
     public void setUp() {
         Hauptklasse.main(new String[] { "no login" });
-        assertTrue(!(Hauptklasse.getUI()==null));
+        assertTrue(!(Hauptklasse.getUI() == null));
         Hauptklasse.log.info("UI erfolgreich initialisiert.");
-        assertTrue(!(Hauptklasse.uebersetzer==null));
+        assertTrue(!(Hauptklasse.getUebersetzer() == null));
         Hauptklasse.log.info("Uebersetzer erfolgreich initialisiert.");
-        
     }
-    
+
     @Test
     public void testNonsenseQuery() {
-        assertTrue("[[Name, VRAM, Hersteller]]".equals(Arrays.deepToString(QueryOutputHandling.nonsenseQuery())));
+        assertTrue("[[Name, VRAM, Hersteller]]"
+                .equals(Arrays.deepToString(QueryOutputHandling.nonsenseQuery())));
         Hauptklasse.log.info("Nonsense Query erfolgreich");
     }
 }

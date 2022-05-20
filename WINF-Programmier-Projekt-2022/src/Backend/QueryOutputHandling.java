@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
  */
 public class QueryOutputHandling {
 
-
     /**
      * Ruft die Methoden auf welche das jeweilige UI setzen mittels eines Arrays mit
      * Tabelleneinträgen.
@@ -89,10 +88,6 @@ public class QueryOutputHandling {
      *         zurueckgeben sollte.
      */
     public static Object[][] nonsenseQuery() {
-        System.out.println(Arrays.deepToString(SQL.queryToStringArray(
-                "SELECT " + "Name, VRAM, Hersteller "
-                        + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
-                new String[] { "Name", "VRAM", "Hersteller" }))+",,");
         return SQL.queryToStringArray(
                 "SELECT " + "Name, VRAM, Hersteller "
                         + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
