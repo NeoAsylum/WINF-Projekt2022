@@ -10,10 +10,14 @@ import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
+
+import Datentypen.Grafikkarte;
 import Datentypen.Produkt;
 import UI.UI;
 
@@ -182,6 +186,7 @@ public class SQL {
     public static Object[][] queryToStringArray(String queryText, String[] spaltenNamen) {
         try {
             ResultSet rs = makeAQuery(queryText);
+            
             Hauptklasse.log.info(queryText);
 
             rs.last();
@@ -209,6 +214,7 @@ public class SQL {
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
         }
+        
         return null;
     }
 

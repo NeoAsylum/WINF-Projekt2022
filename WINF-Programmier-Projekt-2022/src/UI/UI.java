@@ -59,28 +59,30 @@ public class UI extends JFrame {
     private JTextField textFieldSucheAttribut1;
     private JTextField textFieldSucheAttribut2;
     private JTextField textFieldSucheAttribut3;
-    private JPanel einlagern;
+    private JPanel einlagerTab;
     private JPanel panelEinlagerungButtonsOben;
     private JPanel panelEinlagerungButtonsUnten;
     private JComboBox<String> dropdownEinlagerungProdukttyp;
     JScrollPane scrollPane_2;
     private JButton btnNewButton_1;
     private JTable einlagerungsTabelle;
-    private JPanel einlagern_1;
+    private JPanel inventarTab;
     private JPanel panel_4;
     private JPanel panel_5;
     private JButton exportieren;
-    private JScrollPane scrollPane_1;
-    private JPanel einlagern_2;
-    private JPanel panel_6;
+    private JPanel bestelllistenTab;
+    private JPanel bestellenButtonsUnten;
     private JButton exportieren_1;
-    private JScrollPane scrollPane_3;
+    private JScrollPane scrollPaneBestellliste;
     private JTable table_1;
     private JButton aktualisieren_1;
     private JButton okSuche;
-    private JPanel panel_7;
+    private JPanel bestellenButtonsOben;
     private JComboBox<String> dropdownSuche1_2;
     private JComboBox<String> sprachwahl;
+    private JScrollPane scrollPaneInventar;
+    private JTable inventarTabelle;
+    private JButton okButtonInventar;
 
     /**
      * Fuegt alle UI-Elemente hinzu.
@@ -101,7 +103,8 @@ public class UI extends JFrame {
         contentPane.add(tabbedPane);
         // suche
         suche = new JPanel();
-        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Suche"), null, suche, null);
+        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Suche"), null, suche,
+                null);
         suche.setLayout(new BorderLayout(0, 0));
         suchePanelButtonsUnten = new JPanel();
         FlowLayout fl_suchePanelButtonsUnten = (FlowLayout) suchePanelButtonsUnten.getLayout();
@@ -172,23 +175,23 @@ public class UI extends JFrame {
         setSuchTable(input);
         scrollPaneSucheTabelle.setViewportView(tabelleSuche);
         // Einlagerung
-        einlagern = new JPanel();
-        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Einlagern"), null, einlagern,
-                null);
-        einlagern.setLayout(new BorderLayout(0, 0));
+        einlagerTab = new JPanel();
+        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Einlagern"), null,
+                einlagerTab, null);
+        einlagerTab.setLayout(new BorderLayout(0, 0));
 
         // panel Buttons oben
         panelEinlagerungButtonsOben = new JPanel();
         FlowLayout fl_panelEinlagerungButtonsOben = (FlowLayout) panelEinlagerungButtonsOben
                 .getLayout();
         fl_panelEinlagerungButtonsOben.setAlignment(FlowLayout.LEFT);
-        einlagern.add(panelEinlagerungButtonsOben, BorderLayout.NORTH);
+        einlagerTab.add(panelEinlagerungButtonsOben, BorderLayout.NORTH);
         // panel Buttons unten
         panelEinlagerungButtonsUnten = new JPanel();
         FlowLayout fl_panelEinlagerungButtonsUnten = (FlowLayout) panelEinlagerungButtonsUnten
                 .getLayout();
         fl_panelEinlagerungButtonsUnten.setAlignment(FlowLayout.RIGHT);
-        einlagern.add(panelEinlagerungButtonsUnten, BorderLayout.SOUTH);
+        einlagerTab.add(panelEinlagerungButtonsUnten, BorderLayout.SOUTH);
 
         // Button einlagerung
         btnNewButton_1 = new JButton("Lagerpl\u00E4tze ausgeben");
@@ -197,46 +200,58 @@ public class UI extends JFrame {
 
         // Scrollpane Einlagerung
         JScrollPane scrollpaneEinlagerungTabelle = new JScrollPane();
-        einlagern.add(scrollpaneEinlagerungTabelle, BorderLayout.CENTER);
+        einlagerTab.add(scrollpaneEinlagerungTabelle, BorderLayout.CENTER);
 
         // tabelle Einlagerung
         einlagerungsTabelle = new JTable();
+        einlagerungsTabelle.setModel(new DefaultTableModel(
+                new Object[][] { { null, null, null, null }, { null, null, null, null }, },
+                new String[] { "", "", "", "" }));
         scrollpaneEinlagerungTabelle.setViewportView(einlagerungsTabelle);
 
         //
-        einlagern_1 = new JPanel();
-        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Inventar"), null, einlagern_1,
-                null);
-        einlagern_1.setLayout(new BorderLayout(0, 0));
+        inventarTab = new JPanel();
+        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Inventar"), null,
+                inventarTab, null);
+        inventarTab.setLayout(new BorderLayout(0, 0));
 
         panel_4 = new JPanel();
-        einlagern_1.add(panel_4, BorderLayout.NORTH);
+        inventarTab.add(panel_4, BorderLayout.NORTH);
 
         panel_5 = new JPanel();
-        einlagern_1.add(panel_5, BorderLayout.SOUTH);
+        inventarTab.add(panel_5, BorderLayout.SOUTH);
+
+        okButtonInventar = new JButton("inventarOk");
+        panel_5.add(okButtonInventar);
 
         exportieren = new JButton("Exportieren");
         panel_5.add(exportieren);
 
-        scrollPane_1 = new JScrollPane();
-        einlagern_1.add(scrollPane_1, BorderLayout.WEST);
+        scrollPaneInventar = new JScrollPane();
+        inventarTab.add(scrollPaneInventar, BorderLayout.CENTER);
 
-        einlagern_2 = new JPanel();
-        tabbedPane.addTab("Bestellliste", null, einlagern_2, null);
-        einlagern_2.setLayout(new BorderLayout(0, 0));
+        inventarTabelle = new JTable();
+        inventarTabelle.setModel(new DefaultTableModel(
+                new Object[][] { { null, null, null, null }, { null, null, null, null }, },
+                new String[] { "", "", "", "" }));
+        scrollPaneInventar.setViewportView(inventarTabelle);
 
-        panel_6 = new JPanel();
-        einlagern_2.add(panel_6, BorderLayout.SOUTH);
+        bestelllistenTab = new JPanel();
+        tabbedPane.addTab("Bestellliste", null, bestelllistenTab, null);
+        bestelllistenTab.setLayout(new BorderLayout(0, 0));
+
+        bestellenButtonsUnten = new JPanel();
+        bestelllistenTab.add(bestellenButtonsUnten, BorderLayout.SOUTH);
 
         exportieren_1 = new JButton("Exportieren");
-        panel_6.add(exportieren_1);
+        bestellenButtonsUnten.add(exportieren_1);
 
         exportieren_1.addActionListener(e -> {
             Excel.exportieren(table_1);
         });
 
         aktualisieren_1 = new JButton("Aktualisieren");
-        panel_6.add(aktualisieren_1);
+        bestellenButtonsUnten.add(aktualisieren_1);
 
         aktualisieren_1.addActionListener(e -> {
             Produkt p = produktFuerSuche(dropdownSuche1_2.getSelectedItem().toString());
@@ -265,18 +280,21 @@ public class UI extends JFrame {
             QueryOutputHandling.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
                     p.getTabelleneintraege());
         });
-        scrollPane_3 = new JScrollPane();
-        einlagern_2.add(scrollPane_3, BorderLayout.CENTER);
+        scrollPaneBestellliste = new JScrollPane();
+        bestelllistenTab.add(scrollPaneBestellliste, BorderLayout.CENTER);
         table_1 = new JTable();
-        scrollPane_3.setViewportView(table_1);
-        panel_7 = new JPanel();
-        einlagern_2.add(panel_7, BorderLayout.NORTH);
+        table_1.setModel(new DefaultTableModel(
+                new Object[][] { { null, null, null, null }, { null, null, null, null }, },
+                new String[] { "", "", "", "" }));
+        scrollPaneBestellliste.setViewportView(table_1);
+        bestellenButtonsOben = new JPanel();
+        bestelllistenTab.add(bestellenButtonsOben, BorderLayout.NORTH);
         dropdownSuche1_2 = new JComboBox<String>();
         dropdownSuche1_2.addItem("");
         for (String a : arr) {
             dropdownSuche1_2.addItem(a);
         }
-        panel_7.add(dropdownSuche1_2);
+        bestellenButtonsOben.add(dropdownSuche1_2);
         dropdownEinlagerungProdukttyp = new JComboBox<String>();
         for (String a : arr) {
             dropdownEinlagerungProdukttyp.addItem(a);
@@ -299,6 +317,8 @@ public class UI extends JFrame {
      * Methode welche den UI-Elementen Action-Listener hinzufuegt.
      */
     public void addActionListenersToUi() {
+        okButtonInventar
+                .addActionListener(e -> setInventarTable(QueryOutputHandling.inventarisierung()));
         sprachwahl.addActionListener(e -> updateSprache());
         dropdownEinlagerungProdukttyp.addActionListener(e -> updateEinlagerungsTable());
         dropdownSucheProdukttyp.addActionListener(e -> querySuche());
@@ -315,6 +335,17 @@ public class UI extends JFrame {
         model.setRowCount(0);
         model = new DefaultTableModel(data, input[0]);
         tabelleSuche.setModel(model);
+    }
+
+    /**
+     * Methode erzeugt Table neu.
+     */
+    public void setInventarTable(Object[][] input) {
+        Object[][] data = Arrays.copyOfRange(input, 1, input.length);
+        DefaultTableModel model = (DefaultTableModel) inventarTabelle.getModel();
+        model.setRowCount(0);
+        model = new DefaultTableModel(data, input[0]);
+        inventarTabelle.setModel(model);
     }
 
     /**

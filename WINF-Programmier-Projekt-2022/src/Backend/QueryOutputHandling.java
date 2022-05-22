@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Eine Klasse welche die Ausgaben der SQL-Querys verarbeitet.
@@ -78,6 +79,58 @@ public class QueryOutputHandling {
         Map<Object, Long> mapMitStueckzahlen = a.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         return mapMitStueckzahlen;
+    }
+
+    public static Object[][] produktTypArrayhinzufuegen(String hinzuzufuegen, Object[][] array) {
+        Object[][] result = new Object[array.length][array[0].length + 1];
+        for (int i = 0; i < array.length; i++) {
+            result[i][0] = hinzuzufuegen;
+            for (int a = 1; a < array[0].length + 1; a++) {
+                result[i][a] = array[i][a - 1];
+            }
+        }
+        return result;
+    }
+
+    public static Object[][] inventarisierung() {
+
+        // Querys für alle PRodukttypen erstellen.
+        Object[][] grafikkarten = SQL.queryToStringArray(
+                "SELECT NAME, ID, LAGERPLATZ FROM GRAFIKKARTE;",
+                new String[] { "Name", "ID", "Lagerplatz" });
+        Object[][] cpus = SQL.queryToStringArray("SELECT NAME, ID, LAGERPLATZ FROM CPU;",
+                new String[] { "Name", "ID", "Lagerplatz" });
+        Object[][] fertigprodukte = SQL.queryToStringArray(
+                "SELECT NAME, ID, LAGERPLATZ FROM Fertigprodukt;",
+                new String[] { "Name", "ID", "Lagerplatz" });
+        Object[][] hauptspeicher = SQL.queryToStringArray(
+                "SELECT NAME, ID, LAGERPLATZ FROM Hauptspeicher;",
+                new String[] { "Name", "ID", "Lagerplatz" });
+        Object[][] festplatten = SQL.queryToStringArray(
+                "SELECT NAME, ID, LAGERPLATZ FROM Festplatte;",
+                new String[] { "Name", "ID", "Lagerplatz" });
+
+        // Alle Produkttypen in die Spalten einfügen.
+        grafikkarten = produktTypArrayhinzufuegen("Grafikkarte", grafikkarten);
+        grafikkarten[0][0] = "Typ";
+        cpus = produktTypArrayhinzufuegen("CPU", cpus);
+        fertigprodukte = produktTypArrayhinzufuegen("Fertigprodukt", fertigprodukte);
+        hauptspeicher = produktTypArrayhinzufuegen("Hauptspeicher", festplatten);
+        festplatten = produktTypArrayhinzufuegen("Festplatte", festplatten);
+        System.out.println(Arrays.deepToString(festplatten));
+
+        // Die erste Zeile mit den Spaltennamen abschneiden
+        cpus = Arrays.copyOfRange(cpus, 1, cpus.length);
+        fertigprodukte = Arrays.copyOfRange(fertigprodukte, 1, fertigprodukte.length);
+        hauptspeicher = Arrays.copyOfRange(hauptspeicher, 1, hauptspeicher.length);
+        festplatten = Arrays.copyOfRange(festplatten, 1, festplatten.length);
+
+        // Alle Arrays zu Einem kombinieren.
+        Object[][] result = Stream.of(Arrays.stream(grafikkarten), Arrays.stream(cpus),
+                Arrays.stream(fertigprodukte), Arrays.stream(hauptspeicher),
+                Arrays.stream(festplatten)).flatMap(s -> s).toArray(Object[][]::new);
+        System.out.println(Arrays.deepToString(result) + ";;");
+        return result;
     }
 
     /**
