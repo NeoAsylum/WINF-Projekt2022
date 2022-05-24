@@ -21,7 +21,7 @@ public class Liste {
             for (int i = 0; i < theShit[0].length; i++) {
                 sb.append(theShit[0][i] + "=\"" + theShit[k][i] + "\" ");
             }
-            sb.append("/>" + "\n");
+            sb.append("></" + p.produktTyp() + "> "+ "\n");
         }
         sb.append("</Listen>");
         System.out.println(sb.toString());
@@ -39,11 +39,11 @@ public class Liste {
         sb.append(
                 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE Listen SYSTEM \"liste.dtd\">\n<Listen>\n");
         for (int k = 1; k < theShit.length; k++) {
-            sb.append("<" + theShit[k][0] + " ");
+            sb.append("<" + theShit[k][0] +  " ");
             for (int i = 1; i < theShit[0].length; i++) {
                 sb.append(theShit[0][i] + "=\"" + theShit[k][i] + "\" ");
             }
-            sb.append("/>" + "\n");
+            sb.append("></" + theShit[k][0] + "> "+ "\n");
         }
         sb.append("</Listen>");
         System.out.println(sb.toString());
