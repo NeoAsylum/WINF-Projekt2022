@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Backend.Hauptklasse;
-import Backend.QueryOutputHandling;
+import Backend.NurSQL;
 
 public class SetupTest {
 
@@ -24,7 +24,7 @@ public class SetupTest {
     @Test
     public void testNonsenseQuery() {
         assertTrue("[[Name, VRAM, Hersteller]]"
-                .equals(Arrays.deepToString(QueryOutputHandling.nonsenseQuery())));
+                .equals(Arrays.deepToString(NurSQL.nonsenseQuery())));
         Hauptklasse.log.info("Nonsense Query erfolgreich");
     }
 }

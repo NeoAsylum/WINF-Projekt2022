@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import Backend.SQL;
+import Backend.SQLSetup;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -175,7 +175,7 @@ public class Login extends JFrame {
 
                 if (benutzername.equals(name) && passwort1.equals(passwort)) {
 
-                    SQL.setup();
+                    SQLSetup.setup();
 
                     dispose();
 

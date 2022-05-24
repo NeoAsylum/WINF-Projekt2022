@@ -2,9 +2,12 @@ package UI;
 
 import java.awt.BorderLayout;
 
+import Backend.AuslagernMethoden;
+import Backend.EinlagernMethoden;
 import Backend.Hauptklasse;
-import Backend.QueryOutputHandling;
-import Backend.SQL;
+import Backend.InventarUndBestelllisteMethoden;
+import Backend.NurSQL;
+import Backend.SQLZuUI;
 import Datentypen.CPU;
 import Datentypen.Fertigprodukt;
 import Datentypen.Festplatte;
@@ -285,7 +288,7 @@ public class UI extends JFrame {
                 tabelle = "cpu";
                 return;
             }
-            QueryOutputHandling.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
+            SQLZuUI.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
                     p.getTabelleneintraege());
         });
         scrollPaneBestellliste = new JScrollPane();
@@ -326,9 +329,9 @@ public class UI extends JFrame {
      */
     public void addActionListenersToUi() {
         inventarExportButton.addActionListener(
-                e -> Export.Liste.writeInvetoryToXML(QueryOutputHandling.inventarisierung()));
+                e -> Export.Liste.writeInvetoryToXML(InventarUndBestelllisteMethoden.inventarisierung()));
         okButtonInventar
-                .addActionListener(e -> setInventarTable(QueryOutputHandling.inventarisierung()));
+                .addActionListener(e -> setInventarTable(InventarUndBestelllisteMethoden.inventarisierung()));
         sprachwahl.addActionListener(e -> updateSprache());
         dropdownEinlagerungProdukttyp.addActionListener(e -> updateEinlagerungsTable());
         dropdownSucheProdukttyp.addActionListener(e -> querySuche());
@@ -459,11 +462,11 @@ public class UI extends JFrame {
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
                     options[1]);
             if (n == 0) {
-                SQL.anhandEinesArraysAlleRunterzaehlen(
-                        SQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
+                AuslagernMethoden.anhandEinesArraysAlleRunterzaehlen(
+                        NurSQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
                         p.produktTyp());
-                SQL.update(sqlQuery);
-                QueryOutputHandling.nonsenseQuery();
+                NurSQL.update(sqlQuery);
+                NurSQL.nonsenseQuery();
             }
         }
     }
@@ -534,7 +537,7 @@ public class UI extends JFrame {
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
             sqlQuery = p == null ? null : sqlQuery;
-            QueryOutputHandling.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());
+            SQLZuUI.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());
         }
     }
 
@@ -566,10 +569,10 @@ public class UI extends JFrame {
                     }
                     sqlQuery += "'" + einlagerungsTabelle.getModel().getValueAt(k, i) + "', ";
                 }
-                int lagerplatzID = SQL.einlagern(p, (String) name);
+                int lagerplatzID = EinlagernMethoden.einlagern(p, (String) name);
                 sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) + ", " + lagerplatzID
                         + " );";
-                SQL.update(sqlQuery);
+                NurSQL.update(sqlQuery);
             } else {
             }
         }
@@ -580,7 +583,7 @@ public class UI extends JFrame {
      */
     public void updateEinlagerungsTable() {
         Produkt p = produktFuerSuche(dropdownEinlagerungProdukttyp.getSelectedItem().toString());
-        QueryOutputHandling.queryToUI(
+        SQLZuUI.queryToUI(
                 "SELECT " + "Name, VRAM, Hersteller "
                         + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
                 "Einlagerung", Arrays.copyOfRange(p.getTabelleneintraege(), 0,

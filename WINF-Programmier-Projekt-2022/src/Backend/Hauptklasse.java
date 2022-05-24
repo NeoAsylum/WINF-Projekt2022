@@ -18,9 +18,9 @@ public class Hauptklasse {
      */
     public static void main(String[] args) {
         if (args.length < 1) {
-            SQL.setup();
+            SQLSetup.setup();
         } else if (Arrays.stream(args).collect(Collectors.toList()).contains("no login")) {
-            SQL.setup();
+            SQLSetup.setup();
         }
     }
 
