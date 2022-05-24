@@ -32,7 +32,7 @@ public class SQL {
      */
     public static void setup() {
         try {
-            props.loadFromXML(new FileInputStream("resources/properties.txt"));
+            props.loadFromXML(new FileInputStream("file.txt"));
             /*
              * props.setProperty("Sprache", Locale.getDefault().toLanguageTag());
              * props.storeToXML(new FileOutputStream("resources/properties.txt"),

@@ -633,21 +633,21 @@ public class UI extends JFrame {
             for (Object[] o : strings2) {
 
                 name = (String) o[0];
-                int count = map.containsKey(name) ? (int) map.get(name) : 0;
-                map.put(name, count + 1);
+                int count = map.containsKey(name) ? (int) map.get(name) : p.getMindestmenge();
+                map.put(name, count - 1);
 
             }
 
             List<Object> namen = new ArrayList<>();
             namen.addAll(Arrays.asList(map.keySet().toArray()));
-            namen.stream().filter(e -> (Integer) map.get(e) >= p.getMindestmenge())
+            namen.stream().filter(e -> (Integer) map.get(e) <= 0)
                     .forEach(e -> map.remove(e));
 
             Object[] k = map.keySet().toArray();
             Object[] v = map.values().toArray();
             Object[][] arr = new Object[k.length + 1][2];
-            arr[0][0] = "Name";
-            arr[0][1] = "Menge";
+            arr[0][0] = "Produkt";
+            arr[0][1] = "Bestellmenge";
 
             for (int i = 1; i < k.length + 1; i++) {
 
