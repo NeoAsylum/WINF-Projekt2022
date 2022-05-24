@@ -69,7 +69,7 @@ public class InventarUndBestelllisteMethoden {
     public static Map<Object, Long> queryNachNamenStueckzahlen(String tabellenname) {
         Object[][] arr = SQLOutputHandling.queryToStringArray("SELECT Name FROM " + tabellenname + ";",
                 new String[] { "Name" });
-        Object[] two = Arrays.copyOfRange(SQLOutputHandling.getColumnInArray(arr, 0), 1, SQLOutputHandling.getColumnInArray(arr, 0).length);
+        Object[] two = Arrays.copyOfRange(Nuetzliches.getColumnInArray(arr, 0), 1, Nuetzliches.getColumnInArray(arr, 0).length);
         System.out.println(Arrays.toString(two));
         return InventarUndBestelllisteMethoden.stueckzahlenInArray(two);
     }
