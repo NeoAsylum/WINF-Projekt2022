@@ -120,15 +120,22 @@ public class QueryOutputHandling {
         System.out.println(Arrays.deepToString(festplatten));
 
         // Die erste Zeile mit den Spaltennamen abschneiden
+        grafikkarten = Arrays.copyOfRange(grafikkarten, 1, grafikkarten.length);
+
         cpus = Arrays.copyOfRange(cpus, 1, cpus.length);
         fertigprodukte = Arrays.copyOfRange(fertigprodukte, 1, fertigprodukte.length);
         hauptspeicher = Arrays.copyOfRange(hauptspeicher, 1, hauptspeicher.length);
         festplatten = Arrays.copyOfRange(festplatten, 1, festplatten.length);
 
         // Alle Arrays zu Einem kombinieren.
-        Object[][] result = Stream.of(Arrays.stream(grafikkarten), Arrays.stream(cpus),
-                Arrays.stream(fertigprodukte), Arrays.stream(festplatten),
-                Arrays.stream(hauptspeicher)).flatMap(s -> s).toArray(Object[][]::new);
+        Object[][] result = Stream
+                .of(Arrays.stream(grafikkarten), Arrays.stream(cpus),
+                        Arrays.stream(fertigprodukte), Arrays.stream(festplatten),
+                        Arrays.stream(hauptspeicher))
+                .flatMap(s -> s).sorted((a, b) -> (((String) a[3]).compareTo((String) b[3])))
+                .toArray(Object[][]::new);
+        result = Stream.of(Arrays.stream(new Object[][] { { "Typ", "Name", "ID", "Lagerplatz" } }),
+                Arrays.stream(result)).flatMap(s -> s).toArray(Object[][]::new);
         System.out.println(Arrays.deepToString(result) + ";;");
         return result;
     }
