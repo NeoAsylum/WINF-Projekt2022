@@ -127,8 +127,8 @@ public class QueryOutputHandling {
 
         // Alle Arrays zu Einem kombinieren.
         Object[][] result = Stream.of(Arrays.stream(grafikkarten), Arrays.stream(cpus),
-                Arrays.stream(fertigprodukte), Arrays.stream(hauptspeicher),
-                Arrays.stream(festplatten)).flatMap(s -> s).toArray(Object[][]::new);
+                Arrays.stream(fertigprodukte), Arrays.stream(festplatten),
+                Arrays.stream(hauptspeicher)).flatMap(s -> s).toArray(Object[][]::new);
         System.out.println(Arrays.deepToString(result) + ";;");
         return result;
     }

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE Listen SYSTEM "liste.dtd" >
-<Listen>
-	<Grafikkarte VRAM="8 GB" Hersteller="AMD" ID="3"
-		Lagerplatz="15" Name="Radeon 5700XT" />
-</Listen>
-	

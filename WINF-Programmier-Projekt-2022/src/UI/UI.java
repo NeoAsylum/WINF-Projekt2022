@@ -30,6 +30,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Klasse fuer das grafische Nutzerinterface.
@@ -50,7 +52,7 @@ public class UI extends JFrame {
     private JPanel suchePanelButtonsUnten;
     private JPanel suchePanelButtonsOben;
     private JScrollPane scrollPaneSucheTabelle;
-    private JButton btnNewButton;
+    private JButton sucheExportButton;
     private JComboBox<String> dropdownSucheProdukttyp;
     private JComboBox<String> dropdownSucheAttribut1;
     private JComboBox<String> dropdownSucheAttribut2;
@@ -69,7 +71,7 @@ public class UI extends JFrame {
     private JPanel inventarTab;
     private JPanel panel_4;
     private JPanel panel_5;
-    private JButton exportieren;
+    private JButton inventarExportButton;
     private JPanel bestelllistenTab;
     private JPanel bestellenButtonsUnten;
     private JButton exportieren_1;
@@ -121,11 +123,13 @@ public class UI extends JFrame {
 
         deleteSuche.setToolTipText("put x in 'delete' column");
         suchePanelButtonsUnten.add(deleteSuche);
-        btnNewButton = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Exportieren"));
-        suchePanelButtonsUnten.add(btnNewButton);
-        btnNewButton.addActionListener(e -> {
-            Excel.exportieren(tabelleSuche);
-        });
+        sucheExportButton = new JButton(
+                Hauptklasse.getUebersetzer().getUebersetzung("Exportieren"));
+        suchePanelButtonsUnten.add(sucheExportButton);
+        /*
+         * sucheExportButton.addActionListener(e -> { Excel.exportieren(tabelleSuche);
+         * });
+         */
         suchePanelButtonsOben = new JPanel();
         suche.add(suchePanelButtonsOben, BorderLayout.NORTH);
         String[] arr = new String[] { "Grafikkarte", "Festplatte", "Hauptspeicher",
@@ -224,8 +228,12 @@ public class UI extends JFrame {
         okButtonInventar = new JButton("inventarOk");
         panel_5.add(okButtonInventar);
 
-        exportieren = new JButton("Exportieren");
-        panel_5.add(exportieren);
+        inventarExportButton = new JButton("Exportieren");
+        inventarExportButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        panel_5.add(inventarExportButton);
 
         scrollPaneInventar = new JScrollPane();
         inventarTab.add(scrollPaneInventar, BorderLayout.CENTER);
@@ -317,6 +325,8 @@ public class UI extends JFrame {
      * Methode welche den UI-Elementen Action-Listener hinzufuegt.
      */
     public void addActionListenersToUi() {
+        inventarExportButton.addActionListener(
+                e -> Export.Liste.writeInvetoryToXML(QueryOutputHandling.inventarisierung()));
         okButtonInventar
                 .addActionListener(e -> setInventarTable(QueryOutputHandling.inventarisierung()));
         sprachwahl.addActionListener(e -> updateSprache());
@@ -456,6 +466,22 @@ public class UI extends JFrame {
                 QueryOutputHandling.nonsenseQuery();
             }
         }
+    }
+
+    /**
+     * Methode welche die Daten aus einem JTable als Array zurueckgibt.
+     * 
+     * @param table
+     * @return
+     */
+    public Object[][] getTableData(JTable table) {
+        DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+        int nRow = dtm.getRowCount(), nCol = dtm.getColumnCount();
+        Object[][] tableData = new Object[nRow][nCol];
+        for (int i = 0; i < nRow; i++)
+            for (int j = 0; j < nCol; j++)
+                tableData[i][j] = dtm.getValueAt(i, j);
+        return tableData;
     }
 
     /**

@@ -7,5 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="WINF-Programmier-Projekt-2022/src"/>
 	<classpathentry kind="lib" path="WINF-Programmier-Projekt-2022/Folder/mysql-connector-java-8.0.19.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

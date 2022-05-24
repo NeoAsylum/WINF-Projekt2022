@@ -22,7 +22,6 @@ public class Hauptklasse {
         } else if (Arrays.stream(args).collect(Collectors.toList()).contains("no login")) {
             SQL.setup();
         }
-        QueryOutputHandling.inventarisierung();
     }
 
     public static UI getUI() {
