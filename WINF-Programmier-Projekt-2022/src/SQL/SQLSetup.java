@@ -1,4 +1,4 @@
-package Backend;
+package SQL;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
+import Backend.Hauptklasse;
 import UI.UI;
 
 public class SQLSetup {

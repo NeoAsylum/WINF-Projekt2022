@@ -1,4 +1,4 @@
-package Backend;
+package Stuff;
 
 import java.nio.file.FileSystems;
 import java.util.Locale;

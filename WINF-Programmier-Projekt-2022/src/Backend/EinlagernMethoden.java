@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 
 import Datentypen.Produkt;
+import SQL.NurSQL;
 
 public class EinlagernMethoden {
 

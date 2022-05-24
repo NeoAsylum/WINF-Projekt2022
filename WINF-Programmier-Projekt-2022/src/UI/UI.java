@@ -6,8 +6,6 @@ import Backend.AuslagernMethoden;
 import Backend.EinlagernMethoden;
 import Backend.Hauptklasse;
 import Backend.InventarUndBestelllisteMethoden;
-import Backend.NurSQL;
-import Backend.SQLZuUI;
 import Datentypen.CPU;
 import Datentypen.Fertigprodukt;
 import Datentypen.Festplatte;
@@ -15,6 +13,9 @@ import Datentypen.Grafikkarte;
 import Datentypen.Hauptspeicher;
 import Datentypen.Produkt;
 import Export.Excel;
+import SQL.NurSQL;
+import SQL.SQLOutputHandling;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -288,7 +289,7 @@ public class UI extends JFrame {
                 tabelle = "cpu";
                 return;
             }
-            SQLZuUI.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
+            SQLOutputHandling.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
                     p.getTabelleneintraege());
         });
         scrollPaneBestellliste = new JScrollPane();
@@ -463,7 +464,7 @@ public class UI extends JFrame {
                     options[1]);
             if (n == 0) {
                 AuslagernMethoden.anhandEinesArraysAlleRunterzaehlen(
-                        NurSQL.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
+                        SQLOutputHandling.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
                         p.produktTyp());
                 NurSQL.update(sqlQuery);
                 NurSQL.nonsenseQuery();
@@ -537,7 +538,7 @@ public class UI extends JFrame {
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
             sqlQuery = p == null ? null : sqlQuery;
-            SQLZuUI.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());
+            SQLOutputHandling.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());
         }
     }
 
@@ -583,7 +584,7 @@ public class UI extends JFrame {
      */
     public void updateEinlagerungsTable() {
         Produkt p = produktFuerSuche(dropdownEinlagerungProdukttyp.getSelectedItem().toString());
-        SQLZuUI.queryToUI(
+        SQLOutputHandling.queryToUI(
                 "SELECT " + "Name, VRAM, Hersteller "
                         + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
                 "Einlagerung", Arrays.copyOfRange(p.getTabelleneintraege(), 0,

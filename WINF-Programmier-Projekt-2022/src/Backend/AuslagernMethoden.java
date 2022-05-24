@@ -2,6 +2,8 @@ package Backend;
 
 import java.util.Arrays;
 
+import SQL.NurSQL;
+
 public class AuslagernMethoden {
 
     /**

@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import SQL.SQLSetup;
+import Stuff.International;
+
 public class Hauptklasse {
 
     private static UI frame;

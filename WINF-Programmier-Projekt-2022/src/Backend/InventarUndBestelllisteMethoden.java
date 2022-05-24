@@ -7,23 +7,25 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import SQL.SQLOutputHandling;
+
 public class InventarUndBestelllisteMethoden {
 
     public static Object[][] inventarisierung() {
     
         // Querys für alle PRodukttypen erstellen.
-        Object[][] grafikkarten = NurSQL.queryToStringArray(
+        Object[][] grafikkarten = SQLOutputHandling.queryToStringArray(
                 "SELECT NAME, ID, LAGERPLATZ FROM GRAFIKKARTE;",
                 new String[] { "Name", "ID", "Lagerplatz" });
-        Object[][] cpus = NurSQL.queryToStringArray("SELECT NAME, ID, LAGERPLATZ FROM CPU;",
+        Object[][] cpus = SQLOutputHandling.queryToStringArray("SELECT NAME, ID, LAGERPLATZ FROM CPU;",
                 new String[] { "Name", "ID", "Lagerplatz" });
-        Object[][] fertigprodukte = NurSQL.queryToStringArray(
+        Object[][] fertigprodukte = SQLOutputHandling.queryToStringArray(
                 "SELECT NAME, ID, LAGERPLATZ FROM Fertigprodukt;",
                 new String[] { "Name", "ID", "Lagerplatz" });
-        Object[][] hauptspeicher = NurSQL.queryToStringArray(
+        Object[][] hauptspeicher = SQLOutputHandling.queryToStringArray(
                 "SELECT NAME, ID, LAGERPLATZ FROM Hauptspeicher;",
                 new String[] { "Name", "ID", "Lagerplatz" });
-        Object[][] festplatten = NurSQL.queryToStringArray(
+        Object[][] festplatten = SQLOutputHandling.queryToStringArray(
                 "SELECT NAME, ID, LAGERPLATZ FROM Festplatte;",
                 new String[] { "Name", "ID", "Lagerplatz" });
     
@@ -65,9 +67,9 @@ public class InventarUndBestelllisteMethoden {
      * @return Eine Map mit Namen und Stueckzahlen fuer alle Objekte der Tabelle.
      */
     public static Map<Object, Long> queryNachNamenStueckzahlen(String tabellenname) {
-        Object[][] arr = NurSQL.queryToStringArray("SELECT Name FROM " + tabellenname + ";",
+        Object[][] arr = SQLOutputHandling.queryToStringArray("SELECT Name FROM " + tabellenname + ";",
                 new String[] { "Name" });
-        Object[] two = Arrays.copyOfRange(SQLZuUI.getColumnInArray(arr, 0), 1, SQLZuUI.getColumnInArray(arr, 0).length);
+        Object[] two = Arrays.copyOfRange(SQLOutputHandling.getColumnInArray(arr, 0), 1, SQLOutputHandling.getColumnInArray(arr, 0).length);
         System.out.println(Arrays.toString(two));
         return InventarUndBestelllisteMethoden.stueckzahlenInArray(two);
     }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Backend.Hauptklasse;
-import Backend.NurSQL;
+import SQL.NurSQL;
 
 public class SetupTest {
 
