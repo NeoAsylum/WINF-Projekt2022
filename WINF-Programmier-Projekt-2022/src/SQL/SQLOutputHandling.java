@@ -28,15 +28,17 @@ public class SQLOutputHandling {
      */
     public static void queryToUI(String query, String oberflaeche, String[] tabelleneintraege) {
         if (oberflaeche.equals("Suche")) {
-            Hauptklasse.getUI().setSuchTable(SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
+            Hauptklasse.getUI()
+                    .setSuchTable(SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
         } else if (oberflaeche.equals("Einlagerung")) {
-            Hauptklasse.getUI()
-                    .setEinlagerungTable(SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
-            Hauptklasse.getUI()
-                    .setEinlagerungTable(SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
+            Hauptklasse.getUI().setEinlagerungTable(
+                    SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
+            Hauptklasse.getUI().setEinlagerungTable(
+                    SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
 
         } else if (oberflaeche.equals("Bestellliste")) {
-            Hauptklasse.getUI().formatieren(SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
+            Hauptklasse.getUI()
+                    .formatieren(SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
         }
     }
 
@@ -52,18 +54,18 @@ public class SQLOutputHandling {
     public static Object[][] queryToStringArray(String queryText, String[] spaltenNamen) {
         try {
             ResultSet rs = NurSQL.makeAQuery(queryText);
-            
+
             Hauptklasse.log.info(queryText);
-    
+
             rs.last();
             Object[][] arr = new Object[rs.getRow() + 1][spaltenNamen.length];
             rs.beforeFirst();
-    
+
             // Spalten benennen
             for (int i = 0; i < spaltenNamen.length; i++) {
                 arr[0][i] = spaltenNamen[i];
             }
-    
+
             // Reihen holen
             for (int i = 1; rs.next(); i++) {
                 for (int j = 0; j < spaltenNamen.length; j++) {
@@ -72,15 +74,15 @@ public class SQLOutputHandling {
             }
             return arr;
         } catch (SQLSyntaxErrorException e) {
-            Hauptklasse.getUI().setSuchTable(NurSQL.nonsenseQuery());
+            Hauptklasse.nonsenseQuery();
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
         } catch (SQLException e) {
-            Hauptklasse.getUI().setSuchTable(NurSQL.nonsenseQuery());
+            Hauptklasse.nonsenseQuery();
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, "Problem:", e);
         }
-        
+
         return null;
     }
 }
