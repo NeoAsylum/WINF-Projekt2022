@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE Listen SYSTEM "liste.dtd">
 <Listen>
-	<CPU Name="B" ID="5" Lagerplatz="1493"></CPU>
-	<CPU Name="C" ID="6" Lagerplatz="1493"></CPU>
-	<CPU Name="D" ID="7" Lagerplatz="1493"></CPU>
-	<Festplatte Name="eine Grafikkkartename" ID="21"
-		Lagerplatz="3950"></Festplatte>
-	<Hauptspeicher Name="eine Grafikkkartename" ID="21"
-		Lagerplatz="3950"></Hauptspeicher>
-	<Festplatte Name="Festplattenname1" ID="22"
-		Lagerplatz="3953"></Festplatte>
-	<Hauptspeicher Name="Festplattenname1" ID="22"
-		Lagerplatz="3953"></Hauptspeicher>
-	<Festplatte Name="Festplattenname2" ID="23"
-		Lagerplatz="3954"></Festplatte>
-	<Hauptspeicher Name="Festplattenname2" ID="23"
-		Lagerplatz="3954"></Hauptspeicher>
-	<Festplatte Name="Festplattenname3" ID="24"
-		Lagerplatz="3955"></Festplatte>
-	<Hauptspeicher Name="Festplattenname3" ID="24"
-		Lagerplatz="3955"></Hauptspeicher>
-	<Festplatte Name="abcdefg" ID="25" Lagerplatz="3956"></Festplatte>
-	<Hauptspeicher Name="abcdefg" ID="25" Lagerplatz="3956"></Hauptspeicher>
-	<CPU Name="AAA" ID="8" Lagerplatz="3962"></CPU>
-	<CPU Name="AAA" ID="9" Lagerplatz="3963"></CPU>
-	<Grafikkarte Name="Eine" ID="97" Lagerplatz="4943"></Grafikkarte>
-	<Grafikkarte Name="Eine" ID="98" Lagerplatz="4943"></Grafikkarte>
-	<Grafikkarte Name="Eine" ID="99" Lagerplatz="4943"></Grafikkarte>
-	<Grafikkarte Name="Eine" ID="100" Lagerplatz="4943"></Grafikkarte>
-	<Grafikkarte Name="Zweite" ID="101" Lagerplatz="4944"></Grafikkarte>
-	<Grafikkarte Name="Dritte" ID="102" Lagerplatz="4945"></Grafikkarte>
+<CPU Name="B" ID="5" Lagerplatz="1493" ></CPU> 
+<CPU Name="C" ID="6" Lagerplatz="1493" ></CPU> 
+<CPU Name="D" ID="7" Lagerplatz="1493" ></CPU> 
+<Festplatte Name="eine Grafikkkartename" ID="21" Lagerplatz="3950" ></Festplatte> 
+<Hauptspeicher Name="eine Grafikkkartename" ID="21" Lagerplatz="3950" ></Hauptspeicher> 
+<Festplatte Name="Festplattenname1" ID="22" Lagerplatz="3953" ></Festplatte> 
+<Hauptspeicher Name="Festplattenname1" ID="22" Lagerplatz="3953" ></Hauptspeicher> 
+<Festplatte Name="Festplattenname2" ID="23" Lagerplatz="3954" ></Festplatte> 
+<Hauptspeicher Name="Festplattenname2" ID="23" Lagerplatz="3954" ></Hauptspeicher> 
+<Festplatte Name="Festplattenname3" ID="24" Lagerplatz="3955" ></Festplatte> 
+<Hauptspeicher Name="Festplattenname3" ID="24" Lagerplatz="3955" ></Hauptspeicher> 
+<Festplatte Name="abcdefg" ID="25" Lagerplatz="3956" ></Festplatte> 
+<Hauptspeicher Name="abcdefg" ID="25" Lagerplatz="3956" ></Hauptspeicher> 
+<CPU Name="AAA" ID="8" Lagerplatz="3962" ></CPU> 
+<CPU Name="AAA" ID="9" Lagerplatz="3963" ></CPU> 
+<Grafikkarte Name="Eine" ID="97" Lagerplatz="4943" ></Grafikkarte> 
+<Grafikkarte Name="Eine" ID="98" Lagerplatz="4943" ></Grafikkarte> 
+<Grafikkarte Name="Eine" ID="99" Lagerplatz="4943" ></Grafikkarte> 
+<Grafikkarte Name="Eine" ID="100" Lagerplatz="4943" ></Grafikkarte> 
+<Grafikkarte Name="Zweite" ID="101" Lagerplatz="4944" ></Grafikkarte> 
+<Grafikkarte Name="Dritte" ID="102" Lagerplatz="4945" ></Grafikkarte> 
 </Listen>
