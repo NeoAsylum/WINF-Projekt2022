@@ -177,7 +177,7 @@ public class Login extends JFrame {
 
                 if (benutzername.equals(name) && passwort1.equals(passwort)) {
 
-                    SQLSetup.setup();
+                    SQLSetup.setupSQL();
 
                     dispose();
 

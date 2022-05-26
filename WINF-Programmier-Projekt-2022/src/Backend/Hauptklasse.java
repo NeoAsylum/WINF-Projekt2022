@@ -1,10 +1,11 @@
 package Backend;
 
 import UI.UI;
+
 import java.util.Arrays;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
+import SQL.NurSQL;
 import SQL.SQLSetup;
 import Stuff.International;
 
@@ -21,18 +22,31 @@ public class Hauptklasse {
      */
     public static void main(String[] args) {
         if (args.length < 1) {
-            SQLSetup.setup();
+            SQLSetup.setupSQL();
         } else if (Arrays.stream(args).collect(Collectors.toList()).contains("no login")) {
-            SQLSetup.setup();
+            SQLSetup.setupSQL();
         }
+        frame = new UI();
+        frame.addActionListenersToUi();
+        frame.setVisible(true);
+
     }
 
-    public static UI getUI() {
-        return frame;
+    private static void disposeOfFrame() {
+        frame.dispose();
     }
 
-    public static void setUI(UI newFrame) {
-        frame = newFrame;
+    public static void nonsenseQuery() {
+        frame.setSuchTable(NurSQL.nonsenseQuery());
+    }
+
+    public static void setupUI() {
+        if (frame != null) {
+            disposeOfFrame();
+        }
+        frame = new UI();
+        frame.addActionListenersToUi();
+        frame.setVisible(true);
     }
 
     public static International getUebersetzer() {
@@ -41,6 +55,10 @@ public class Hauptklasse {
 
     public static void setUebersetzer(International ue) {
         uebersetzer = ue;
+    }
+
+    public static UI getUI() {
+        return frame;
     }
 
 }

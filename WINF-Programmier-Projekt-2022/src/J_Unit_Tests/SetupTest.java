@@ -1,7 +1,11 @@
 package J_Unit_Tests;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
+import java.time.Duration;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,4 +31,6 @@ public class SetupTest {
                 .equals(Arrays.deepToString(NurSQL.nonsenseQuery())));
         Hauptklasse.log.info("Nonsense Query erfolgreich");
     }
+    
+   
 }

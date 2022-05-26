@@ -24,7 +24,7 @@ public class SQLSetup {
      * Setup Methode welche SQL-Connection aufsetzt, frame/UI initialisiert und
      * Properties lädt/die Sprache anhand der vorher gespeicherten Sprache festlegt.
      */
-    public static void setup() {
+    public static void setupSQL() {
         try {
             props.loadFromXML(new FileInputStream("resources/properties.txt"));
             /*
@@ -32,8 +32,6 @@ public class SQLSetup {
              * props.storeToXML(new FileOutputStream("resources/properties.txt"),
              * "Written in " + new Datum().datum + ", " + new Datum().zeit);
              */
-            Hauptklasse.getUebersetzer().setSprache(props.getProperty("Sprache"));
-            System.out.println(Locale.getDefault().toLanguageTag());
         } catch (FileNotFoundException e1) {
             JOptionPane.showMessageDialog(null, e1.getMessage());
             e1.printStackTrace();
@@ -46,9 +44,7 @@ public class SQLSetup {
             conn = DriverManager.getConnection(
                     props.getProperty("url") + props.getProperty("dbName"),
                     props.getProperty("userName"), props.getProperty("password"));
-            Hauptklasse.setUI(new UI());
-            Hauptklasse.getUI().addActionListenersToUi();
-            Hauptklasse.getUI().setVisible(true);
+
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
@@ -59,8 +55,8 @@ public class SQLSetup {
     }
 
     /**
-     * Eine Methode welche all unsere Lagerplaetze leer nochmal anlegt.
-     * Nur zum neuanlegen der Lagerplaetze verwenden.
+     * Eine Methode welche all unsere Lagerplaetze leer nochmal anlegt. Nur zum
+     * neuanlegen der Lagerplaetze verwenden.
      */
     public static void erstelleAlleLagerplaetze() {
         Statement stmt;
@@ -79,7 +75,7 @@ public class SQLSetup {
             JOptionPane.showMessageDialog(null, e.getMessage());
             Hauptklasse.log.log(Level.SEVERE, e.getMessage());
         }
-        Hauptklasse.getUI().setSuchTable(NurSQL.nonsenseQuery());
+        Hauptklasse.nonsenseQuery();
     }
 
 }

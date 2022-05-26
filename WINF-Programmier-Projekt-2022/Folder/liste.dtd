@@ -10,9 +10,9 @@
 	<!ELEMENT CPU  EMPTY>
 		<!ATTLIST CPU
 			Name CDATA #REQUIRED
-			Hersteller CDATA #IMPLIED
 			MHz CDATA #IMPLIED
 			ID CDATA #REQUIRED
+			Hersteller CDATA #IMPLIED
 			Lagerplatz CDATA #REQUIRED>
 	<!ELEMENT Fertigprodukt (#PCDATA)>
 		<!ATTLIST Fertigprodukt
