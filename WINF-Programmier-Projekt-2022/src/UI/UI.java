@@ -229,15 +229,15 @@ public class UI extends JFrame {
         panel_5 = new JPanel();
         inventarTab.add(panel_5, BorderLayout.SOUTH);
 
-        okButtonInventar = new JButton("inventarOk");
-        panel_5.add(okButtonInventar);
-
         inventarExportButton = new JButton("Exportieren");
         inventarExportButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             }
         });
         panel_5.add(inventarExportButton);
+        
+                okButtonInventar = new JButton("Aktualisieren");
+                panel_5.add(okButtonInventar);
 
         scrollPaneInventar = new JScrollPane();
         inventarTab.add(scrollPaneInventar, BorderLayout.CENTER);
