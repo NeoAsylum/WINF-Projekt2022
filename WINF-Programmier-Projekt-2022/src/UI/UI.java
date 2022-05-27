@@ -28,14 +28,21 @@ import javax.swing.JButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ScrollPaneConstants;
+import java.awt.Component;
+import java.awt.Rectangle;
+import java.awt.Dimension;
 
 /**
  * Klasse fuer das grafische Nutzerinterface.
@@ -83,12 +90,14 @@ public class UI extends JFrame {
     private JTable table_1;
     private JButton aktualisieren_1;
     private JButton okSuche;
-    private JPanel bestellenButtonsOben; 
+    private JPanel bestellenButtonsOben;
     private JComboBox<String> dropdownSuche1_2;
     private JComboBox<String> sprachwahl;
     private JScrollPane scrollPaneInventar;
     private JTable inventarTabelle;
     private JButton okButtonInventar;
+    private JScrollPane lagerplatzScrollPane;
+    private JTable lagerplaetzeEinlagerung;
 
     /**
      * Fuegt alle UI-Elemente hinzu.
@@ -312,6 +321,22 @@ public class UI extends JFrame {
             dropdownEinlagerungProdukttyp.addItem(a);
         }
         panelEinlagerungButtonsOben.add(dropdownEinlagerungProdukttyp);
+
+        lagerplatzScrollPane = new JScrollPane();
+        lagerplatzScrollPane.setPreferredSize(new Dimension(150, 2));
+        lagerplatzScrollPane.setMaximumSize(new Dimension(200, 32767));
+        lagerplatzScrollPane.setBounds(new Rectangle(50, 0, 50, 0));
+        lagerplatzScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lagerplatzScrollPane
+                .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        einlagerTab.add(lagerplatzScrollPane, BorderLayout.WEST);
+
+        lagerplaetzeEinlagerung = new JTable();
+        lagerplaetzeEinlagerung.setMaximumSize(new Dimension(150, 0));
+        lagerplaetzeEinlagerung
+                .setModel(new DefaultTableModel(new Object[][] { { null }, { null }, { null }, },
+                        new String[] { "Lagerplaetze" }));
+        lagerplatzScrollPane.setViewportView(lagerplaetzeEinlagerung);
     }
 
     public void updateSprache() {
@@ -327,12 +352,13 @@ public class UI extends JFrame {
      * Methode welche den UI-Elementen Action-Listener hinzufuegt.
      */
     public void addActionListenersToUi() {
-        sucheExportButton.addActionListener(e -> Export.XMLExport.writeQueryToXML(getTableData(tabelleSuche),
-                produktTypausString(dropdownSucheProdukttyp.toString())));
-        inventarExportButton.addActionListener(
-                e -> Export.XMLExport.writeInvetoryToXML(InventarUndBestelllisteMethoden.inventarisierung()));
-        okButtonInventar
-                .addActionListener(e -> setInventarTable(InventarUndBestelllisteMethoden.inventarisierung()));
+        sucheExportButton.addActionListener(
+                e -> Export.XMLExport.writeQueryToXML(getTableData(tabelleSuche),
+                        produktTypausString(dropdownSucheProdukttyp.toString())));
+        inventarExportButton.addActionListener(e -> Export.XMLExport
+                .writeInvetoryToXML(InventarUndBestelllisteMethoden.inventarisierung()));
+        okButtonInventar.addActionListener(
+                e -> setInventarTable(InventarUndBestelllisteMethoden.inventarisierung()));
         sprachwahl.addActionListener(e -> updateSprache());
         dropdownEinlagerungProdukttyp.addActionListener(e -> updateEinlagerungsTable());
         dropdownSucheProdukttyp.addActionListener(e -> querySuche());
@@ -349,6 +375,15 @@ public class UI extends JFrame {
         model.setRowCount(0);
         model = new DefaultTableModel(data, input[0]);
         tabelleSuche.setModel(model);
+    }
+
+    public void setLagerplaetzeEinlagerungTable(Object[][] input) {
+        System.out.println(Arrays.deepToString(input));
+        Object[][] data = Arrays.copyOfRange(input, 1, input.length);
+        DefaultTableModel model = (DefaultTableModel) lagerplaetzeEinlagerung.getModel();
+        model.setRowCount(0);
+        model = new DefaultTableModel(input, new Object[] { "Lagerplaetze" });
+        lagerplaetzeEinlagerung.setModel(model);
     }
 
     /**
@@ -463,8 +498,8 @@ public class UI extends JFrame {
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
                     options[1]);
             if (n == 0) {
-                AuslagernMethoden.anhandEinesArraysAlleRunterzaehlen(
-                        SQLOutputHandling.queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
+                AuslagernMethoden.anhandEinesArraysAlleRunterzaehlen(SQLOutputHandling
+                        .queryToStringArray(sqlQuery2, new String[] { "Name", "Lagerplatz" }),
                         p.produktTyp());
                 NurSQL.update(sqlQuery);
                 NurSQL.nonsenseQuery();
@@ -547,6 +582,7 @@ public class UI extends JFrame {
      * Vollständigkeit Reihenweise in die SQL-Datenbank einfuegt.
      */
     public void queryAdd() {
+        LinkedList<String> lagerplaetze = new LinkedList<String>();
         for (int k = 0; k < einlagerungsTabelle.getRowCount(); k++) {
             Object name = "";
             Produkt p = produktTypausString(
@@ -571,11 +607,19 @@ public class UI extends JFrame {
                     sqlQuery += "'" + einlagerungsTabelle.getModel().getValueAt(k, i) + "', ";
                 }
                 int lagerplatzID = EinlagernMethoden.einlagern(p, (String) name);
+                lagerplaetze.add(lagerplatzID + "");
                 sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2) + ", " + lagerplatzID
                         + " );";
                 NurSQL.update(sqlQuery);
             } else {
             }
+        }
+        if (!lagerplaetze.isEmpty()) {
+            String[][] lagerplaetzeArray = new String[lagerplaetze.size()][1];
+            for (int i = 0; i < lagerplaetze.size(); i++) {
+                lagerplaetzeArray[i][0] = lagerplaetze.get(i);
+            }
+            setLagerplaetzeEinlagerungTable(lagerplaetzeArray);
         }
     }
 
@@ -583,7 +627,8 @@ public class UI extends JFrame {
      * Methode welche den Einlagerungstable fuellt.
      */
     public void updateEinlagerungsTable() {
-        Produkt p = produktTypausString(dropdownEinlagerungProdukttyp.getSelectedItem().toString());
+        Produkt p = produktTypausString(
+                dropdownEinlagerungProdukttyp.getSelectedItem().toString());
         SQLOutputHandling.queryToUI(
                 "SELECT " + "Name, VRAM, Hersteller "
                         + "FROM GRAFIKKARTE WHERE HERSTELLER='ABCDEFG';",
@@ -670,8 +715,7 @@ public class UI extends JFrame {
 
             List<Object> namen = new ArrayList<>();
             namen.addAll(Arrays.asList(map.keySet().toArray()));
-            namen.stream().filter(e -> (Integer) map.get(e) <= 0)
-                    .forEach(e -> map.remove(e));
+            namen.stream().filter(e -> (Integer) map.get(e) <= 0).forEach(e -> map.remove(e));
 
             Object[] k = map.keySet().toArray();
             Object[] v = map.values().toArray();
