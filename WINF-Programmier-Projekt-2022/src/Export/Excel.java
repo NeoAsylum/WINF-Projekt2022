@@ -46,7 +46,7 @@ public class Excel {
                 JOptionPane.showMessageDialog(jf, "Die Datei " + a + " wurde exportiert.");
             }else {
             	JFrame jf = new JFrame();
-            	JOptionPane.showMessageDialog(jf, "Die Datei konnte nicht exportiert werden");
+            	JOptionPane.showMessageDialog(jf, "Die Datei konnte nicht exportiert werden.");
             }
 
         } catch (IOException e1) {
