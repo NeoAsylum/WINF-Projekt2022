@@ -1,3 +1,4 @@
+
 package Export;
 
 import java.util.ArrayList;
@@ -6,6 +7,9 @@ import java.util.LinkedList;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import Datentypen.Grafikkarte;
+import Datentypen.Produkt;
 
 public class XMLParser extends DefaultHandler {
     ArrayList<String[]> alleElemente = new ArrayList<String[]>();
@@ -21,16 +25,11 @@ public class XMLParser extends DefaultHandler {
             LinkedList<String> liste = new LinkedList<String>();
             liste.add(attributes.getValue("Name"));
             liste.add(attributes.getValue("ID"));
-            if(attributes.getValue("VRAM")!=null) {
+            if (attributes.getValue("VRAM") != null) {
                 liste.add(attributes.getValue("VRAM"));
             }
-            if(attributes.getValue("Hersteller")!=null) {
-                liste.add(attributes.getValue("Hersteller"));
-            }
             liste.add(attributes.getValue("Lagerplatz"));
-            alleElemente.add(liste.stream().toArray(a->new String[a]));
         }
-        
     }
 
     @Override

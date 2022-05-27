@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE Listen SYSTEM "liste.dtd">
-<Listen>
-<Grafikkarte Name="Eine" VRAM="123" Hersteller="123" ID="98" Lagerplatz="4943" ></Grafikkarte> 
-<Grafikkarte Name="Eine" VRAM="123" Hersteller="123" ID="99" Lagerplatz="4943" ></Grafikkarte> 
-<Grafikkarte Name="Eine" VRAM="222" Hersteller="223" ID="100" Lagerplatz="4943" ></Grafikkarte> 
-<Grafikkarte Name="Zweite" VRAM="123" Hersteller="123" ID="101" Lagerplatz="4944" ></Grafikkarte> 
-<Grafikkarte Name="Dritte" VRAM="33" Hersteller="22" ID="102" Lagerplatz="4945" ></Grafikkarte> 
-</Listen>

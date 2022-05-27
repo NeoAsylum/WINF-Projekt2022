@@ -77,7 +77,7 @@ public class UI extends JFrame {
     private JPanel panelEinlagerungButtonsUnten;
     private JComboBox<String> dropdownEinlagerungProdukttyp;
     JScrollPane scrollPane_2;
-    private JButton btnNewButton_1;
+    private JButton einlagernButton;
     private JTable einlagerungsTabelle;
     private JPanel inventarTab;
     private JPanel panel_4;
@@ -85,7 +85,7 @@ public class UI extends JFrame {
     private JButton inventarExportButton;
     private JPanel bestelllistenTab;
     private JPanel bestellenButtonsUnten;
-    private JButton exportieren_1;
+    private JButton bestelllisteExportButton;
     private JScrollPane scrollPaneBestellliste;
     private JTable table_1;
     private JButton aktualisieren_1;
@@ -211,9 +211,9 @@ public class UI extends JFrame {
         einlagerTab.add(panelEinlagerungButtonsUnten, BorderLayout.SOUTH);
 
         // Button einlagerung
-        btnNewButton_1 = new JButton("Lagerpl\u00E4tze ausgeben");
-        btnNewButton_1.addActionListener(e -> queryAdd());
-        panelEinlagerungButtonsUnten.add(btnNewButton_1);
+        einlagernButton = new JButton("Einlagern");
+        einlagernButton.addActionListener(e -> queryAdd());
+        panelEinlagerungButtonsUnten.add(einlagernButton);
 
         // Scrollpane Einlagerung
         JScrollPane scrollpaneEinlagerungTabelle = new JScrollPane();
@@ -238,15 +238,15 @@ public class UI extends JFrame {
         panel_5 = new JPanel();
         inventarTab.add(panel_5, BorderLayout.SOUTH);
 
-        okButtonInventar = new JButton("inventarOk");
-        panel_5.add(okButtonInventar);
-
         inventarExportButton = new JButton("Exportieren");
         inventarExportButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             }
         });
         panel_5.add(inventarExportButton);
+        
+                okButtonInventar = new JButton("Aktualisieren");
+                panel_5.add(okButtonInventar);
 
         scrollPaneInventar = new JScrollPane();
         inventarTab.add(scrollPaneInventar, BorderLayout.CENTER);
@@ -264,13 +264,10 @@ public class UI extends JFrame {
         bestellenButtonsUnten = new JPanel();
         bestelllistenTab.add(bestellenButtonsUnten, BorderLayout.SOUTH);
 
-        exportieren_1 = new JButton("Exportieren");
-        bestellenButtonsUnten.add(exportieren_1);
+        bestelllisteExportButton = new JButton("Exportieren");
+        bestellenButtonsUnten.add(bestelllisteExportButton);
 
-        exportieren_1.addActionListener(e -> {
-            Excel.exportieren(table_1);
-        });
-
+     
         aktualisieren_1 = new JButton("Aktualisieren");
         bestellenButtonsUnten.add(aktualisieren_1);
 
@@ -352,13 +349,20 @@ public class UI extends JFrame {
      * Methode welche den UI-Elementen Action-Listener hinzufuegt.
      */
     public void addActionListenersToUi() {
-        sucheExportButton.addActionListener(
-                e -> Export.XMLExport.writeQueryToXML(getTableData(tabelleSuche),
-                        produktTypausString(dropdownSucheProdukttyp.toString())));
+
         inventarExportButton.addActionListener(e -> Export.XMLExport
                 .writeInvetoryToXML(InventarUndBestelllisteMethoden.inventarisierung()));
-        okButtonInventar.addActionListener(
-                e -> setInventarTable(InventarUndBestelllisteMethoden.inventarisierung()));
+       
+        sucheExportButton.addActionListener(e -> {Export.XMLExport.writeQueryToXML(getTableData(tabelleSuche),
+                produktTypausString(dropdownSucheProdukttyp.toString()));
+        Export.Excel.exportieren(tabelleSuche, "Suchergebnisse");});
+        
+        okButtonInventar
+                .addActionListener(e -> setInventarTable(InventarUndBestelllisteMethoden.inventarisierung()));
+        
+        bestelllisteExportButton.addActionListener(e -> {
+            Excel.exportieren(table_1, "Bestellliste");
+        });
         sprachwahl.addActionListener(e -> updateSprache());
         dropdownEinlagerungProdukttyp.addActionListener(e -> updateEinlagerungsTable());
         dropdownSucheProdukttyp.addActionListener(e -> querySuche());

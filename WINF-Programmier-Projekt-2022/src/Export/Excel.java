@@ -16,15 +16,16 @@ public class Excel {
      * @param table
      * @param name
      */
-    public static void exportieren(JTable table) {
+    public static void exportieren(JTable table, String tab) {
         try {
 
             String a = JOptionPane.showInputDialog("Welchen Namen soll das File haben?");
-            if (a != null) {
+            
+            if (a != null && a.length()>0) {
                 TableModel table_model = table.getModel();
                 FileWriter file_writer = new FileWriter(
                         "WINF-Programmier-Projekt-2022" + FileSystems.getDefault().getSeparator()
-                                + "Folder" + FileSystems.getDefault().getSeparator() + a + ".xls");
+                                + "Folder" + FileSystems.getDefault().getSeparator() + tab + FileSystems.getDefault().getSeparator() + a + ".xls");
                 for (int i = 0; i < table_model.getColumnCount(); i++) {
                     file_writer.write(table_model.getColumnName(i) + "\t");
                 }
@@ -43,6 +44,9 @@ public class Excel {
 
                 JFrame jf = new JFrame();
                 JOptionPane.showMessageDialog(jf, "Die Datei " + a + " wurde exportiert.");
+            }else {
+            	JFrame jf = new JFrame();
+            	JOptionPane.showMessageDialog(jf, "Die Datei konnte nicht exportiert werden.");
             }
 
         } catch (IOException e1) {
