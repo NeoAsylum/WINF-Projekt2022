@@ -24,7 +24,7 @@ public class Excel {
                 TableModel table_model = table.getModel();
                 FileWriter file_writer = new FileWriter(
                         "WINF-Programmier-Projekt-2022" + FileSystems.getDefault().getSeparator()
-                                + "Folder" + FileSystems.getDefault().getSeparator() + a + ".xls");
+                                + "Folder" + FileSystems.getDefault().getSeparator() + "Bestellliste" + FileSystems.getDefault().getSeparator() + a + ".xls");
                 for (int i = 0; i < table_model.getColumnCount(); i++) {
                     file_writer.write(table_model.getColumnName(i) + "\t");
                 }
