@@ -78,7 +78,7 @@ public class UI extends JFrame {
     private JButton inventarExportButton;
     private JPanel bestelllistenTab;
     private JPanel bestellenButtonsUnten;
-    private JButton exportieren_1;
+    private JButton bestelllisteExportButton;
     private JScrollPane scrollPaneBestellliste;
     private JTable table_1;
     private JButton aktualisieren_1;
@@ -255,13 +255,10 @@ public class UI extends JFrame {
         bestellenButtonsUnten = new JPanel();
         bestelllistenTab.add(bestellenButtonsUnten, BorderLayout.SOUTH);
 
-        exportieren_1 = new JButton("Exportieren");
-        bestellenButtonsUnten.add(exportieren_1);
+        bestelllisteExportButton = new JButton("Exportieren");
+        bestellenButtonsUnten.add(bestelllisteExportButton);
 
-        exportieren_1.addActionListener(e -> {
-            Excel.exportieren(table_1);
-        });
-
+     
         aktualisieren_1 = new JButton("Aktualisieren");
         bestellenButtonsUnten.add(aktualisieren_1);
 
@@ -327,12 +324,18 @@ public class UI extends JFrame {
      * Methode welche den UI-Elementen Action-Listener hinzufuegt.
      */
     public void addActionListenersToUi() {
-        sucheExportButton.addActionListener(e -> Export.XMLExport.writeQueryToXML(getTableData(tabelleSuche),
-                produktTypausString(dropdownSucheProdukttyp.toString())));
+        sucheExportButton.addActionListener(e -> {Export.XMLExport.writeQueryToXML(getTableData(tabelleSuche),
+                produktTypausString(dropdownSucheProdukttyp.toString()));
+        Export.Excel.exportieren(tabelleSuche, "Suchergebnisse");});
         inventarExportButton.addActionListener(
                 e -> Export.XMLExport.writeInvetoryToXML(InventarUndBestelllisteMethoden.inventarisierung()));
         okButtonInventar
                 .addActionListener(e -> setInventarTable(InventarUndBestelllisteMethoden.inventarisierung()));
+        
+        bestelllisteExportButton.addActionListener(e -> {
+            Excel.exportieren(table_1, "Bestellliste");
+        });
+
         sprachwahl.addActionListener(e -> updateSprache());
         dropdownEinlagerungProdukttyp.addActionListener(e -> updateEinlagerungsTable());
         dropdownSucheProdukttyp.addActionListener(e -> querySuche());
