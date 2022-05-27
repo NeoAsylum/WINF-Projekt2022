@@ -70,7 +70,7 @@ public class UI extends JFrame {
     private JPanel panelEinlagerungButtonsUnten;
     private JComboBox<String> dropdownEinlagerungProdukttyp;
     JScrollPane scrollPane_2;
-    private JButton btnNewButton_1;
+    private JButton einlagernButton;
     private JTable einlagerungsTabelle;
     private JPanel inventarTab;
     private JPanel panel_4;
@@ -202,9 +202,9 @@ public class UI extends JFrame {
         einlagerTab.add(panelEinlagerungButtonsUnten, BorderLayout.SOUTH);
 
         // Button einlagerung
-        btnNewButton_1 = new JButton("Lagerpl\u00E4tze ausgeben");
-        btnNewButton_1.addActionListener(e -> queryAdd());
-        panelEinlagerungButtonsUnten.add(btnNewButton_1);
+        einlagernButton = new JButton("Einlagern");
+        einlagernButton.addActionListener(e -> queryAdd());
+        panelEinlagerungButtonsUnten.add(einlagernButton);
 
         // Scrollpane Einlagerung
         JScrollPane scrollpaneEinlagerungTabelle = new JScrollPane();
