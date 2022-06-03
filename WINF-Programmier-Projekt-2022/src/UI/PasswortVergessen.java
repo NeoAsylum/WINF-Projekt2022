@@ -9,7 +9,9 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class PasswortVergessen extends JFrame {
     private JPanel contentPane;
-
+    /**
+     * Methode zum Handlen, wenn das Passwort vergessen wurde.
+     */
     public PasswortVergessen() {
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

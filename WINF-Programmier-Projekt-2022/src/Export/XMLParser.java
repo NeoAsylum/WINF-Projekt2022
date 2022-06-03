@@ -11,6 +11,11 @@ import org.xml.sax.helpers.DefaultHandler;
 import Datentypen.Grafikkarte;
 import Datentypen.Produkt;
 
+/**
+ * Dies ist der DefaultHandler zur Verarbeitung der XML-Datei.
+ * 
+ *
+ */
 public class XMLParser extends DefaultHandler {
     ArrayList<String[]> alleElemente = new ArrayList<String[]>();
 

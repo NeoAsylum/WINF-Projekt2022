@@ -31,8 +31,8 @@ public class Login extends JFrame {
     private JPasswordField password;
 
     /**
-     *
-     * Create the frame.
+     *Klasse zur Erstellung des Login-GUI.
+     * 
      */
     public Login() {
         setTitle("Login");
@@ -200,7 +200,10 @@ public class Login extends JFrame {
         gbc_enter.gridy = 0;
         panel_2.add(enter, gbc_enter);
     }
-
+    
+    /**
+     * Löschen der Felder Username und Password.
+     */
     public void loeschen() {
 
         username.setText("");

@@ -9,9 +9,14 @@ import java.util.logging.Level;
 import Backend.Hauptklasse;
 import Datentypen.Produkt;
 
+
 public class XMLExport {
     static StringBuilder sb = new StringBuilder();
-
+    /**
+     * Diese Methode exportiert JTables als XML.
+     * @param theShit
+     * @param p
+     */
     public static void writeQueryToXML(Object[][] theShit, Produkt p) {
         sb.append(
                 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE Listen SYSTEM \"liste.dtd\">\n<Listen>\n");

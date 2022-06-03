@@ -17,7 +17,7 @@ public class Hauptklasse {
 
     /**
      * Dies ist die Main-Methode.
-     * 
+     * Sie führt die Applikation aus.
      * @param args
      */
     public static void main(String[] args) {

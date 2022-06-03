@@ -335,7 +335,10 @@ public class UI extends JFrame {
                         new String[] { "Lagerplaetze" }));
         lagerplatzScrollPane.setViewportView(lagerplaetzeEinlagerung);
     }
-
+    
+    /**
+     * Methode, um die Spracheinstellung zu akltualisieren.
+     */
     public void updateSprache() {
         System.out.println(sprachwahl.getSelectedItem().toString());
         Hauptklasse.getUebersetzer().setSprache(sprachwahl.getSelectedItem().toString());
@@ -346,7 +349,7 @@ public class UI extends JFrame {
     }
 
     /**
-     * Methode welche den UI-Elementen Action-Listener hinzufuegt.
+     * Methode, welche den UI-Elementen Action-Listener hinzufuegt.
      */
     public void addActionListenersToUi() {
 
@@ -371,7 +374,8 @@ public class UI extends JFrame {
     }
 
     /**
-     * Methode erzeugt Table neu.
+     * Methode erstellt die Suchtabelle.
+     * @param input
      */
     public void setSuchTable(Object[][] input) {
         Object[][] data = Arrays.copyOfRange(input, 1, input.length);
@@ -380,7 +384,10 @@ public class UI extends JFrame {
         model = new DefaultTableModel(data, input[0]);
         tabelleSuche.setModel(model);
     }
-
+    /**
+     * Methode erstellt die Einlagerungstabelle.
+     * @param input
+     */
     public void setLagerplaetzeEinlagerungTable(Object[][] input) {
         System.out.println(Arrays.deepToString(input));
         Object[][] data = Arrays.copyOfRange(input, 1, input.length);
@@ -390,9 +397,10 @@ public class UI extends JFrame {
         lagerplaetzeEinlagerung.setModel(model);
     }
 
-    /**
-     * Methode erzeugt Table neu.
-     */
+  /**
+   * Methode erstellt die Inventartabelle.
+   * @param input
+   */
     public void setInventarTable(Object[][] input) {
         Object[][] data = Arrays.copyOfRange(input, 1, input.length);
         DefaultTableModel model = (DefaultTableModel) inventarTabelle.getModel();
@@ -677,7 +685,7 @@ public class UI extends JFrame {
     }
 
     /**
-     * 
+     * Methode erstellt die Bestelllistentabelle.
      * @param input
      */
     public void setBestellTable(Object[][] input) {
@@ -695,7 +703,7 @@ public class UI extends JFrame {
      * 
      * @param input
      */
-    public void formatieren(Object[][] input) {
+    public void formatierenBestellliste(Object[][] input) {
         try {
 
             Produkt p = produktTypausString(dropdownSuche1_2.getSelectedItem().toString());

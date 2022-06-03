@@ -38,7 +38,7 @@ public class SQLOutputHandling {
 
         } else if (oberflaeche.equals("Bestellliste")) {
             Hauptklasse.getUI()
-                    .formatieren(SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
+                    .formatierenBestellliste(SQLOutputHandling.queryToStringArray(query, tabelleneintraege));
         }
     }
 

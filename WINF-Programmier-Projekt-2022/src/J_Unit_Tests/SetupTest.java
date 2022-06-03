@@ -14,6 +14,11 @@ import org.junit.jupiter.api.Test;
 import Backend.Hauptklasse;
 import SQL.NurSQL;
 
+/**
+ * In dieser Klasse wird die Applikation auf Reaktionen getestet durch JUnit.
+ * @author yann
+ *
+ */
 public class SetupTest {
 
     @BeforeEach
