@@ -141,17 +141,31 @@ public class Login extends JFrame {
                     PasswortVergessen myWindow = new PasswortVergessen();
                     myWindow.setVisible(true);
 
-                    dispose();
 
                 }
             }
         });
+        
+       
         btnNewButton.setBounds(0, 10, 160, 21);
         panel_3.add(btnNewButton);
 
         JButton btnNewButton_1 = new JButton("Benutzer anlegen");
         btnNewButton_1.setBounds(0, 41, 160, 21);
         panel_3.add(btnNewButton_1);
+        
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                if (e.getSource() == btnNewButton_1) {
+
+                    BenutzerAnlegen myWindow = new BenutzerAnlegen();
+                    myWindow.setVisible(true);
+
+
+                }
+            }
+        });
 
         JPanel panel_2 = new JPanel();
         contentPane.add(panel_2, BorderLayout.SOUTH);
@@ -184,7 +198,7 @@ public class Login extends JFrame {
 					ResultSet res = stmt.executeQuery("SELECT * FROM passwoerter");
 					
 					 for (int i = 1; res.next(); i++) {
-			                for (int j = 0; j < 2; j++) {
+
 								if(text0.equals(res.getString(i))) {
 									benutzername = true;
 								if(text1.equals(res.getString(i+1))) {
@@ -194,7 +208,6 @@ public class Login extends JFrame {
 			                	break;
 			                }
 								}
-			            }
 					 }
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
