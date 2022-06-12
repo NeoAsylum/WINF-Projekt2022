@@ -20,7 +20,7 @@ public class NurSQL {
     public static void update(String sqlQueryText) {
         Statement stmt;
         try {
-            stmt = SQLSetup.conn.createStatement();
+            stmt = SQLSetup.getConn().createStatement();
             Hauptklasse.log.info(sqlQueryText + " update Query");
             stmt.executeUpdate(sqlQueryText);
         } catch (SQLException e) {
@@ -38,7 +38,7 @@ public class NurSQL {
     public static ResultSet makeAQuery(String query) {
         Statement stmt;
         try {
-            stmt = SQLSetup.conn.createStatement();
+            stmt = SQLSetup.getConn().createStatement();
             return stmt.executeQuery(query);
         } catch (SQLException e) {
             Hauptklasse.log.log(Level.SEVERE, e.getMessage(), e);

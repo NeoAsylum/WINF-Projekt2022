@@ -17,7 +17,7 @@ import UI.UI;
 
 public class SQLSetup {
 
-    static Connection conn;
+    private static Connection conn;
     static Properties props = new Properties();
 
     /**
@@ -41,9 +41,9 @@ public class SQLSetup {
         }
         try {
             Class.forName(props.getProperty("driver"));
-            conn = DriverManager.getConnection(
+            setConn(DriverManager.getConnection(
                     props.getProperty("url") + props.getProperty("dbName"),
-                    props.getProperty("userName"), props.getProperty("password"));
+                    props.getProperty("userName"), props.getProperty("password")));
 
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -61,7 +61,7 @@ public class SQLSetup {
     public static void erstelleAlleLagerplaetze() {
         Statement stmt;
         try {
-            stmt = conn.createStatement();
+            stmt = getConn().createStatement();
             for (int raum = 0; raum < 5; raum++) {
                 for (int regal = 0; regal < 5; regal++) {
                     for (int fach = 0; fach < 20; fach++) {
@@ -77,5 +77,13 @@ public class SQLSetup {
         }
         Hauptklasse.nonsenseQuery();
     }
+
+	public static Connection getConn() {
+		return conn;
+	}
+
+	public static void setConn(Connection conn) {
+		SQLSetup.conn = conn;
+	}
 
 }

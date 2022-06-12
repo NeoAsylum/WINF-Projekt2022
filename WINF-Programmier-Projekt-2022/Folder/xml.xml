@@ -1,31 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE Listen SYSTEM "liste.dtd">
 <Listen>
-<Grafikkarte Name="Dritte" VRAM="33" Hersteller="22" ID="102" Lagerplatz="4945" ></Grafikkarte> 
-<Grafikkarte Name="a" VRAM="bb" Hersteller="cc" ID="103" Lagerplatz="4946" ></Grafikkarte> 
-<Grafikkarte Name="aa" VRAM="bb" Hersteller="cc" ID="104" Lagerplatz="4947" ></Grafikkarte> 
-<Grafikkarte Name="test" VRAM="test" Hersteller="test" ID="105" Lagerplatz="4948" ></Grafikkarte> 
-<Grafikkarte Name="abc" VRAM="def" Hersteller="gfh" ID="106" Lagerplatz="4949" ></Grafikkarte> 
-<Grafikkarte Name="aaa" VRAM="bbb" Hersteller="ccc" ID="107" Lagerplatz="4950" ></Grafikkarte> 
-<Grafikkarte Name="aa" VRAM="bb" Hersteller="cc" ID="108" Lagerplatz="4947" ></Grafikkarte> 
-<Grafikkarte Name="aaa" VRAM="sss" Hersteller="ddd" ID="109" Lagerplatz="4950" ></Grafikkarte> 
-<Grafikkarte Name="aasdasd" VRAM="asdasdqwdwqd" Hersteller="qwdasdasd" ID="110" Lagerplatz="4952" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="asdqdwqd" Hersteller="qweqweqwe" ID="111" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="dqwdsad" Hersteller="asdqwd" ID="112" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="sadadff" Hersteller="qweqwe" ID="113" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="asdqdwqd" Hersteller="qweqweqwe" ID="114" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="dqwdsad" Hersteller="asdqwd" ID="115" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="sadadff" Hersteller="qweqwe" ID="116" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="werwere" VRAM="werwerwe" Hersteller="werwer" ID="117" Lagerplatz="4954" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="asdqdwqd" Hersteller="qweqweqwe" ID="118" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="dqwdsad" Hersteller="asdqwd" ID="119" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="sadadff" Hersteller="qweqwe" ID="120" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="werwere" VRAM="werwerwe" Hersteller="werwer" ID="121" Lagerplatz="4954" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="asdqdwqd" Hersteller="qweqweqwe" ID="122" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="dqwdsad" Hersteller="asdqwd" ID="123" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="aaaaaaaa" VRAM="sadadff" Hersteller="qweqwe" ID="124" Lagerplatz="4953" ></Grafikkarte> 
-<Grafikkarte Name="werwere" VRAM="werwerwe" Hersteller="werwer" ID="125" Lagerplatz="4954" ></Grafikkarte> 
-<Grafikkarte Name="fasdfsad" VRAM="fsdfasdf" Hersteller="asdfsdfa" ID="126" Lagerplatz="4955" ></Grafikkarte> 
-<Grafikkarte Name="qqweqw" VRAM="eqweqwewqe" Hersteller="qweqwe" ID="127" Lagerplatz="4956" ></Grafikkarte> 
-<Grafikkarte Name="qweqwe" VRAM="qweqwe" Hersteller="qweqwe" ID="128" Lagerplatz="4957" ></Grafikkarte> 
+<Grafikkarte Name="BarraCuda" VRAM="Seagate" Hersteller="4TB" ID="alle" Lagerplatz="22" <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE Listen SYSTEM "liste.dtd">
+<Listen>
+<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1002" ID="4986" ></Grafikkarte> 
+<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1003" ID="4986" ></Grafikkarte> 
+<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1004" ID="4986" ></Grafikkarte> 
+<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1005" ID="4986" ></Grafikkarte> 
+<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1006" ID="4986" ></Grafikkarte> 
+<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1007" ID="4986" ></Grafikkarte> 
+<Grafikkarte Name="Vengeance" VRAM="16GB" Hersteller="1008" ID="4986" ></Grafikkarte> 
+<Grafikkarte Name="Vengeance" VRAM="16GB" Hersteller="1009" ID="4986" ></Grafikkarte> 
+<Grafikkarte Name="Vengeance" VRAM="16GB" Hersteller="1010" ID="4986" ></Grafikkarte> 
 </Listen>
