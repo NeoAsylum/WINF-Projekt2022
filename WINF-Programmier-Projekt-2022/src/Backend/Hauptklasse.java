@@ -1,5 +1,6 @@
 package Backend;
 
+import UI.Login;
 import UI.UI;
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import Stuff.International;
 public class Hauptklasse {
 
     private static UI frame;
+    private static Login login;
     private static International uebersetzer = new International();
     public static final Logger log = Logger.getLogger(Hauptklasse.class.getName());
 
@@ -26,10 +28,9 @@ public class Hauptklasse {
         } else if (Arrays.stream(args).collect(Collectors.toList()).contains("no login")) {
             SQLSetup.setupSQL();
         }
-        frame = new UI();
-        frame.addActionListenersToUi();
-        frame.setVisible(true);
-
+        login = new Login();
+        login.setVisible(true);
+       
     }
 
     private static void disposeOfFrame() {

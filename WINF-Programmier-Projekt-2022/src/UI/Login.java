@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Backend.Hauptklasse;
 import SQL.SQLSetup;
 
 import java.awt.GridBagLayout;
@@ -22,6 +23,10 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Iterator;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -169,24 +174,41 @@ public class Login extends JFrame {
         JButton enter = new JButton("Enter");
         enter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String benutzername = "1";
-                String passwort = "1";
+                boolean benutzername = false;
+                boolean passwort = false;
 
-                String name = String.valueOf(username.getText());
-                String passwort1 = String.valueOf(password.getPassword());
+                String text0 = String.valueOf(username.getText());
+                String text1 = String.valueOf(password.getPassword());
+                try {
+					Statement stmt = SQLSetup.getConn().createStatement();
+					ResultSet res = stmt.executeQuery("SELECT * FROM passwoerter");
+					
+					 for (int i = 1; res.next(); i++) {
+			                for (int j = 0; j < 2; j++) {
+								if(text0.equals(res.getString(i))) {
+									benutzername = true;
+								if(text1.equals(res.getString(i+1))) {
+									passwort = true;
+									break;
+			                }else {
+			                	break;
+			                }
+								}
+			            }
+					 }
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
-                if (benutzername.equals(name) && passwort1.equals(passwort)) {
-
-                    SQLSetup.setupSQL();
-
-                    dispose();
+                if (benutzername&&passwort) {
+                  dispose();
+                  Hauptklasse.setupUI();
 
                 } else {
 
                     String nachricht = "Benutzername oder Passwort ist falsch";
-
                     JOptionPane.showMessageDialog(null, nachricht);
-
                     loeschen();
 
                 }
