@@ -132,6 +132,7 @@ public class UI extends JFrame {
         sprachwahl.addItem("");
         sprachwahl.addItem("English");
         sprachwahl.addItem("Deutsch");
+        sprachwahl.addItem("Español");
         suchePanelButtonsUnten.add(sprachwahl);
 
         deleteSuche.setToolTipText("put x in 'delete' column");
@@ -145,8 +146,9 @@ public class UI extends JFrame {
          */
         suchePanelButtonsOben = new JPanel();
         suche.add(suchePanelButtonsOben, BorderLayout.NORTH);
-        String[] arr = new String[] { "Grafikkarte", "Festplatte", "Hauptspeicher",
-                "Fertigprodukt", "CPU" };
+        String[] arr = new String[] { Hauptklasse.getUebersetzer().getUebersetzung("Grafikkarte"), Hauptklasse.getUebersetzer().getUebersetzung("Festplatte"),
+        		Hauptklasse.getUebersetzer().getUebersetzung("Hauptspeicher"),
+        		Hauptklasse.getUebersetzer().getUebersetzung("Fertigprodukt"), "CPU" };
         // Dropdown 1 Suche
         dropdownSucheProdukttyp = new JComboBox<String>();
         dropdownSucheProdukttyp.addItem("");
@@ -193,9 +195,9 @@ public class UI extends JFrame {
         scrollPaneSucheTabelle.setViewportView(tabelleSuche);
         // Einlagerung
         einlagerTab = new JPanel();
-        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Einlagern"), null,
-                einlagerTab, null);
+        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Einlagern"), null, einlagerTab, null);
         einlagerTab.setLayout(new BorderLayout(0, 0));
+       
 
         // panel Buttons oben
         panelEinlagerungButtonsOben = new JPanel();
@@ -211,7 +213,7 @@ public class UI extends JFrame {
         einlagerTab.add(panelEinlagerungButtonsUnten, BorderLayout.SOUTH);
 
         // Button einlagerung
-        einlagernButton = new JButton("Einlagern");
+        einlagernButton = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Einlagern")); 
         einlagernButton.addActionListener(e -> queryAdd());
         panelEinlagerungButtonsUnten.add(einlagernButton);
 
@@ -238,14 +240,14 @@ public class UI extends JFrame {
         panel_5 = new JPanel();
         inventarTab.add(panel_5, BorderLayout.SOUTH);
 
-        inventarExportButton = new JButton("Exportieren");
+        inventarExportButton = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Exportieren"));
         inventarExportButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             }
         });
         panel_5.add(inventarExportButton);
         
-                okButtonInventar = new JButton("Aktualisieren");
+                okButtonInventar = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Aktualisieren"));
                 panel_5.add(okButtonInventar);
 
         scrollPaneInventar = new JScrollPane();
@@ -258,17 +260,17 @@ public class UI extends JFrame {
         scrollPaneInventar.setViewportView(inventarTabelle);
 
         bestelllistenTab = new JPanel();
-        tabbedPane.addTab("Bestellliste", null, bestelllistenTab, null);
+        tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Bestellliste"), null, bestelllistenTab, null);
         bestelllistenTab.setLayout(new BorderLayout(0, 0));
 
         bestellenButtonsUnten = new JPanel();
         bestelllistenTab.add(bestellenButtonsUnten, BorderLayout.SOUTH);
 
-        bestelllisteExportButton = new JButton("Exportieren");
+        bestelllisteExportButton = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Exportieren"));
         bestellenButtonsUnten.add(bestelllisteExportButton);
 
      
-        aktualisieren_1 = new JButton("Aktualisieren");
+        aktualisieren_1 = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Aktualisieren"));
         bestellenButtonsUnten.add(aktualisieren_1);
 
         aktualisieren_1.addActionListener(e -> {
@@ -332,7 +334,7 @@ public class UI extends JFrame {
         lagerplaetzeEinlagerung.setMaximumSize(new Dimension(150, 0));
         lagerplaetzeEinlagerung
                 .setModel(new DefaultTableModel(new Object[][] { { null }, { null }, { null }, },
-                        new String[] { "Lagerplaetze" }));
+                        new String[] { Hauptklasse.getUebersetzer().getUebersetzung("Lagerplaetze")}));
         lagerplatzScrollPane.setViewportView(lagerplaetzeEinlagerung);
     }
     

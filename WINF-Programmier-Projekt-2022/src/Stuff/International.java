@@ -17,6 +17,10 @@ public class International {
         if(localcode=="English"||localcode=="en-EN") {
             localcode="en";
         }
+        if(localcode=="Español"||localcode=="es-ES") {
+            localcode="es";
+        }
+
         current = new Locale(localcode);
         rb = ResourceBundle.getBundle("sprachen"+FileSystems.getDefault().getSeparator()+"sprache",current);
     }
