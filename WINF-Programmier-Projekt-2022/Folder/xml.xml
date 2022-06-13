@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE Listen SYSTEM "liste.dtd">
 <Listen>
-<Grafikkarte Name="BarraCuda" VRAM="Seagate" Hersteller="4TB" ID="alle" Lagerplatz="22" <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE Listen SYSTEM "liste.dtd">
-<Listen>
-<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1002" ID="4986" ></Grafikkarte> 
-<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1003" ID="4986" ></Grafikkarte> 
-<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1004" ID="4986" ></Grafikkarte> 
-<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1005" ID="4986" ></Grafikkarte> 
-<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1006" ID="4986" ></Grafikkarte> 
-<Grafikkarte Name="MTXTec" VRAM="16GB" Hersteller="1007" ID="4986" ></Grafikkarte> 
-<Grafikkarte Name="Vengeance" VRAM="16GB" Hersteller="1008" ID="4986" ></Grafikkarte> 
-<Grafikkarte Name="Vengeance" VRAM="16GB" Hersteller="1009" ID="4986" ></Grafikkarte> 
-<Grafikkarte Name="Vengeance" VRAM="16GB" Hersteller="1010" ID="4986" ></Grafikkarte> 
+<CPU Name="Ryzen 7" ID="5" Lagerplatz="1493" ></CPU> 
+<CPU Name="Ryzen 7" ID="6" Lagerplatz="1493" ></CPU> 
+<CPU Name="Ryzen 7" ID="7" Lagerplatz="1493" ></CPU> 
+<Festplatte Name="BarraCuda" ID="21" Lagerplatz="3950" ></Festplatte> 
+<Hauptspeicher Name="BarraCuda" ID="21" Lagerplatz="3950" ></Hauptspeicher> 
+<Festplatte Name="BarraCuda" ID="22" Lagerplatz="3953" ></Festplatte> 
+<Hauptspeicher Name="BarraCuda" ID="22" Lagerplatz="3953" ></Hauptspeicher> 
+<Festplatte Name="BarraCuda" ID="23" Lagerplatz="3954" ></Festplatte> 
+<Hauptspeicher Name="BarraCuda" ID="23" Lagerplatz="3954" ></Hauptspeicher> 
+<Festplatte Name="BarraCuda" ID="24" Lagerplatz="3955" ></Festplatte> 
+<Hauptspeicher Name="BarraCuda" ID="24" Lagerplatz="3955" ></Hauptspeicher> 
+<Festplatte Name="Samsung 870 EVO" ID="25" Lagerplatz="3956" ></Festplatte> 
+<Hauptspeicher Name="Samsung 870 EVO" ID="25" Lagerplatz="3956" ></Hauptspeicher> 
+<CPU Name="i9" ID="8" Lagerplatz="3962" ></CPU> 
+<CPU Name="i9" ID="9" Lagerplatz="3963" ></CPU> 
+<Grafikkarte Name="GeForce GTX 1660 Ti" ID="101" Lagerplatz="4944" ></Grafikkarte> 
+<Grafikkarte Name="GeForce GTX 1660 Ti" ID="102" Lagerplatz="4945" ></Grafikkarte> 
+<Grafikkarte Name="Geforce GT 730" ID="104" Lagerplatz="4946" ></Grafikkarte> 
+<Grafikkarte Name="Geforce GT 730" ID="105" Lagerplatz="4946" ></Grafikkarte> 
+<Grafikkarte Name="GeForce GTX 1660 Ti" ID="150" Lagerplatz="4946" ></Grafikkarte> 
+<Grafikkarte Name="GeForce GTX 1660 Ti" ID="702" Lagerplatz="4946" ></Grafikkarte> 
+<Festplatte Name="Samsung 870 EVO" ID="26" Lagerplatz="4951" ></Festplatte> 
+<Festplatte Name="IronWolf" ID="27" Lagerplatz="4951" ></Festplatte> 
+<Festplatte Name="IronWolf" ID="28" Lagerplatz="4951" ></Festplatte> 
+<Hauptspeicher Name="Samsung 870 EVO" ID="26" Lagerplatz="4951" ></Hauptspeicher> 
+<Hauptspeicher Name="IronWolf" ID="27" Lagerplatz="4951" ></Hauptspeicher> 
+<Hauptspeicher Name="IronWolf" ID="28" Lagerplatz="4951" ></Hauptspeicher> 
+<Festplatte Name="IronWolf" ID="29" Lagerplatz="4958" ></Festplatte> 
+<Festplatte Name="IronWolf" ID="30" Lagerplatz="4958" ></Festplatte> 
+<Hauptspeicher Name="IronWolf" ID="29" Lagerplatz="4958" ></Hauptspeicher> 
+<Hauptspeicher Name="IronWolf" ID="30" Lagerplatz="4958" ></Hauptspeicher> 
+<Festplatte Name="IronWolf" ID="31" Lagerplatz="4959" ></Festplatte> 
+<Hauptspeicher Name="IronWolf" ID="31" Lagerplatz="4959" ></Hauptspeicher> 
 </Listen>
