@@ -1,5 +1,10 @@
 package Backend;
 
+/**
+ * Klasse mit nuetzlichen Methoden.
+ * @author All-Stars
+ *
+ */
 public class Nuetzliches {
 
     /**

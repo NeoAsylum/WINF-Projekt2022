@@ -12,7 +12,7 @@ import Backend.Hauptklasse;
 /**
  * Eine Klasse welche die Ausgaben der SQL-Querys verarbeitet.
  * 
- * @author Team 4
+ * @author AllStars
  *
  */
 public class SQLOutputHandling {

@@ -15,10 +15,21 @@ import javax.swing.JOptionPane;
 import Backend.Hauptklasse;
 import UI.UI;
 
+/**
+ * Eine Klasse welche die SQL-Verbindung erstellt.
+ * @author AllStars
+ *
+ */
 public class SQLSetup {
 
+    /**
+     * Instanz der Verbindung zur SQL-Datenbank.
+     */
     private static Connection conn;
-    static Properties props = new Properties();
+    /**
+     * Instanz der Properties, genutzt fuer die Anmeldedaten.
+     */
+    private static Properties props = new Properties();
 
     /**
      * Setup Methode welche SQL-Connection aufsetzt, frame/UI initialisiert und
@@ -78,10 +89,18 @@ public class SQLSetup {
         Hauptklasse.nonsenseQuery();
     }
 
+    /**
+     * Getter Methode fuer die Connection zur SQL Datenbank.
+     * @return Gibt die Connection zurueck.
+     */
 	public static Connection getConn() {
 		return conn;
 	}
 
+	/**
+	 * Setter Methode fuer die Connection zur SQL-Datenbank.
+	 * @param conn Die zu setzende Connection.
+	 */
 	public static void setConn(Connection conn) {
 		SQLSetup.conn = conn;
 	}

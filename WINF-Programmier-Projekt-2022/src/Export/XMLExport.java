@@ -9,13 +9,17 @@ import java.util.logging.Level;
 import Backend.Hauptklasse;
 import Datentypen.Produkt;
 
-
+/**
+ * Klasse fuer den Export von XML-Dateien.
+ * @author AllStars
+ *
+ */
 public class XMLExport {
     static StringBuilder sb = new StringBuilder();
     /**
      * Diese Methode exportiert JTables als XML.
-     * @param theShit
-     * @param p
+     * @param theShit Der Object-Array welcher exportiert werden soll.
+     * @param p Produkttyp.
      */
     public static void writeQueryToXML(Object[][] theShit, Produkt p) {
         sb.append(
@@ -40,7 +44,11 @@ public class XMLExport {
             Hauptklasse.log.log(Level.SEVERE,"Not written to XML",e);
         }
     }
-
+    
+    /**
+     * Diese Methode exportiert JTables als XML.
+     * @param theShit Der Object-Array welcher exportiert werden soll.
+     */
     public static void writeInvetoryToXML(Object[][] theShit) {
         Arrays.deepToString(theShit);
         sb.append(

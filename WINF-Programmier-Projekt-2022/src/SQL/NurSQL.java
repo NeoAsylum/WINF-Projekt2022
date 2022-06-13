@@ -9,6 +9,11 @@ import javax.swing.JOptionPane;
 
 import Backend.Hauptklasse;
 
+/**
+ * Ein Klasse welche nur Methoden fuer das direkte interagieren mit der SQL-Datenbank enthaelt.
+ * @author AllStars
+ *
+ */
 public class NurSQL {
 
     /**

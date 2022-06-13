@@ -9,8 +9,17 @@ import java.util.stream.Stream;
 
 import SQL.SQLOutputHandling;
 
+/**
+ * Klasse mit Methoden zum Erstellen des Inventars und der Bestellliste.
+ * @author AllStars
+ *
+ */
 public class InventarUndBestelllisteMethoden {
 
+    /**
+     * Methode zum Erstellen eines Inventars als Object-Array.
+     * @return Gibt einen Object Array zurueck mit allen Elementen aller Produkttypen.
+     */
     public static Object[][] inventarisierung() {
     
         // Querys für alle PRodukttypen erstellen.

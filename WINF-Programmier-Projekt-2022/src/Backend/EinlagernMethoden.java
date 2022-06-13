@@ -7,6 +7,11 @@ import java.util.logging.Level;
 import Datentypen.Produkt;
 import SQL.NurSQL;
 
+/**
+ * Eine Klasse welche Methoden zum Prozess des Einlagerns enthaelt.
+ * @author AllStars
+ *
+ */
 public class EinlagernMethoden {
 
     /**

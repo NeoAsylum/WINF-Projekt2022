@@ -4,6 +4,11 @@ import java.util.Arrays;
 
 import SQL.NurSQL;
 
+/**
+ * Eine Klasse welche Methoden zum Prozess des Auslagerns enthaelt.
+ * @author AllStars
+ *
+ */
 public class AuslagernMethoden {
 
     /**

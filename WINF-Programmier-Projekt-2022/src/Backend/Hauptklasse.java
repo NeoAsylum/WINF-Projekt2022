@@ -10,11 +10,28 @@ import SQL.NurSQL;
 import SQL.SQLSetup;
 import Stuff.International;
 
+/**
+ * Hauptklasse zum Starten des Programmes.
+ * @author AllStars
+ *
+ */
 public class Hauptklasse {
 
+    /**
+     * JFrame mit UI.
+     */
     private static UI frame;
+    /**
+     * Instanz der Login-Klasse.
+     */
     private static Login login;
+    /**
+     * Instanz fuer den Uebersetzer.
+     */
     private static International uebersetzer = new International();
+    /**
+     * Instanz fuer den Logger.
+     */
     public static final Logger log = Logger.getLogger(Hauptklasse.class.getName());
 
     /**
@@ -33,14 +50,23 @@ public class Hauptklasse {
        
     }
 
+    /**
+     * Methode welche das frame entsorgt.
+     */
     private static void disposeOfFrame() {
         frame.dispose();
     }
 
+    /**
+     * Query welche die Suchtabelle mit 'nichts' fuellt.
+     */
     public static void nonsenseQuery() {
         frame.setSuchTable(NurSQL.nonsenseQuery());
     }
 
+    /**
+     * Setup fuer UI.
+     */
     public static void setupUI() {
         if (frame != null) {
             disposeOfFrame();
@@ -50,14 +76,26 @@ public class Hauptklasse {
         frame.setVisible(true);
     }
 
+    /**
+     * Getter fuer den Uebersetzer.
+     * @return Der Uebersetzer.
+     */
     public static International getUebersetzer() {
         return uebersetzer;
     }
 
+    /**
+     * Setter fuer den Uebersetzer.
+     * @param ue Der Uebersetzer.
+     */
     public static void setUebersetzer(International ue) {
         uebersetzer = ue;
     }
 
+    /**
+     * Getter fuer das UI.
+     * @return
+     */
     public static UI getUI() {
         return frame;
     }

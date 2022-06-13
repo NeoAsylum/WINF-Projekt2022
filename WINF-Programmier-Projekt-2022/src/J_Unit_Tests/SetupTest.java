@@ -16,7 +16,7 @@ import SQL.NurSQL;
 
 /**
  * In dieser Klasse wird die Applikation auf Reaktionen getestet durch JUnit.
- * @author yann
+ * @author AllStars
  *
  */
 public class SetupTest {

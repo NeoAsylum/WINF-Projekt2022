@@ -10,15 +10,15 @@ import javax.swing.table.TableModel;
 /**
  * 
  * Klasse für Excel-Export.
- *
+ * @author AllStars
  */
 public class Excel {
 
     /**
      * Exportieren einer JTable als Excel-Datei.
      * 
-     * @param table
-     * @param name
+     * @param table Tabelle welche exportiert werden soll.
+     * @param name Name des aktiven Tabs.
      */
     public static void exportieren(JTable table, String tab) {
         try {
