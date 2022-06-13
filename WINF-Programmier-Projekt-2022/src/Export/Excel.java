@@ -7,7 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
-
+/**
+ * 
+ * Klasse für Excel-Export.
+ *
+ */
 public class Excel {
 
     /**

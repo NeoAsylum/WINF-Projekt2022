@@ -353,8 +353,11 @@ public class UI extends JFrame {
      */
     public void addActionListenersToUi() {
 
-        inventarExportButton.addActionListener(e -> Export.XMLExport
-                .writeInvetoryToXML(InventarUndBestelllisteMethoden.inventarisierung()));
+        inventarExportButton.addActionListener(e ->{ 
+        	Export.XMLExport
+                .writeInvetoryToXML(InventarUndBestelllisteMethoden.inventarisierung());
+            Export.Excel.exportieren(inventarTabelle, "Inventar");
+        });
        
         sucheExportButton.addActionListener(e -> {Export.XMLExport.writeQueryToXML(getTableData(tabelleSuche),
                 produktTypausString(dropdownSucheProdukttyp.toString()));
