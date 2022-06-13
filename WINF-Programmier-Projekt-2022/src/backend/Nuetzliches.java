@@ -22,5 +22,4 @@ public class Nuetzliches {
     }
     return column;
   }
-
 }

@@ -141,10 +141,8 @@ public class UI extends JFrame {
      */
     suchePanelButtonsOben = new JPanel();
     suche.add(suchePanelButtonsOben, BorderLayout.NORTH);
-    String[] arr = new String[] { Hauptklasse.getUebersetzer().getUebersetzung("Grafikkarte"),
-        Hauptklasse.getUebersetzer().getUebersetzung("Festplatte"),
-        Hauptklasse.getUebersetzer().getUebersetzung("Hauptspeicher"),
-        Hauptklasse.getUebersetzer().getUebersetzung("Fertigprodukt"), "CPU" };
+    String[] arr = new String[] { "Grafikkarte", "Festplatte", "Hauptspeicher", "Fertigprodukt",
+        "CPU" };
     // Dropdown 1 Suche
     dropdownSucheProdukttyp = new JComboBox<String>();
     dropdownSucheProdukttyp.addItem("");
@@ -593,6 +591,7 @@ public class UI extends JFrame {
         added = 0;
 
       }
+      System.out.println(sqlQuery);
       sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
       sqlQuery = p == null ? null : sqlQuery;
       SQLOutputHandling.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());

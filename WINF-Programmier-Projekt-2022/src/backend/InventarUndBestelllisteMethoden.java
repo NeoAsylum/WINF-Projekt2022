@@ -121,5 +121,4 @@ public class InventarUndBestelllisteMethoden {
     }
     return result;
   }
-
 }
