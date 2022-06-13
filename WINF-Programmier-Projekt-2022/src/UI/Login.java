@@ -198,10 +198,9 @@ public class Login extends JFrame {
 					ResultSet res = stmt.executeQuery("SELECT * FROM passwoerter");
 					
 					 for (int i = 1; res.next(); i++) {
-
-								if(text0.equals(res.getString(i))) {
+								if(text0.equals(res.getString(1))) {
 									benutzername = true;
-								if(text1.equals(res.getString(i+1))) {
+								if(text1.equals(res.getString(2))) {
 									passwort = true;
 									break;
 			                }else {

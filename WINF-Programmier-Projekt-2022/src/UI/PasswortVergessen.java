@@ -117,7 +117,7 @@ public class PasswortVergessen extends JFrame {
 					stmt = SQLSetup.getConn().createStatement();
 				ResultSet res = stmt.executeQuery("SELECT * FROM passwoerter");
         		for(int i = 1; res.next(); i++) {;
-        				if(res.getString(i).equals(bn.getText())) {
+        				if(res.getString(1).equals(bn.getText())) {
         					if(!pw.getText().equals("")) {
         						Statement stmt1 = SQL.SQLSetup.getConn().createStatement();
         						stmt1.execute("UPDATE passwoerter SET passwort = '"+ pw.getText() + "' WHERE benutzername = '" + bn.getText() + "'");
