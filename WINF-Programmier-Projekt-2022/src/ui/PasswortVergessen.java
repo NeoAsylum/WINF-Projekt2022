@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import java.awt.BorderLayout; 
 
@@ -6,9 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
-import Backend.Hauptklasse;
-import SQL.SQLSetup;
+import backend.Hauptklasse;
+import sql.sqlSetup;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -114,12 +113,12 @@ public class PasswortVergessen extends JFrame {
         	if(admin.getText().equals(key)) {
         		Statement stmt;
 				try {
-					stmt = SQLSetup.getConn().createStatement();
+					stmt = sqlSetup.getConn().createStatement();
 				ResultSet res = stmt.executeQuery("SELECT * FROM passwoerter");
         		for(int i = 1; res.next(); i++) {;
         				if(res.getString(1).equals(bn.getText())) {
         					if(!pw.getText().equals("")) {
-        						Statement stmt1 = SQL.SQLSetup.getConn().createStatement();
+        						Statement stmt1 = sql.sqlSetup.getConn().createStatement();
         						stmt1.execute("UPDATE passwoerter SET passwort = '"+ pw.getText() + "' WHERE benutzername = '" + bn.getText() + "'");
         						JOptionPane.showMessageDialog(frame, "Ihr Passwort konnte erfolgreich zurückgesetzt werden");
         						dispose();

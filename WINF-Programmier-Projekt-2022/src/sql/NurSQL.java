@@ -1,4 +1,4 @@
-package SQL;
+package sql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +7,7 @@ import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
-import Backend.Hauptklasse;
+import backend.Hauptklasse;
 
 /**
  * Ein Klasse welche nur Methoden fuer das direkte interagieren mit der SQL-Datenbank enthaelt.
@@ -25,7 +25,7 @@ public class NurSQL {
     public static void update(String sqlQueryText) {
         Statement stmt;
         try {
-            stmt = SQLSetup.getConn().createStatement();
+            stmt = sqlSetup.getConn().createStatement();
             Hauptklasse.log.info(sqlQueryText + " update Query");
             stmt.executeUpdate(sqlQueryText);
         } catch (SQLException e) {
@@ -43,7 +43,7 @@ public class NurSQL {
     public static ResultSet makeAQuery(String query) {
         Statement stmt;
         try {
-            stmt = SQLSetup.getConn().createStatement();
+            stmt = sqlSetup.getConn().createStatement();
             return stmt.executeQuery(query);
         } catch (SQLException e) {
             Hauptklasse.log.log(Level.SEVERE, e.getMessage(), e);

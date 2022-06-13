@@ -1,4 +1,4 @@
-package SQL;
+package sql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +7,7 @@ import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
-import Backend.Hauptklasse;
+import backend.Hauptklasse;
 
 /**
  * Eine Klasse welche die Ausgaben der SQL-Querys verarbeitet.

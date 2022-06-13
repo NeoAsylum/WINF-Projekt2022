@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import SQL.SQLSetup;
+import sql.sqlSetup;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -125,7 +125,7 @@ public class BenutzerAnlegen extends JFrame {
         	if(admin.getText().equals(key)) {
 				try {
 					if(!bn.getText().equals("") && !pw.getText().equals("")) {
-						Statement stmt = SQLSetup.getConn().createStatement();
+						Statement stmt = sqlSetup.getConn().createStatement();
 						stmt.execute("INSERT INTO passwoerter (benutzername, passwort) VALUES ('" + bn.getText() + "','" + pw.getText() + "')");
 						JOptionPane.showMessageDialog(frame, "Ihr Benutzerprofil wurde erfolgreich erstellt");
 						dispose();
