@@ -138,8 +138,8 @@ public class Login extends JFrame {
 
                 if (e.getSource() == btnNewButton) {
 
-                    PasswortVergessen myWindow = new PasswortVergessen();
-                    myWindow.setVisible(true);
+                    PasswortVergessen frame = new PasswortVergessen();
+                    frame.setVisible(true);
 
 
                 }
@@ -159,8 +159,8 @@ public class Login extends JFrame {
 
                 if (e.getSource() == btnNewButton_1) {
 
-                    BenutzerAnlegen myWindow = new BenutzerAnlegen();
-                    myWindow.setVisible(true);
+                    BenutzerAnlegen frame = new BenutzerAnlegen();
+                    frame.setVisible(true);
 
 
                 }
