@@ -78,13 +78,13 @@ public class UI extends JFrame {
   private JTable einlagerungsTabelle;
   private JPanel inventarTab;
   private JPanel panel_4;
-  private JPanel panel_5;
+  private JPanel buttonsInventar;
   private JButton inventarExportButton;
   private JPanel bestelllistenTab;
   private JPanel bestellenButtonsUnten;
   private JButton bestelllisteExportButton;
   private JScrollPane scrollPaneBestellliste;
-  private JTable table_1;
+  private JTable bestelllistenTabelle;
   private JButton aktualisieren_1;
   private JButton okSuche;
   private JPanel bestellenButtonsOben;
@@ -135,10 +135,6 @@ public class UI extends JFrame {
     suchePanelButtonsUnten.add(deleteSuche);
     sucheExportButton = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Exportieren"));
     suchePanelButtonsUnten.add(sucheExportButton);
-    /*
-     * sucheExportButton.addActionListener(e -> { Excel.exportieren(tabelleSuche);
-     * });
-     */
     suchePanelButtonsOben = new JPanel();
     suche.add(suchePanelButtonsOben, BorderLayout.NORTH);
     String[] arr = new String[] { "Grafikkarte", "Festplatte", "Hauptspeicher", "Fertigprodukt",
@@ -222,17 +218,18 @@ public class UI extends JFrame {
         new String[] { "", "", "", "" }));
     scrollpaneEinlagerungTabelle.setViewportView(einlagerungsTabelle);
 
-    //
+    // Tab fuer Inventarisierung
     inventarTab = new JPanel();
     tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Inventar"), null, inventarTab,
         null);
     inventarTab.setLayout(new BorderLayout(0, 0));
 
+    // leeres Panel ueber Inventarliste
     panel_4 = new JPanel();
     inventarTab.add(panel_4, BorderLayout.NORTH);
-
-    panel_5 = new JPanel();
-    inventarTab.add(panel_5, BorderLayout.SOUTH);
+    // buttons im Inventar
+    buttonsInventar = new JPanel();
+    inventarTab.add(buttonsInventar, BorderLayout.SOUTH);
 
     inventarExportButton = new JButton(
         Hauptklasse.getUebersetzer().getUebersetzung("Exportieren"));
@@ -240,10 +237,10 @@ public class UI extends JFrame {
       public void actionPerformed(ActionEvent e) {
       }
     });
-    panel_5.add(inventarExportButton);
+    buttonsInventar.add(inventarExportButton);
 
     okButtonInventar = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Aktualisieren"));
-    panel_5.add(okButtonInventar);
+    buttonsInventar.add(okButtonInventar);
 
     scrollPaneInventar = new JScrollPane();
     inventarTab.add(scrollPaneInventar, BorderLayout.CENTER);
@@ -254,55 +251,30 @@ public class UI extends JFrame {
         new String[] { "", "", "", "" }));
     scrollPaneInventar.setViewportView(inventarTabelle);
 
+    // Tab mit Bestellliste
     bestelllistenTab = new JPanel();
     tabbedPane.addTab(Hauptklasse.getUebersetzer().getUebersetzung("Bestellliste"), null,
         bestelllistenTab, null);
     bestelllistenTab.setLayout(new BorderLayout(0, 0));
-
+    // Bestelllistenbuttons unten Panel
     bestellenButtonsUnten = new JPanel();
     bestelllistenTab.add(bestellenButtonsUnten, BorderLayout.SOUTH);
 
     bestelllisteExportButton = new JButton(
         Hauptklasse.getUebersetzer().getUebersetzung("Exportieren"));
     bestellenButtonsUnten.add(bestelllisteExportButton);
-
+    // Button zum aktualisieren der Bestellliste
     aktualisieren_1 = new JButton(Hauptklasse.getUebersetzer().getUebersetzung("Aktualisieren"));
     bestellenButtonsUnten.add(aktualisieren_1);
 
-    aktualisieren_1.addActionListener(e -> {
-      Produkt p = produktTypausString(dropdownSuche1_2.getSelectedItem().toString());
-      String tabelle;
-      switch (dropdownSuche1_2.getSelectedItem().toString()) {
-      case "Grafikkarte":
-        tabelle = "grafikkarte";
-        break;
-      case "CPU":
-        tabelle = "cpu";
-        break;
-      case "Fertigprodukt":
-        tabelle = "fertigprodukt";
-        break;
-      case "Hauptspeicher":
-        tabelle = "hauptspeicher";
-        break;
-      case "Festplatte":
-        tabelle = "festplatte";
-        break;
-      default:
-        System.out.println(dropdownSuche1_2.getSelectedItem().toString());
-        tabelle = "cpu";
-        return;
-      }
-      SQLOutputHandling.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
-          p.getTabelleneintraege());
-    });
     scrollPaneBestellliste = new JScrollPane();
+    // Scrollpane fuer die Tabelle
     bestelllistenTab.add(scrollPaneBestellliste, BorderLayout.CENTER);
-    table_1 = new JTable();
-    table_1.setModel(new DefaultTableModel(
+    bestelllistenTabelle = new JTable();
+    bestelllistenTabelle.setModel(new DefaultTableModel(
         new Object[][] { { null, null, null, null }, { null, null, null, null }, },
         new String[] { "", "", "", "" }));
-    scrollPaneBestellliste.setViewportView(table_1);
+    scrollPaneBestellliste.setViewportView(bestelllistenTabelle);
     bestellenButtonsOben = new JPanel();
     bestelllistenTab.add(bestellenButtonsOben, BorderLayout.NORTH);
     dropdownSuche1_2 = new JComboBox<String>();
@@ -317,6 +289,7 @@ public class UI extends JFrame {
     }
     panelEinlagerungButtonsOben.add(dropdownEinlagerungProdukttyp);
 
+    // einlagerung Tabelle fuer betroffene Lagerplaetze
     lagerplatzScrollPane = new JScrollPane();
     lagerplatzScrollPane.setPreferredSize(new Dimension(150, 2));
     lagerplatzScrollPane.setMaximumSize(new Dimension(200, 32767));
@@ -339,10 +312,12 @@ public class UI extends JFrame {
    */
   public void updateSprache() {
     System.out.println(sprachwahl.getSelectedItem().toString());
+    // Sprache wird gesetzt
     Hauptklasse.getUebersetzer().setSprache(sprachwahl.getSelectedItem().toString());
-    System.out.println(Hauptklasse.getUebersetzer().getUebersetzung("Suche"));
+    // Genutztes UI wird verworfen.
     this.setVisible(false);
     dispose();
+    // Neues UI wird erstellt.
     Hauptklasse.setupUi();
   }
 
@@ -350,29 +325,59 @@ public class UI extends JFrame {
    * Methode, welche den UI-Elementen Action-Listener hinzufuegt.
    */
   public void addActionListenersToUi() {
-
+    // Actionlistener fuer den Export button im Inventar-Tab
     inventarExportButton.addActionListener(e -> {
       export.XMLExport.writeInvetoryToXml(InventarUndBestelllisteMethoden.inventarisierung());
       export.Excel.exportieren(inventarTabelle, "Inventar");
     });
-
+    // Actionlistener fuer den Export button im Such-Tab
     sucheExportButton.addActionListener(e -> {
       export.XMLExport.writeQueryToXML(getTableData(tabelleSuche),
           produktTypausString(dropdownSucheProdukttyp.toString()));
       export.Excel.exportieren(tabelleSuche, "Suchergebnisse");
     });
-
+    // Ok-Button im Inventar refresht Inventar
     okButtonInventar.addActionListener(
         e -> setInventarTable(InventarUndBestelllisteMethoden.inventarisierung()));
 
+    // Button zum exportieren der Bestelllistentabelle
     bestelllisteExportButton.addActionListener(e -> {
-      Excel.exportieren(table_1, "Bestellliste");
+      Excel.exportieren(bestelllistenTabelle, "Bestellliste");
     });
+    // Dropdown fuer die Sprachwahl
     sprachwahl.addActionListener(e -> updateSprache());
     dropdownEinlagerungProdukttyp.addActionListener(e -> updateEinlagerungsTable());
     dropdownSucheProdukttyp.addActionListener(e -> querySuche());
     dropdownSucheProdukttyp.addActionListener(e -> updateDropdown2());
     okSuche.addActionListener(e -> querySuche());
+
+    // aktualisiern Button fuer Bestellliste
+    aktualisieren_1.addActionListener(e -> {
+      Produkt p = produktTypausString(dropdownSuche1_2.getSelectedItem().toString());
+      String tabelle;
+      switch (dropdownSuche1_2.getSelectedItem().toString()) {
+      case "Grafikkarte":
+        tabelle = "grafikkarte";
+        break;
+      case "CPU":
+        tabelle = "cpu";
+        break;
+      case "Fertigprodukt":
+        tabelle = "fertigprodukt";
+        break;
+      case "Hauptspeicher":
+        tabelle = "hauptspeicher";
+        break;
+      case "Festplatte":
+        tabelle = "festplatte";
+        break;
+      default:
+        tabelle = "cpu";
+        return;
+      }
+      SQLOutputHandling.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
+          p.getTabelleneintraege());
+    });
   }
 
   /**
@@ -394,7 +399,6 @@ public class UI extends JFrame {
    * @param input Object-Array fuer Tabelleninhalt.
    */
   public void setLagerplaetzeEinlagerungTable(Object[][] input) {
-    System.out.println(Arrays.deepToString(input));
     Object[][] data = Arrays.copyOfRange(input, 1, input.length);
     DefaultTableModel model = (DefaultTableModel) lagerplaetzeEinlagerung.getModel();
     model.setRowCount(0);
@@ -452,12 +456,15 @@ public class UI extends JFrame {
   public void deletionSuchTabelle() {
     Produkt p = produktTypausString(dropdownSucheProdukttyp.getSelectedItem().toString());
     if (p != null) {
+      //Text fuer Query zum Loeschen der gezeigten Produkte
       String sqlQuery = "DELETE ";
+      //Test fuer Query fuer Decrement der gezeigten Produkte
       String sqlQuery2 = "SELECT NAME, LAGERPLATZ ";
       sqlQuery2 += "FROM " + p.produktTyp() + " ";
 
       sqlQuery += "FROM " + p.produktTyp() + " ";
       int added = 0;
+      // Insert Attribut 1
       if (!(getDropdownSucheAttribut1().getSelectedItem().toString().length() <= 1)) {
         sqlQuery += "WHERE " + (getDropdownSucheAttribut1().getSelectedItem().equals("ID")
             ? getDropdownSucheAttribut1().getSelectedItem() + "="
@@ -471,6 +478,7 @@ public class UI extends JFrame {
                 + textFieldSucheAttribut1.getText() + "' AND ");
         added = 1;
       }
+      // Insert Attribut 2
       if (!(dropdownSucheAttribut2.getSelectedItem().toString().length() <= 1)) {
         if (added == 0) {
           sqlQuery += "WHERE ";
@@ -489,6 +497,7 @@ public class UI extends JFrame {
         added = 1;
 
       }
+      // Insert Attribut 2
       if (!(dropdownSucheAttribut3.getSelectedItem().toString().length() <= 1)) {
         if (added == 0) {
           sqlQuery += "WHERE ";
@@ -506,13 +515,16 @@ public class UI extends JFrame {
                 + "' ";
         added = 0;
       }
+      //falsches Ende am String abschneiden.
       sqlQuery2 = sqlQuery2.substring(0, sqlQuery2.length() - 1 - added * 4) + ";";
       System.out.println(sqlQuery2);
       sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
       System.out.println(sqlQuery);
       sqlQuery = p == null ? null : sqlQuery;
-      Object[] options = { "Yes", "No" };
-      int n = JOptionPane.showOptionDialog(this, "Delete current Selection?", "Delete?",
+      Object[] options = { Hauptklasse.getUebersetzer().getUebersetzung("ja"), Hauptklasse.getUebersetzer().getUebersetzung("nein") };
+      int n = JOptionPane.showOptionDialog(this,
+          Hauptklasse.getUebersetzer().getUebersetzung("loeschen?"),
+          Hauptklasse.getUebersetzer().getUebersetzung("loeschen?"),
           JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
           options[1]);
       if (n == 0) {
@@ -551,12 +563,14 @@ public class UI extends JFrame {
     Produkt p = produktTypausString(dropdownSucheProdukttyp.getSelectedItem().toString());
     if (p != null) {
       String sqlQuery = "SELECT ";
+      //Tabelleneintraege zu String hinzufuegen
       for (int i = 0; i < p.getTabelleneintraege().length; i++) {
         sqlQuery += p.getTabelleneintraege()[i] + ", ";
       }
       sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2);
       sqlQuery += " FROM " + p.produktTyp() + " ";
       int added = 0;
+      //Attribut 1 zu String hinzufuegen
       if (!(getDropdownSucheAttribut1().getSelectedItem().toString().length() <= 1)) {
         if (added == 0) {
           sqlQuery += "WHERE ";
@@ -568,6 +582,7 @@ public class UI extends JFrame {
                 + textFieldSucheAttribut1.getText() + "' AND ";
         added = 1;
       }
+      //Attribut 2 zu String hinzufuegen
       if (!(dropdownSucheAttribut2.getSelectedItem().toString().length() <= 1)) {
         if (added == 0) {
           sqlQuery += "WHERE ";
@@ -579,6 +594,7 @@ public class UI extends JFrame {
                 + "' AND ";
         added = 1;
       }
+      //Attribut 3 zu String hinzufuegen
       if (!(dropdownSucheAttribut3.getSelectedItem().toString().length() <= 1)) {
         if (added == 0) {
           sqlQuery += "WHERE ";
@@ -592,6 +608,7 @@ public class UI extends JFrame {
 
       }
       System.out.println(sqlQuery);
+      //String kuerzen
       sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
       sqlQuery = p == null ? null : sqlQuery;
       SQLOutputHandling.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());
@@ -695,10 +712,10 @@ public class UI extends JFrame {
    */
   public void setBestellTable(Object[][] input) {
     Object[][] data = Arrays.copyOfRange(input, 1, input.length);
-    DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+    DefaultTableModel model = (DefaultTableModel) bestelllistenTabelle.getModel();
     model.setRowCount(0);
     model = new DefaultTableModel(data, input[0]);
-    table_1.setModel(model);
+    bestelllistenTabelle.setModel(model);
   }
 
   /**
@@ -721,7 +738,6 @@ public class UI extends JFrame {
       Map<Object, Object> map = new HashMap<>();
 
       String name = null;
-
       for (Object[] o : strings2) {
 
         name = (String) o[0];

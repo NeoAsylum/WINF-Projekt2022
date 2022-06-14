@@ -8,6 +8,7 @@ package datentypen;
  *
  */
 public interface Produkt extends EinObjekt {
+  
   /**
    * Getter fuer die Mindestmenge.
    */
