@@ -49,9 +49,6 @@ import javax.swing.table.DefaultTableModel;
  */
 @SuppressWarnings("serial")
 public class UI extends JFrame {
-  enum tabs {
-    Suche, Einlagerung
-  };
 
   private JPanel contentPane;
   private JTabbedPane tabbedPane;
