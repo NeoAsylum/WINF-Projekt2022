@@ -35,7 +35,7 @@ public class sqlSetup {
    */
   public static void setupSql() {
     try {
-      props.loadFromXML(new FileInputStream("resources/properties.txt"));
+      props.loadFromXML(new FileInputStream("WINF-Programmier-Projekt-2022/Folder/resources/properties.txt"));
       /*
        * props.setProperty("Sprache", Locale.getDefault().toLanguageTag());
        * props.storeToXML(new FileOutputStream("resources/properties.txt"),
