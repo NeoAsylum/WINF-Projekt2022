@@ -396,7 +396,6 @@ public class UI extends JFrame {
    * @param input Object-Array fuer Tabelleninhalt.
    */
   public void setLagerplaetzeEinlagerungTable(Object[][] input) {
-    Object[][] data = Arrays.copyOfRange(input, 1, input.length);
     DefaultTableModel model = (DefaultTableModel) lagerplaetzeEinlagerung.getModel();
     model.setRowCount(0);
     model = new DefaultTableModel(input, new Object[] { "Lagerplaetze" });
