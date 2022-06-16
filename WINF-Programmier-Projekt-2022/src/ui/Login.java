@@ -19,14 +19,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -144,22 +139,16 @@ public class Login extends JFrame {
         }
       }
     });
-
     btnNewButton.setBounds(0, 10, 160, 21);
     panel_3.add(btnNewButton);
-
     JButton btnNewButton_1 = new JButton("Benutzer anlegen");
     btnNewButton_1.setBounds(0, 41, 160, 21);
     panel_3.add(btnNewButton_1);
-
     btnNewButton_1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-
         if (e.getSource() == btnNewButton_1) {
-
           BenutzerAnlegen frame = new BenutzerAnlegen();
           frame.setVisible(true);
-
         }
       }
     });
@@ -194,7 +183,8 @@ public class Login extends JFrame {
           Statement stmt = sqlSetup.getConn().createStatement();
           ResultSet res = stmt.executeQuery("SELECT * FROM passwoerter");
 
-          for (int i = 1; res.next(); i++) {
+          for (@SuppressWarnings("unused")
+          int i = 1; res.next(); i++) {
             if (text0.equals(res.getString(1))) {
               benutzername = true;
               if (text1.equals(res.getString(2))) {
@@ -206,7 +196,6 @@ public class Login extends JFrame {
             }
           }
         } catch (SQLException e1) {
-          // TODO Auto-generated catch block
           e1.printStackTrace();
         }
 
@@ -219,7 +208,6 @@ public class Login extends JFrame {
           String nachricht = "Benutzername oder Passwort ist falsch";
           JOptionPane.showMessageDialog(null, nachricht);
           loeschen();
-
         }
       }
     });
@@ -236,30 +224,8 @@ public class Login extends JFrame {
    * Löschen der Felder Username und Password.
    */
   public void loeschen() {
-
     username.setText("");
     password.setText("");
 
   }
-
-  private static void addPopup(Component component, final JPopupMenu popup) {
-    component.addMouseListener(new MouseAdapter() {
-      public void mousePressed(MouseEvent e) {
-        if (e.isPopupTrigger()) {
-          showMenu(e);
-        }
-      }
-
-      public void mouseReleased(MouseEvent e) {
-        if (e.isPopupTrigger()) {
-          showMenu(e);
-        }
-      }
-
-      private void showMenu(MouseEvent e) {
-        popup.show(e.getComponent(), e.getX(), e.getY());
-      }
-    });
-  }
-
 }
