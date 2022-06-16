@@ -377,6 +377,7 @@ public class UI extends JFrame {
       SQLOutputHandling.queryToUI("SELECT * FROM " + tabelle, "Bestellliste",
           p.getTabelleneintraege());
     });
+    dropdownEinlagerungProdukttyp.setSelectedIndex(0);
   }
 
   /**
