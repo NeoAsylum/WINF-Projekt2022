@@ -73,7 +73,6 @@ public class sqlSetup {
       for (int raum = 0; raum < 5; raum++) {
         for (int regal = 0; regal < 5; regal++) {
           for (int fach = 0; fach < 20; fach++) {
-            System.out.println("raum+ " + raum + "regal" + regal + "fach" + fach);
             stmt.executeUpdate("INSERT INTO LAGERPLATZ (RAUM,REGAL,FACH) VALUES(" + raum + ","
                 + regal + "," + fach + ");");
           }

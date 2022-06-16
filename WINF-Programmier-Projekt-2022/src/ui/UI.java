@@ -311,7 +311,6 @@ public class UI extends JFrame {
    * Methode, um die Spracheinstellung zu akltualisieren.
    */
   public void updateSprache() {
-    System.out.println(sprachwahl.getSelectedItem().toString());
     // Sprache wird gesetzt
     Hauptklasse.getUebersetzer().setSprache(sprachwahl.getSelectedItem().toString());
     // Genutztes UI wird verworfen.
@@ -333,7 +332,7 @@ public class UI extends JFrame {
     // Actionlistener fuer den Export button im Such-Tab
     sucheExportButton.addActionListener(e -> {
       export.XMLExport.writeQueryToXML(getTableData(tabelleSuche),
-          produktTypausString(dropdownSucheProdukttyp.toString()));
+          produktTypausString(dropdownSucheProdukttyp.getSelectedItem().toString()));
       export.Excel.exportieren(tabelleSuche, "Suchergebnisse");
     });
     // Ok-Button im Inventar refresht Inventar
@@ -456,9 +455,9 @@ public class UI extends JFrame {
   public void deletionSuchTabelle() {
     Produkt p = produktTypausString(dropdownSucheProdukttyp.getSelectedItem().toString());
     if (p != null) {
-      //Text fuer Query zum Loeschen der gezeigten Produkte
+      // Text fuer Query zum Loeschen der gezeigten Produkte
       String sqlQuery = "DELETE ";
-      //Test fuer Query fuer Decrement der gezeigten Produkte
+      // Test fuer Query fuer Decrement der gezeigten Produkte
       String sqlQuery2 = "SELECT NAME, LAGERPLATZ ";
       sqlQuery2 += "FROM " + p.produktTyp() + " ";
 
@@ -515,13 +514,12 @@ public class UI extends JFrame {
                 + "' ";
         added = 0;
       }
-      //falsches Ende am String abschneiden.
+      // falsches Ende am String abschneiden.
       sqlQuery2 = sqlQuery2.substring(0, sqlQuery2.length() - 1 - added * 4) + ";";
-      System.out.println(sqlQuery2);
       sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
-      System.out.println(sqlQuery);
       sqlQuery = p == null ? null : sqlQuery;
-      Object[] options = { Hauptklasse.getUebersetzer().getUebersetzung("ja"), Hauptklasse.getUebersetzer().getUebersetzung("nein") };
+      Object[] options = { Hauptklasse.getUebersetzer().getUebersetzung("ja"),
+          Hauptklasse.getUebersetzer().getUebersetzung("nein") };
       int n = JOptionPane.showOptionDialog(this,
           Hauptklasse.getUebersetzer().getUebersetzung("loeschen?"),
           Hauptklasse.getUebersetzer().getUebersetzung("loeschen?"),
@@ -563,14 +561,14 @@ public class UI extends JFrame {
     Produkt p = produktTypausString(dropdownSucheProdukttyp.getSelectedItem().toString());
     if (p != null) {
       String sqlQuery = "SELECT ";
-      //Tabelleneintraege zu String hinzufuegen
+      // Tabelleneintraege zu String hinzufuegen
       for (int i = 0; i < p.getTabelleneintraege().length; i++) {
         sqlQuery += p.getTabelleneintraege()[i] + ", ";
       }
       sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 2);
       sqlQuery += " FROM " + p.produktTyp() + " ";
       int added = 0;
-      //Attribut 1 zu String hinzufuegen
+      // Attribut 1 zu String hinzufuegen
       if (!(getDropdownSucheAttribut1().getSelectedItem().toString().length() <= 1)) {
         if (added == 0) {
           sqlQuery += "WHERE ";
@@ -582,7 +580,7 @@ public class UI extends JFrame {
                 + textFieldSucheAttribut1.getText() + "' AND ";
         added = 1;
       }
-      //Attribut 2 zu String hinzufuegen
+      // Attribut 2 zu String hinzufuegen
       if (!(dropdownSucheAttribut2.getSelectedItem().toString().length() <= 1)) {
         if (added == 0) {
           sqlQuery += "WHERE ";
@@ -594,7 +592,7 @@ public class UI extends JFrame {
                 + "' AND ";
         added = 1;
       }
-      //Attribut 3 zu String hinzufuegen
+      // Attribut 3 zu String hinzufuegen
       if (!(dropdownSucheAttribut3.getSelectedItem().toString().length() <= 1)) {
         if (added == 0) {
           sqlQuery += "WHERE ";
@@ -607,8 +605,7 @@ public class UI extends JFrame {
         added = 0;
 
       }
-      System.out.println(sqlQuery);
-      //String kuerzen
+      // String kuerzen
       sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 - added * 4) + ";";
       sqlQuery = p == null ? null : sqlQuery;
       SQLOutputHandling.queryToUI(sqlQuery, "Suche", p.getTabelleneintraege());
@@ -729,7 +726,6 @@ public class UI extends JFrame {
     try {
 
       Produkt p = produktTypausString(dropdownSuche1_2.getSelectedItem().toString());
-      // System.out.println(p.getMindestmenge());
 
       Object[][] strings = Arrays.copyOfRange(input, 1, input.length);
 

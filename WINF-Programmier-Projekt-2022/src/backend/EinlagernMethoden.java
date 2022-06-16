@@ -50,7 +50,6 @@ public class EinlagernMethoden {
             + name.toString() + "' WHERE ID=" + rs.getInt(1) + ";");
         return einlagern(produktTyp, name);
       } catch (SQLException e1) {
-        System.out.println("There is no more free space!!!");
         Hauptklasse.log.log(Level.SEVERE, e.getMessage(), e1);
       }
       Hauptklasse.log.log(Level.SEVERE, e.getMessage());

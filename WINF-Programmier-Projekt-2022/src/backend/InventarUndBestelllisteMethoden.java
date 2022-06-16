@@ -52,7 +52,6 @@ public class InventarUndBestelllisteMethoden {
         festplatten);
     festplatten = InventarUndBestelllisteMethoden.produktTypArrayhinzufuegen("Festplatte",
         festplatten);
-    System.out.println(Arrays.deepToString(festplatten));
 
     // Die erste Zeile mit den Spaltennamen abschneiden
     grafikkarten = Arrays.copyOfRange(grafikkarten, 1, grafikkarten.length);
@@ -70,7 +69,6 @@ public class InventarUndBestelllisteMethoden {
         .toArray(Object[][]::new);
     result = Stream.of(Arrays.stream(new Object[][] { { "Typ", "Name", "ID", "Lagerplatz" } }),
         Arrays.stream(result)).flatMap(s -> s).toArray(Object[][]::new);
-    System.out.println(Arrays.deepToString(result) + ";;");
     return result;
   }
 
@@ -86,7 +84,6 @@ public class InventarUndBestelllisteMethoden {
         new String[] { "Name" });
     Object[] two = Arrays.copyOfRange(Nuetzliches.getColumnInArray(arr, 0), 1,
         Nuetzliches.getColumnInArray(arr, 0).length);
-    System.out.println(Arrays.toString(two));
     return InventarUndBestelllisteMethoden.stueckzahlenInArray(two);
   }
 
