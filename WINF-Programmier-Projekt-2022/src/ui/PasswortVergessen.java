@@ -1,18 +1,14 @@
 package ui;
 
-import java.awt.BorderLayout; 
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import backend.Hauptklasse;
 import sql.sqlSetup;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
@@ -36,6 +32,7 @@ public class PasswortVergessen extends JFrame {
     /**
      * Methode zum Handlen, wenn das Passwort vergessen wurde.
      */
+    @SuppressWarnings("deprecation")
     public PasswortVergessen() {
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,7 +112,8 @@ public class PasswortVergessen extends JFrame {
 				try {
 					stmt = sqlSetup.getConn().createStatement();
 				ResultSet res = stmt.executeQuery("SELECT * FROM passwoerter");
-        		for(int i = 1; res.next(); i++) {;
+        		for(@SuppressWarnings("unused")
+            int i = 1; res.next(); i++) {;
         				if(res.getString(1).equals(bn.getText())) {
         					if(!pw.getText().equals("")) {
         						Statement stmt1 = sql.sqlSetup.getConn().createStatement();

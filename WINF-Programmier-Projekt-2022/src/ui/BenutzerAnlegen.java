@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,19 +9,18 @@ import javax.swing.border.EmptyBorder;
 import sql.sqlSetup;
 
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class BenutzerAnlegen extends JFrame {
 
   private JPanel contentPane;
@@ -50,6 +48,7 @@ public class BenutzerAnlegen extends JFrame {
   /**
    * Create the frame.
    */
+  @SuppressWarnings("deprecation")
   public BenutzerAnlegen() {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setBounds(100, 100, 450, 300);
