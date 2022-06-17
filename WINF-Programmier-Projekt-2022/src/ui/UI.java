@@ -97,6 +97,7 @@ public class UI extends JFrame {
    * Fuegt alle UI-Elemente hinzu.
    */
   public UI() {
+  	setTitle("Lagerverwaltung");
 
     // Frame setup
     Object[][] input = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" } };

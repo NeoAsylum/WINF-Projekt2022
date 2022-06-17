@@ -20,7 +20,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
-
+/**
+ * 
+ * @author AllStars
+ * Diese Klasse erzeugt das PasswortVergessen Frame
+ * und updatet bei bestimmtem Event die Datenbank.
+ *
+ */
 @SuppressWarnings("serial")
 public class PasswortVergessen extends JFrame {
     private JPanel contentPane;

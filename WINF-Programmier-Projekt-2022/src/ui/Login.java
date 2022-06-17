@@ -22,7 +22,13 @@ import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+/**
+ * Diese Klasse erzeugt das Login Frame
+ * und ruft bei bestimmten Events die Klassen BenutzerAnlegen
+ * und PasswortVergessen auf.
+ * @author All-Stars
+ *
+ */
 @SuppressWarnings("serial")
 public class Login extends JFrame {
 
@@ -77,7 +83,7 @@ public class Login extends JFrame {
     gbc_label_2.gridy = 0;
     panel_1.add(label_2, gbc_label_2);
 
-    JLabel lblNewLabel_1 = new JLabel("Username:");
+    JLabel lblNewLabel_1 = new JLabel("Benutzername:");
     GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
     gbc_lblNewLabel_1.weighty = 1.0;
     gbc_lblNewLabel_1.weightx = 1.0;
@@ -221,7 +227,7 @@ public class Login extends JFrame {
   }
 
   /**
-   * Löschen der Felder Username und Password.
+   * Löschen der Felder Benutzername und Passwort.
    */
   public void loeschen() {
     username.setText("");

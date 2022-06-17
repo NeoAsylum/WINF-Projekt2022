@@ -19,7 +19,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
-
+/**
+ * Diese Klasse erzeugt das BenutzerAnlegen Frame
+ * und schreibt bei bestimmtem Event Benutzer in die Datenbank.
+ * @author All-Stars
+ *
+ */
 @SuppressWarnings("serial")
 public class BenutzerAnlegen extends JFrame {
 
