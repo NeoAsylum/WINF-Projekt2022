@@ -1,5 +1,5 @@
 
-package Export;
+package export;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -8,8 +8,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import Datentypen.Grafikkarte;
-import Datentypen.Produkt;
+import datentypen.Grafikkarte;
+import datentypen.Produkt;
 
 /**
  * Dies ist der DefaultHandler zur Verarbeitung der XML-Datei.
